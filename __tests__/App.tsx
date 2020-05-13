@@ -3,10 +3,17 @@
 import React from 'react';
 import App from '../App';
 
-import { render } from '@testing-library/react-native';
+import { render, cleanup } from '@testing-library/react-native';
 
-it('renders correctly', () => {
-  const { getByText } = render(<App />);
+afterEach(cleanup);
 
-  expect(getByText('Hello')).toBeTruthy();
+describe('<App />', () => {
+  it('renders correctly on the menu screen', () => {
+    const { getByText, getAllByText } = render(<App />);
+
+    expect(getAllByText('Menu')).toBeTruthy();
+    expect(getByText('Conditions')).toBeTruthy();
+    expect(getByText('Favourites')).toBeTruthy();
+    expect(getByText('Random Browse')).toBeTruthy();
+  });
 });
