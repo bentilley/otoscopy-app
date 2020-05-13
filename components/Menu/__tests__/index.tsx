@@ -4,6 +4,14 @@ import React from 'react';
 import Menu from '../index';
 import { render, fireEvent } from '@testing-library/react-native';
 
+// This is a fix for a TouchableOpacity bug - see
+// https://github.com/testing-library/native-testing-library/issues/113 to see
+// if there is a fix yet and this can be removed
+jest.mock(
+  'react-native/Libraries/Components/Touchable/TouchableOpacity',
+  () => 'TouchableOpacity',
+);
+
 let navigationStubs: {
   goToReference: () => void;
   goToFavourites: () => void;
