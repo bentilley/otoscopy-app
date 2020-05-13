@@ -21,7 +21,7 @@ beforeEach(() => {
 describe('<Menu />', () => {
   it('renders correctly', () => {
     const { queryByText } = render(<Menu {...navigationStubs} />);
-    expect(queryByText('Menu')).toBeTruthy();
+    expect(queryByText('Otoscopy App')).toBeTruthy();
   });
 
   it('navigates to the Reference menu', () => {
