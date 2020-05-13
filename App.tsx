@@ -8,40 +8,14 @@ import {
   StackNavigationProp,
 } from '@react-navigation/stack';
 import { UserProvider } from './model/user';
+import MenuScreen from './components/screens/MenuScreen/';
 
-type RootStackParamList = {
+export type RootStackParamList = {
   Menu: undefined;
   Reference: undefined;
   Condition: { condition: string };
   Slide: { slides: string } | undefined;
   SlideList: { slides: string } | undefined;
-};
-
-type MenuProps = {
-  navigation: StackNavigationProp<RootStackParamList, 'Menu'>;
-  route: RouteProp<RootStackParamList, 'Menu'>;
-};
-
-const MenuScreen: React.FC<MenuProps> = ({ navigation }) => {
-  return (
-    <View style={styles.screen}>
-      <Text>Menu</Text>
-      <Button
-        title="Conditions"
-        onPress={() => navigation.navigate('Reference')}
-      />
-      <Button
-        title="Favourites"
-        onPress={() =>
-          navigation.navigate('SlideList', { slides: 'favourites' })
-        }
-      />
-      <Button
-        title="Random Browse"
-        onPress={() => navigation.navigate('Slide', { slides: 'random' })}
-      />
-    </View>
-  );
 };
 
 type ReferenceProps = {
