@@ -1,0 +1,18 @@
+{
+  "__tests__/*": {
+    "type": "test",
+    "alternate": ["{}"]
+  },
+  "App.tsx": {
+    "type": "app",
+    "alternate": ["__tests__/App.tsx"]
+  },
+  "**/__tests__/*": {
+    "type": "test",
+    "alternate": ["{dirname}/{basename}"]
+  },
+  "components/*": {
+    "type": "component",
+    "alternate": ["components/{dirname}/__tests__/{basename}"]
+  }
+}
