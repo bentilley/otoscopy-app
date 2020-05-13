@@ -1,3 +1,5 @@
+/** @format */
+
 import React from 'react';
 import { Menu } from '../index';
 import { render } from '@testing-library/react-native';

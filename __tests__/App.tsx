@@ -1,6 +1,4 @@
-/**
- * @format
- */
+/** @format */
 
 import React from 'react';
 import App from '../App';
