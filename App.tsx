@@ -122,7 +122,11 @@ const App = () => {
               />
             ),
           })}>
-          <Stack.Screen name="Menu" component={MenuScreen} />
+          <Stack.Screen
+            name="Menu"
+            component={MenuScreen}
+            options={{ title: '' }}
+          />
           <Stack.Screen name="Reference" component={ReferenceScreen} />
           <Stack.Screen name="Condition" component={ConditionScreen} />
           <Stack.Screen name="Slide" component={SlideScreen} />
