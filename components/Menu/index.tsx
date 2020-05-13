@@ -1,16 +1,27 @@
 /** @format */
 
 import React from 'react';
-import { View, Text } from 'react-native';
+import { StyleSheet, View, Text, Button } from 'react-native';
 
 type Props = {
-  name?: string;
+  goToReference: () => void;
+  goToFavourites: () => void;
+  goToBrowse: () => void;
 };
 
-export const Menu: React.FC<Props> = () => {
+const Menu: React.FC<Props> = (props) => {
   return (
-    <View>
-      <Text>Hello</Text>
+    <View style={styles.screen}>
+      <Text>Menu</Text>
+      <Button title="Conditions" onPress={props.goToReference} />
+      <Button title="Favourites" onPress={props.goToFavourites} />
+      <Button title="Random Browse" onPress={props.goToBrowse} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  screen: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+});
+
+export default Menu;
