@@ -9,6 +9,7 @@ import {
 } from '@react-navigation/stack';
 import { UserProvider } from './model/user';
 import MenuScreen from './components/screens/MenuScreen/';
+import { COLOURS } from './components/design/';
 
 export type RootStackParamList = {
   Menu: undefined;
@@ -107,9 +108,10 @@ const App = () => {
           initialRouteName="Menu"
           screenOptions={({ navigation }) => ({
             headerStyle: {
-              backgroundColor: '#15D6BE',
+              backgroundColor: COLOURS.veryDark,
+              shadowColor: COLOURS.dark,
             },
-            headerTintColor: '#000',
+            headerTintColor: COLOURS.lightGrey,
             headerTitleStyle: {
               fontWeight: 'bold',
             },
