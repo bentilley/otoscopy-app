@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLOURS.lessDark,
     borderRadius: 2,
-    backgroundColor: COLOURS.verDark,
+    backgroundColor: COLOURS.veryDark,
   },
   menuButtonContainer: { paddingHorizontal: 30, paddingVertical: 10 },
 });
