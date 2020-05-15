@@ -8,6 +8,7 @@ import {
   StackNavigationProp,
 } from '@react-navigation/stack';
 import { UserProvider } from './model/user';
+import { ConditionProvider, useConditionState } from './model/condition';
 import MenuScreen from './components/screens/MenuScreen/';
 import { COLOURS } from './components/design/';
 
@@ -103,36 +104,38 @@ const Stack = createStackNavigator<RootStackParamList>();
 const App = () => {
   return (
     <UserProvider>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="Menu"
-          screenOptions={({ navigation }) => ({
-            headerStyle: {
-              backgroundColor: COLOURS.veryDark,
-              shadowColor: COLOURS.dark,
-            },
-            headerTintColor: COLOURS.lightGrey,
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-            headerRight: () => (
-              <Button
-                title="Menu"
-                onPress={() => navigation.navigate('Menu')}
-              />
-            ),
-          })}>
-          <Stack.Screen
-            name="Menu"
-            component={MenuScreen}
-            options={{ title: '' }}
-          />
-          <Stack.Screen name="Reference" component={ReferenceScreen} />
-          <Stack.Screen name="Condition" component={ConditionScreen} />
-          <Stack.Screen name="Slide" component={SlideScreen} />
-          <Stack.Screen name="SlideList" component={SlideListScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <ConditionProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Menu"
+            screenOptions={({ navigation }) => ({
+              headerStyle: {
+                backgroundColor: COLOURS.veryDark,
+                shadowColor: COLOURS.dark,
+              },
+              headerTintColor: COLOURS.lightGrey,
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+              headerRight: () => (
+                <Button
+                  title="Menu"
+                  onPress={() => navigation.navigate('Menu')}
+                />
+              ),
+            })}>
+            <Stack.Screen
+              name="Menu"
+              component={MenuScreen}
+              options={{ title: '' }}
+            />
+            <Stack.Screen name="Reference" component={ReferenceScreen} />
+            <Stack.Screen name="Condition" component={ConditionScreen} />
+            <Stack.Screen name="Slide" component={SlideScreen} />
+            <Stack.Screen name="SlideList" component={SlideListScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ConditionProvider>
     </UserProvider>
   );
 };
