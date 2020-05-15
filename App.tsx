@@ -8,7 +8,7 @@ import {
   StackNavigationProp,
 } from '@react-navigation/stack';
 import { UserProvider } from './model/user';
-import { ConditionProvider, useConditionState } from './model/condition';
+import { ConditionProvider, useConditions } from './model/condition';
 import MenuScreen from './components/screens/MenuScreen/';
 import { COLOURS } from './components/design/';
 

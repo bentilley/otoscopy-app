@@ -1,51 +1,46 @@
 /** @format */
 
 import React from 'react';
+import firestore from '@react-native-firebase/firestore';
 
-const ConditionStateContext = React.createContext<Selectors | {}>({});
-const ConditionActionsContext = React.createContext<Actions>({});
+async function getCategories(
+  setCategories: React.Dispatch<React.SetStateAction<Category[]>>,
+) {
+  console.log('getCategories');
+  const query = await firestore().collection('categories').get();
+  const categories = query.docs.map((doc) => doc.data());
+  setCategories(categories as Category[]);
+}
+
+const initialState = { categories: [] };
+
+const ConditionStateContext = React.createContext<State>(initialState);
 
 type Props = {
   children: JSX.Element;
 };
 
 export const ConditionProvider: React.FC<Props> = ({ children }) => {
-  const [state, dispatch] = React.useReducer<React.Reducer<State, Action>>(
-    reducer,
-    initialState,
-  );
-
-  const data = getSelectors(state);
-
-  const enhancedDispatch = applyMiddleware(dispatch);
-  const actions = getActions(state, enhancedDispatch);
+  console.log('Rendering ConditionProvider');
+  const [categories, setCategories] = React.useState<Category[]>([]);
+  React.useEffect(() => {
+    getCategories(setCategories);
+  }, [setCategories]);
 
   return (
-    <ConditionStateContext.Provider value={data}>
-      <ConditionActionsContext.Provider value={actions}>
-        {children}
-      </ConditionActionsContext.Provider>
+    <ConditionStateContext.Provider value={{ categories }}>
+      {children}
     </ConditionStateContext.Provider>
   );
 };
 
-export const useConditionState = () => {
+export const useConditions = () => {
   const context = React.useContext(ConditionStateContext);
   if (context === undefined) {
     throw new Error('Probably not in Provider!');
   }
   return context;
 };
-
-export const useConditionActions = () => {
-  const context = React.useContext(ConditionActionsContext);
-  if (context === undefined) {
-    throw new Error('Probably not in Provider!');
-  }
-  return context;
-};
-
-const initialState = { categories: [] };
 
 type Category = {
   name: string;
@@ -59,36 +54,4 @@ type Condition = {
 
 type State = {
   categories: Category[];
-};
-
-type Action = { type: 'GET_CATEGORIES' };
-
-type Actions = { [index: string]: () => void };
-
-type Selectors = {
-  categories: () => Category[];
-};
-
-type Dispatch = React.Dispatch<Action>;
-
-const getSelectors = (state: State): Selectors => ({
-  categories: () => state.categories,
-});
-
-const applyMiddleware = (dispatch: Dispatch): Dispatch => {
-  return dispatch;
-};
-
-const getActions = (state: State, dispatch: Dispatch): Actions => ({
-  getCategories: () => dispatch({ type: 'GET_CATEGORIES' }),
-});
-
-const reducer = (state: State, action: Action): State => {
-  switch (action.type) {
-    case 'GET_CATEGORIES':
-      break;
-    default:
-      return state;
-  }
-  return state;
 };
