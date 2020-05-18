@@ -2,22 +2,33 @@
 
 import React from 'react';
 import Reference from '../index';
-import { render, fireEvent } from '@testing-library/react-native';
+import { render, fireEvent, cleanup } from '@testing-library/react-native';
+
+// This is a fix for a TouchableOpacity bug - see
+// https://github.com/testing-library/native-testing-library/issues/113 to see
+// if there is a fix yet and this can be removed
+jest.mock(
+  'react-native/Libraries/Components/Touchable/TouchableOpacity',
+  () => 'TouchableOpacity',
+);
 
 jest.mock('model/condition', () => ({
   useConditions: () => ({
     categories: [
       {
         name: 'Diseases of the middle ear',
-        conditions: [{ name: 'Otitis Media' }, { name: 'Hurty Drum' }],
+        conditions: [
+          { name: 'Otitis Media', id: 'AA' },
+          { name: 'Hurty Drum', id: 'AB' },
+        ],
       },
       {
         name: 'Benitis of the ears',
-        conditions: [{ name: 'Banging Ben Bones' }],
+        conditions: [{ name: 'Banging Ben Bones', id: 'BA' }],
       },
       {
         name: 'Olly Earholes',
-        conditions: [{ name: 'Octagon ear Ollifilus' }],
+        conditions: [{ name: 'Octagon ear Ollifilus', id: 'CA' }],
       },
     ],
   }),
@@ -27,16 +38,23 @@ let navigationStubs: {
   goToCondition: (condition: string) => void;
 };
 
+beforeEach(() => {
+  navigationStubs = {
+    goToCondition: jest.fn(),
+  };
+});
+
+afterEach(cleanup);
+
 describe('<Reference />', () => {
   it('renders correctly', () => {
     const { queryByText } = render(<Reference {...navigationStubs} />);
-    expect(queryByText('Reference')).toBeTruthy();
     expect(queryByText('Diseases of the middle ear')).toBeTruthy();
     expect(queryByText('Benitis of the ears')).toBeTruthy();
     expect(queryByText('Olly Earholes')).toBeTruthy();
   });
 
-  it('responds to category touch', () => {
+  it('responds to category touch', async () => {
     const { getByText, queryByText } = render(
       <Reference {...navigationStubs} />,
     );
