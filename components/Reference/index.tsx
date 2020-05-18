@@ -1,33 +1,110 @@
 /** @format */
 
 import React from 'react';
-import { View, Button, StyleSheet } from 'react-native';
-import { useConditions } from 'model/condition';
+import { ScrollView, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { useConditions, Category, Condition } from 'model/condition';
+import { Footer } from 'components';
 import { OtoText, COLOURS } from 'components/design';
 
 type Props = {
   goToCondition: (condition: string) => void;
 };
 
-const Reference: React.FC<Props> = (props) => {
-  const { categories } = useConditions();
-  console.log(categories);
+const Reference: React.FC<Props> = ({ goToCondition }) => {
+  /* const { categories } = useConditions(); */
+  let cat = [
+    {
+      name: 'Diseases of the middle ear',
+      conditions: [
+        { name: 'Otitis Media', id: 'AA' },
+        { name: 'Hurty Drum', id: 'AB' },
+      ],
+    },
+    {
+      name: 'Benitis of the ears',
+      conditions: [{ name: 'Banging Ben Bones', id: 'BA' }],
+    },
+    {
+      name: 'Olly Earholes',
+      conditions: [{ name: 'Octagon ear Ollifilus', id: 'CA' }],
+    },
+  ];
   return (
-    <View style={styles.screen}>
-      <OtoText size={'large'}>Reference</OtoText>
-      <Button title="condition A" onPress={() => props.goToCondition('A')} />
-      <Button title="condition B" onPress={() => props.goToCondition('B')} />
-      <Button title="condition C" onPress={() => props.goToCondition('C')} />
+    <React.Fragment>
+      <ScrollView style={styles.screen}>
+        {cat.map((category) => (
+          <CategoryItem
+            {...category}
+            goToCondition={goToCondition}
+            key={category.name}
+          />
+        ))}
+      </ScrollView>
+      <Footer />
+    </React.Fragment>
+  );
+};
+
+type CategoryItemProps = Category & Props;
+
+const CategoryItem: React.FC<CategoryItemProps> = ({
+  name,
+  conditions,
+  goToCondition,
+}) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+  return (
+    <View>
+      <TouchableOpacity onPress={() => setIsOpen(!isOpen)}>
+        <View style={styles.categoryItem}>
+          <OtoText size="large">{name}</OtoText>
+        </View>
+      </TouchableOpacity>
+      {isOpen &&
+        conditions.map((condition) => {
+          const onPress = () => goToCondition(condition.name);
+          return (
+            <ConditionItem
+              {...condition}
+              onPress={onPress}
+              key={condition.id}
+            />
+          );
+        })}
     </View>
+  );
+};
+
+type ConditionItemProps = Condition & { onPress: () => void };
+
+const ConditionItem: React.FC<ConditionItemProps> = ({ name, onPress }) => {
+  return (
+    <TouchableOpacity onPress={onPress}>
+      <View style={styles.conditionItem}>
+        <OtoText size="medium">{name}</OtoText>
+      </View>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: COLOURS.black,
+    backgroundColor: COLOURS.dark,
+  },
+  categoryItem: {
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    borderColor: COLOURS.darkGrey,
+    borderBottomWidth: 1,
+  },
+  conditionItem: {
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    paddingLeft: 30,
+    backgroundColor: COLOURS.lessDark,
+    borderColor: COLOURS.darkGrey,
+    borderBottomWidth: 1,
   },
 });
 

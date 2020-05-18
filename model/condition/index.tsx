@@ -40,12 +40,12 @@ export const useConditions = () => {
   return context;
 };
 
-type Category = {
+export type Category = {
   name: string;
   conditions: Condition[];
 };
 
-type Condition = {
+export type Condition = {
   id: string;
   name: string;
 };
