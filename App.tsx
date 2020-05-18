@@ -7,10 +7,11 @@ import {
   createStackNavigator,
   StackNavigationProp,
 } from '@react-navigation/stack';
-import { UserProvider } from './model/user';
-import { ConditionProvider, useConditions } from './model/condition';
-import MenuScreen from './components/screens/MenuScreen/';
-import { COLOURS } from './components/design/';
+import { UserProvider } from 'model/user';
+import { ConditionProvider } from 'model/condition';
+import MenuScreen from 'components/screens/MenuScreen';
+import ReferenceScreen from 'components/screens/ReferenceScreen';
+import { COLOURS } from 'components/design/';
 
 export type RootStackParamList = {
   Menu: undefined;
@@ -18,31 +19,6 @@ export type RootStackParamList = {
   Condition: { condition: string };
   Slide: { slides: string } | undefined;
   SlideList: { slides: string } | undefined;
-};
-
-type ReferenceProps = {
-  navigation: StackNavigationProp<RootStackParamList, 'Reference'>;
-  route: RouteProp<RootStackParamList, 'Reference'>;
-};
-
-const ReferenceScreen: React.FC<ReferenceProps> = ({ navigation }) => {
-  return (
-    <View style={styles.screen}>
-      <Text>Reference</Text>
-      <Button
-        title="condition A"
-        onPress={() => navigation.navigate('Condition', { condition: 'A' })}
-      />
-      <Button
-        title="condition B"
-        onPress={() => navigation.navigate('Condition', { condition: 'B' })}
-      />
-      <Button
-        title="condition C"
-        onPress={() => navigation.navigate('Condition', { condition: 'C' })}
-      />
-    </View>
-  );
 };
 
 type ConditionProps = {
