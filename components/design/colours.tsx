@@ -5,6 +5,7 @@ interface COLOURS {
   veryDark: string;
   dark: string;
   lessDark: string;
+  darkGrey: string;
   grey: string;
   lightGrey: string;
   primary: string;
@@ -18,6 +19,7 @@ export const COLOURS: COLOURS = Object.freeze({
   veryDark: '#131313',
   dark: '#2f2f2f',
   lessDark: '#3e3e3e',
+  darkGrey: '#575757',
   grey: '#bdbdbd',
   lightGrey: '#dedede',
   primary: '#15d6be',
