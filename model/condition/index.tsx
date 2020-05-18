@@ -6,7 +6,6 @@ import firestore from '@react-native-firebase/firestore';
 async function getCategories(
   setCategories: React.Dispatch<React.SetStateAction<Category[]>>,
 ) {
-  console.log('getCategories');
   const query = await firestore().collection('categories').get();
   const categories = query.docs.map((doc) => doc.data());
   setCategories(categories as Category[]);
@@ -21,7 +20,6 @@ type Props = {
 };
 
 export const ConditionProvider: React.FC<Props> = ({ children }) => {
-  console.log('Rendering ConditionProvider');
   const [categories, setCategories] = React.useState<Category[]>([]);
   React.useEffect(() => {
     getCategories(setCategories);

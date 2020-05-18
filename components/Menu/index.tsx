@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
-import { OtoText, COLOURS } from '../design';
+import { OtoText, COLOURS } from 'components/design';
 
 type Props = {
   goToReference: () => void;
