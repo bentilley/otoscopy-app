@@ -2,17 +2,16 @@
 
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { OtoText, COLOURS, OtoIcon } from 'components/design';
+import { COLOURS, OtoIcon } from 'components/design';
 
 export const Footer = () => {
   return (
     <View style={styles.footer}>
       <View style={styles.icons}>
-        <OtoText size="large">Star</OtoText>
-        <OtoIcon name="star" />
+        <OtoIcon name="star-o" size={40} style={{ color: COLOURS.grey }} />
       </View>
       <View style={styles.icons}>
-        <OtoText size="large">Mag</OtoText>
+        <OtoIcon name="search" size={50} style={{ color: COLOURS.grey }} />
       </View>
     </View>
   );
