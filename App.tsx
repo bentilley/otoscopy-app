@@ -1,7 +1,7 @@
 /** @format */
 
 import React from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native';
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import {
   createStackNavigator,
@@ -11,7 +11,7 @@ import { UserProvider } from 'model/user';
 import { ConditionProvider } from 'model/condition';
 import MenuScreen from 'components/screens/MenuScreen';
 import ReferenceScreen from 'components/screens/ReferenceScreen';
-import { COLOURS } from 'components/design/';
+import { OtoIcon, COLOURS } from 'components/design/';
 
 export type RootStackParamList = {
   Menu: undefined;
@@ -77,6 +77,20 @@ const SlideListScreen: React.FC<SlideListProps> = ({ route, navigation }) => {
 
 const Stack = createStackNavigator<RootStackParamList>();
 
+type MenuButtonProps = {
+  navigation: StackNavigationProp<RootStackParamList>;
+};
+
+const MenuButton: React.FC<MenuButtonProps> = ({ navigation }) => {
+  return (
+    <TouchableOpacity onPress={() => navigation.navigate('Menu')}>
+      <View style={styles.menuButton}>
+        <OtoIcon name="menu" size={40} style={{ color: COLOURS.grey }} />
+      </View>
+    </TouchableOpacity>
+  );
+};
+
 const App = () => {
   return (
     <UserProvider>
@@ -93,12 +107,7 @@ const App = () => {
               headerTitleStyle: {
                 fontWeight: 'bold',
               },
-              headerRight: () => (
-                <Button
-                  title="Menu"
-                  onPress={() => navigation.navigate('Menu')}
-                />
-              ),
+              headerRight: () => <MenuButton navigation={navigation} />,
             })}>
             <Stack.Screen
               name="Menu"
@@ -118,6 +127,7 @@ const App = () => {
 
 const styles = StyleSheet.create({
   screen: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  menuButton: { paddingHorizontal: 10 },
 });
 
 export default App;
