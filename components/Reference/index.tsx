@@ -4,7 +4,7 @@ import React from 'react';
 import { ScrollView, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useConditions, Category, Condition } from 'model/condition';
 import { Footer } from 'components';
-import { OtoText, COLOURS } from 'components/design';
+import { OtoText, OtoIcon, COLOURS } from 'components/design';
 
 type Props = {
   goToCondition: (condition: string) => void;
@@ -57,6 +57,11 @@ const CategoryItem: React.FC<CategoryItemProps> = ({
     <View>
       <TouchableOpacity onPress={() => setIsOpen(!isOpen)}>
         <View style={styles.categoryItem}>
+          <OtoIcon
+            name={isOpen ? 'caret-down' : 'caret-right'}
+            size={28}
+            style={{ color: COLOURS.grey }}
+          />
           <OtoText size="large">{name}</OtoText>
         </View>
       </TouchableOpacity>
@@ -93,15 +98,16 @@ const styles = StyleSheet.create({
     backgroundColor: COLOURS.dark,
   },
   categoryItem: {
+    flexDirection: 'row',
     paddingVertical: 10,
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
     borderColor: COLOURS.darkGrey,
     borderBottomWidth: 1,
   },
   conditionItem: {
-    paddingVertical: 8,
+    paddingVertical: 10,
     paddingHorizontal: 10,
-    paddingLeft: 30,
+    paddingLeft: 35,
     backgroundColor: COLOURS.lessDark,
     borderColor: COLOURS.darkGrey,
     borderBottomWidth: 1,
