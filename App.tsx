@@ -11,6 +11,7 @@ import { UserProvider } from 'model/user';
 import { ConditionProvider } from 'model/condition';
 import MenuScreen from 'components/screens/MenuScreen';
 import ReferenceScreen from 'components/screens/ReferenceScreen';
+import ConditionScreen from 'components/screens/ConditionScreen';
 import { OtoIcon, COLOURS } from 'components/design/';
 
 export type RootStackParamList = {
@@ -19,26 +20,6 @@ export type RootStackParamList = {
   Condition: { condition: string };
   Slide: { slides: string } | undefined;
   SlideList: { slides: string } | undefined;
-};
-
-type ConditionProps = {
-  navigation: StackNavigationProp<RootStackParamList, 'Condition'>;
-  route: RouteProp<RootStackParamList, 'Condition'>;
-};
-
-const ConditionScreen: React.FC<ConditionProps> = ({ route, navigation }) => {
-  return (
-    <View style={styles.screen}>
-      <Text>Condition</Text>
-      <Text>Here are some facts about {route.params.condition}</Text>
-      <Button
-        title="View Slides"
-        onPress={() =>
-          navigation.navigate('SlideList', { slides: 'condition slides' })
-        }
-      />
-    </View>
-  );
 };
 
 type SlideProps = {
