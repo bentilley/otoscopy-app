@@ -28,3 +28,11 @@ Depending on which platform you would like to run development mode in.
 
 This app was created following the React Native tutorial. See instructions
 followed here: https://reactnative.dev/docs/environment-setup
+
+## Icons
+
+SVG isn't so easy in app development so the icons are all supplied using a
+custom font called _otoicon_.
+
+To add additional icons to the custom font that is used, please see the
+instructions in the `components/design/icons/index.tsx` file.
