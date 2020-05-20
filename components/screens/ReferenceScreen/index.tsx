@@ -6,6 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import { RootStackParamList } from 'App';
 import Reference from 'components/Reference';
+import { Condition } from 'model/condition';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Reference'>;
@@ -14,7 +15,7 @@ type Props = {
 
 const ReferenceScreen: React.FC<Props> = ({ navigation }) => {
   const navigationFunctions = {
-    goToCondition: (condition: string) =>
+    goToCondition: (condition: Condition) =>
       navigation.navigate('Condition', { condition }),
   };
   return <Reference {...navigationFunctions} />;

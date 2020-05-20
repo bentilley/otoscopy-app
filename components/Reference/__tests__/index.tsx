@@ -3,6 +3,7 @@
 import React from 'react';
 import Reference from '../index';
 import { render, fireEvent, cleanup } from '@testing-library/react-native';
+import { Condition } from 'model/condition';
 
 // This is a fix for a TouchableOpacity bug - see
 // https://github.com/testing-library/native-testing-library/issues/113 to see
@@ -35,7 +36,7 @@ jest.mock('model/condition', () => ({
 }));
 
 let navigationStubs: {
-  goToCondition: (condition: string) => void;
+  goToCondition: (condition: Condition) => void;
 };
 
 beforeEach(() => {
@@ -82,8 +83,9 @@ describe('<Reference />', () => {
     fireEvent.press(category);
     const condition = getByText('Banging Ben Bones');
     fireEvent.press(condition);
-    expect(navigationStubs.goToCondition).toHaveBeenCalledWith(
-      'Banging Ben Bones',
-    );
+    expect(navigationStubs.goToCondition).toHaveBeenCalledWith({
+      id: 'BA',
+      name: 'Banging Ben Bones',
+    });
   });
 });

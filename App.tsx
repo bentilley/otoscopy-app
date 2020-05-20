@@ -13,11 +13,12 @@ import MenuScreen from 'components/screens/MenuScreen';
 import ReferenceScreen from 'components/screens/ReferenceScreen';
 import ConditionScreen from 'components/screens/ConditionScreen';
 import { OtoIcon, COLOURS } from 'components/design/';
+import { Condition } from 'model/condition';
 
 export type RootStackParamList = {
   Menu: undefined;
   Reference: undefined;
-  Condition: { condition: string };
+  Condition: { condition: Condition };
   Slide: { slides: string } | undefined;
   SlideList: { slides: string } | undefined;
 };

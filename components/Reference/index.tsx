@@ -52,7 +52,7 @@ const CategoryItem: React.FC<CategoryItemProps> = ({
       </TouchableOpacity>
       {isOpen &&
         conditions.map((condition) => {
-          const onPress = () => goToCondition(condition.name);
+          const onPress = () => goToCondition(condition);
           return (
             <ConditionItem
               {...condition}
