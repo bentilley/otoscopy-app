@@ -5,34 +5,19 @@ import { ScrollView, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useConditions, Category, Condition } from 'model/condition';
 import { Footer } from 'components';
 import { OtoText, OtoIcon, COLOURS } from 'components/design';
+/* import { categoryData } from './__mocks__/category-data'; */
 
 type Props = {
-  goToCondition: (condition: string) => void;
+  goToCondition: (condition: Condition) => void;
 };
 
 const Reference: React.FC<Props> = ({ goToCondition }) => {
-  /* const { categories } = useConditions(); */
-  let cat = [
-    {
-      name: 'Diseases of the middle ear',
-      conditions: [
-        { name: 'Otitis Media', id: 'AA' },
-        { name: 'Hurty Drum', id: 'AB' },
-      ],
-    },
-    {
-      name: 'Benitis of the ears',
-      conditions: [{ name: 'Banging Ben Bones', id: 'BA' }],
-    },
-    {
-      name: 'Olly Earholes',
-      conditions: [{ name: 'Octagon ear Ollifilus', id: 'CA' }],
-    },
-  ];
+  const { categories } = useConditions();
+  /* const categories = categoryData; */
   return (
     <React.Fragment>
       <ScrollView style={styles.screen}>
-        {cat.map((category) => (
+        {categories.map((category) => (
           <CategoryItem
             {...category}
             goToCondition={goToCondition}
