@@ -1,11 +1,11 @@
 /** @format */
 
 import React from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import { RootStackParamList } from 'App';
+import ConditionView from 'components/ConditionView';
 
 type ConditionProps = {
   navigation: StackNavigationProp<RootStackParamList, 'Condition'>;
@@ -13,22 +13,17 @@ type ConditionProps = {
 };
 
 const ConditionScreen: React.FC<ConditionProps> = ({ route, navigation }) => {
+  const navigationFunctions = {
+    goToSlides: () => {
+      navigation.navigate('SlideList', { slides: 'condition slides' });
+    },
+  };
   return (
-    <View style={styles.screen}>
-      <Text>Condition</Text>
-      <Text>Here are some facts about {route.params.condition}</Text>
-      <Button
-        title="View Slides"
-        onPress={() =>
-          navigation.navigate('SlideList', { slides: 'condition slides' })
-        }
-      />
-    </View>
+    <ConditionView
+      {...navigationFunctions}
+      condition={route.params.condition}
+    />
   );
 };
-
-const styles = StyleSheet.create({
-  screen: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-});
 
 export default ConditionScreen;
