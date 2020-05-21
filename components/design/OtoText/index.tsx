@@ -4,46 +4,50 @@ import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 
 type OtoTextProps = {
-  size: 'small' | 'medium' | 'large';
+  size: FontSizes;
+  weight?: FontWeights;
 };
 
-export const OtoText: React.FC<OtoTextProps> = ({ children, size }) => {
-  switch (size) {
-    case 'small':
-      return <SmallText>{children}</SmallText>;
-    case 'medium':
-      return <MediumText>{children}</MediumText>;
-    case 'large':
-      return <LargeText>{children}</LargeText>;
-  }
+export const OtoText: React.FC<OtoTextProps> = ({ children, size, weight }) => {
+  const stylesheet = getStyleSheet(size, weight);
+  return (
+    <AppText>
+      <Text style={stylesheet.style}>{children}</Text>
+    </AppText>
+  );
 };
 
 const AppText: React.FC = ({ children }) => {
   return <Text style={style.font}>{children}</Text>;
 };
 
-const LargeText: React.FC = ({ children }) => {
-  return (
-    <AppText>
-      <Text style={style.largeFont}>{children}</Text>
-    </AppText>
-  );
+type FontSizes = 'large' | 'medium' | 'smallMedium' | 'small';
+type FontWeights = 'fine' | 'normal' | 'semibold' | 'bold';
+
+function getStyleSheet(
+  fontSize: FontSizes,
+  fontWeight: FontWeights | undefined,
+) {
+  return StyleSheet.create({
+    style: {
+      fontSize: size[fontSize],
+      fontWeight: weight[fontWeight || 'normal'],
+    },
+  });
+}
+
+const size: { [key in FontSizes]: number } = {
+  large: 24,
+  medium: 18,
+  smallMedium: 16,
+  small: 14,
 };
 
-const MediumText: React.FC = ({ children }) => {
-  return (
-    <AppText>
-      <Text style={style.mediumFont}>{children}</Text>
-    </AppText>
-  );
-};
-
-const SmallText: React.FC = ({ children }) => {
-  return (
-    <AppText>
-      <Text style={style.smallFont}>{children}</Text>
-    </AppText>
-  );
+const weight: { [key in FontWeights]: '100' | '300' | '500' | '700' } = {
+  fine: '100',
+  normal: '300',
+  semibold: '500',
+  bold: '700',
 };
 
 const style = StyleSheet.create({
@@ -52,5 +56,6 @@ const style = StyleSheet.create({
   },
   largeFont: { fontSize: 24 },
   mediumFont: { fontSize: 18 },
+  smallMedFont: { fontSize: 16 },
   smallFont: { fontSize: 14 },
 });
