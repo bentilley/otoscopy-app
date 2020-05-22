@@ -21,8 +21,10 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    height: 75,
+    height: 70,
     backgroundColor: COLOURS.veryDark,
+    borderTopWidth: 1,
+    borderTopColor: COLOURS.dark,
   },
   icons: {
     flexDirection: 'column',
