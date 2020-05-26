@@ -1,7 +1,7 @@
 /** @format */
 
 import React from 'react';
-import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import {
   createStackNavigator,
@@ -13,6 +13,7 @@ import { Condition } from 'model/condition/types';
 import MenuScreen from 'components/screens/MenuScreen';
 import ReferenceScreen from 'components/screens/ReferenceScreen';
 import ConditionScreen from 'components/screens/ConditionScreen';
+import SlideListScreen from 'components/screens/SlideListScreen';
 import { OtoIcon, COLOURS } from 'components/design/';
 
 export type RootStackParamList = {
@@ -33,26 +34,6 @@ const SlideScreen: React.FC<SlideProps> = ({ route }) => {
   return (
     <View style={styles.screen}>
       <Text>Slide{text ? ` - ${text}` : ''}</Text>
-    </View>
-  );
-};
-
-type SlideListProps = {
-  navigation: StackNavigationProp<RootStackParamList, 'SlideList'>;
-  route: RouteProp<RootStackParamList, 'SlideList'>;
-};
-
-const SlideListScreen: React.FC<SlideListProps> = ({ route, navigation }) => {
-  const text = (route.params && route.params.slides) || '';
-  return (
-    <View style={styles.screen}>
-      <Text>SlideList{text ? ` - ${text}` : ''}</Text>
-      <Button
-        title="A slide"
-        onPress={() =>
-          navigation.navigate('Slide', { slides: 'One of your favourites' })
-        }
-      />
     </View>
   );
 };
