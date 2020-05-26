@@ -2,9 +2,9 @@
 
 import React from 'react';
 import reducer, { initialState } from './reducer';
-import getActions from './actions';
-import getSelectors from './selectors';
-import applyMiddleware from './middleware';
+import useActions from './actions';
+import useSelectors from './selectors';
+import useMiddleware from './middleware';
 
 import { Selectors } from './selectors';
 import { ActionHandlers } from './actions';
@@ -15,19 +15,16 @@ const ConditionActionsContext = React.createContext<ActionHandlers | null>(
 );
 
 export const ConditionProvider: React.FC = ({ children }) => {
-  console.log('ConditionProvider render');
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
-  const selectors = React.useMemo(() => getSelectors(state), [state]);
-  const enhancedDispatch = React.useMemo(() => applyMiddleware(dispatch), [
-    dispatch,
-  ]);
-  const actions = getActions(state, enhancedDispatch);
+  const selectors = useSelectors(state);
+  const enhancedDispatch = useMiddleware(dispatch);
+  const actions = useActions(state, enhancedDispatch);
 
-  const { getCategories } = actions;
+  const { fetchCategories } = actions;
   React.useEffect(() => {
-    getCategories();
-  }, [getCategories]);
+    fetchCategories();
+  }, [fetchCategories]);
 
   return (
     <ConditionStateContext.Provider value={selectors}>
@@ -62,32 +59,3 @@ export const useConditionsActions = (): ActionHandlers => {
   checkIfInvalidContext(context);
   return context as ActionHandlers;
 };
-
-/* export const useCondition = (conditionId: string) => { */
-/*   const { conditions, setConditions } = React.useContext(ConditionStateContext); */
-/*   if (!setConditions) { */
-/*     throw new TypeError('setConditions is not defined here!'); */
-/*   } */
-
-/*   if (conditions[conditionId]) { */
-/*     return { info: conditions[conditionId] }; */
-/*   } else { */
-/*     const newConditions = { ...conditions }; */
-/*     firestore() */
-/*       .collection('conditions') */
-/*       .doc(conditionId) */
-/*       .get() */
-/*       .then( */
-/*         (doc) => { */
-/*           const data = doc.data(); */
-/*           console.log(JSON.stringify(data)); */
-/*           newConditions[conditionId] = data as ConditionData; */
-/*           setConditions(newConditions); */
-/*         }, */
-/*         (err) => { */
-/*           console.error(err); */
-/*         }, */
-/*       ); */
-/*     return { info: null }; */
-/*   } */
-/* }; */

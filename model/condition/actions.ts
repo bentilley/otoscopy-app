@@ -1,32 +1,40 @@
 /** @format */
-/* eslint react-hooks/rules-of-hooks: off */
-// getActions is only called within a provider component deterministically
 
 import React from 'react';
-import { Category } from './types';
+import { Category, Condition, ConditionData } from './types';
 import { State } from './reducer';
 
 export type Action =
-  | { type: 'GET_CATEGORIES' }
-  | { type: 'SET_CATEGORIES'; payload: Category[] };
+  | { type: 'FETCH_CATEGORIES' }
+  | { type: 'SET_CATEGORIES'; payload: Category[] }
+  | { type: 'FETCH_CONDITION'; payload: Condition }
+  | { type: 'SET_CONDITION'; payload: { id: string; data: ConditionData } };
 
 export type ActionHandlers = {
-  getCategories: () => void;
+  fetchCategories: () => void;
+  fetchCondition: (condition: Condition) => void;
 };
 
-const getActions = (
+const useActions = (
   state: State,
   dispatch: React.Dispatch<Action>,
 ): ActionHandlers => {
-  console.log('getActions');
   return {
-    getCategories: React.useMemo(
+    fetchCategories: React.useMemo(
       () => () => {
-        dispatch({ type: 'GET_CATEGORIES' });
+        dispatch({ type: 'FETCH_CATEGORIES' });
       },
       [dispatch],
+    ),
+    fetchCondition: React.useMemo(
+      () => (condition: Condition) => {
+        if (!state.conditions[condition.id]) {
+          dispatch({ type: 'FETCH_CONDITION', payload: condition });
+        }
+      },
+      [state, dispatch],
     ),
   };
 };
 
-export default getActions;
+export default useActions;

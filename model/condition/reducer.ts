@@ -14,10 +14,17 @@ export const initialState = {
 };
 
 const reducer = (state: State, action: Action): State => {
-  console.log(action);
   switch (action.type) {
     case 'SET_CATEGORIES':
       return { ...state, categories: action.payload };
+    case 'SET_CONDITION':
+      return {
+        ...state,
+        conditions: {
+          ...state.conditions,
+          [action.payload.id]: action.payload.data,
+        },
+      };
     default:
       return state;
   }
