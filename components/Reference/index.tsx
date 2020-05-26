@@ -2,25 +2,35 @@
 
 import React from 'react';
 import { ScrollView, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { useConditions, Category, Condition } from 'model/condition';
+import { Category, Condition } from 'model/condition/types';
+import { useConditions, useConditionsActions } from 'model/condition';
 import { Footer } from 'components';
 import { OtoText, OtoIcon, COLOURS } from 'components/design';
-/* import { categoryData } from './__mocks__/category-data'; */
+import { categoryData } from './__mocks__/category-data';
 
 type Props = {
   goToCondition: (condition: Condition) => void;
 };
 
 const Reference: React.FC<Props> = ({ goToCondition }) => {
-  const { categories } = useConditions();
-  /* const categories = categoryData; */
+  const { getCategories } = useConditions();
+  const { fetchCondition } = useConditionsActions();
+
+  /* const categories = getCategories(); */
+  const categories = categoryData;
+
+  const fetchAndgoToCondition = (condition: Condition) => {
+    fetchCondition(condition);
+    goToCondition(condition);
+  };
+
   return (
     <React.Fragment>
       <ScrollView style={styles.screen}>
         {categories.map((category) => (
           <CategoryItem
             {...category}
-            goToCondition={goToCondition}
+            goToCondition={fetchAndgoToCondition}
             key={category.name}
           />
         ))}

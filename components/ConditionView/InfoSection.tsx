@@ -3,7 +3,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
-import { ConditionSection } from 'model/condition';
+import { ConditionSection } from 'model/condition/types';
 import { OtoIcon, OtoText, COLOURS } from 'components/design';
 import { shortHash } from 'utils';
 

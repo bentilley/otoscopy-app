@@ -3,7 +3,7 @@
 import React from 'react';
 import Reference from '../index';
 import { render, fireEvent, cleanup } from '@testing-library/react-native';
-import { Condition } from 'model/condition';
+import { Condition } from 'model/condition/types';
 
 // This is a fix for a TouchableOpacity bug - see
 // https://github.com/testing-library/native-testing-library/issues/113 to see
@@ -15,23 +15,28 @@ jest.mock(
 
 jest.mock('model/condition', () => ({
   useConditions: () => ({
-    categories: [
-      {
-        name: 'Diseases of the middle ear',
-        conditions: [
-          { name: 'Otitis Media', id: 'AA' },
-          { name: 'Hurty Drum', id: 'AB' },
-        ],
-      },
-      {
-        name: 'Benitis of the ears',
-        conditions: [{ name: 'Banging Ben Bones', id: 'BA' }],
-      },
-      {
-        name: 'Olly Earholes',
-        conditions: [{ name: 'Octagon ear Ollifilus', id: 'CA' }],
-      },
-    ],
+    getCategories: () => ({
+      categories: [
+        {
+          name: 'Diseases of the middle ear',
+          conditions: [
+            { name: 'Otitis Media', id: 'AA' },
+            { name: 'Hurty Drum', id: 'AB' },
+          ],
+        },
+        {
+          name: 'Benitis of the ears',
+          conditions: [{ name: 'Banging Ben Bones', id: 'BA' }],
+        },
+        {
+          name: 'Olly Earholes',
+          conditions: [{ name: 'Octagon ear Ollifilus', id: 'CA' }],
+        },
+      ],
+    }),
+  }),
+  useConditionsActions: () => ({
+    fetchCondition: jest.fn(),
   }),
 }));
 

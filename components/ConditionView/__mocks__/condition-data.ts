@@ -1,6 +1,6 @@
 /** @format */
 
-import {ConditionData} from 'model/condition';
+import { ConditionData } from 'model/condition/types';
 
 export const conditionData: ConditionData = {
   aetiology: {

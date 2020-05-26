@@ -9,11 +9,11 @@ import {
 } from '@react-navigation/stack';
 import { UserProvider } from 'model/user';
 import { ConditionProvider } from 'model/condition';
+import { Condition } from 'model/condition/types';
 import MenuScreen from 'components/screens/MenuScreen';
 import ReferenceScreen from 'components/screens/ReferenceScreen';
 import ConditionScreen from 'components/screens/ConditionScreen';
 import { OtoIcon, COLOURS } from 'components/design/';
-import { Condition } from 'model/condition';
 
 export type RootStackParamList = {
   Menu: undefined;

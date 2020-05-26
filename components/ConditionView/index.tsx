@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { ScrollView, StyleSheet, Button, View } from 'react-native';
-import { useCondition, Condition } from 'model/condition';
+import { Condition } from 'model/condition/types';
+import { useConditions } from 'model/condition';
 import { Footer } from 'components';
 import { OtoText, COLOURS } from 'components/design';
 import { conditionData } from './__mocks__/condition-data';
@@ -15,7 +16,8 @@ type Props = {
 };
 
 const ConditionView: React.FC<Props> = ({ goToSlides, condition }) => {
-  /* const { info } = useCondition(condition.id); */
+  const { getCondition } = useConditions();
+  /* const info = getCondition(condition.id); */
   const info = conditionData;
 
   return (
