@@ -14,5 +14,9 @@
   "components/*": {
     "type": "component",
     "alternate": ["components/{dirname}/__tests__/{basename}"]
+  },
+  "components/screens/*Screen/index.tsx": {
+    "type": "screen",
+    "alternate": ["components/{}/index.tsx"]
   }
 }
