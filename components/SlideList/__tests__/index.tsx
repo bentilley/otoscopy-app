@@ -3,6 +3,8 @@
 import React from 'react';
 import SlideList from '../index';
 import { render, fireEvent, cleanup } from '@testing-library/react-native';
+import { slideData } from 'components/SlideList/__mocks__/slide-data';
+import { Slide } from 'model/condition/types';
 
 // This is a fix for a TouchableOpacity bug - see
 // https://github.com/testing-library/native-testing-library/issues/113 to see
@@ -16,30 +18,21 @@ let navigationStubs: {
   goToSlide: () => void;
 };
 
-let slides: { id: string }[];
+let props: {
+  slides: Slide[];
+  isFavourites: boolean;
+} = {
+  slides: slideData,
+  isFavourites: false,
+};
 
 beforeEach(() => {
   navigationStubs = {
     goToSlide: jest.fn(),
   };
 
-  slides = [
-    {
-      condition: 'Otitis Media',
-      diagnosis: 'Right ear Acute Otitis Media.',
-      thumbnail_url: '/thumb/otitis-media/100001.jpg',
-    },
-    {
-      condition: 'Otitis Media',
-      diagnosis: 'Right ear Acute Otitis Media.',
-      thumbnail_url: '/thumb/otitis-media/100001.jpg',
-    },
-    {
-      condition: 'Otitis Media',
-      diagnosis: 'Right ear Acute Otitis Media.',
-      thumbnail_url: '/thumb/otitis-media/100001.jpg',
-    },
-  ];
+  props.slides = slideData;
+  props.isFavourites = false;
 });
 
 afterEach(cleanup);
@@ -47,24 +40,29 @@ afterEach(cleanup);
 describe('<SlideList />', () => {
   it('renders correctly', () => {
     const { queryAllByText } = render(
-      <SlideList {...navigationStubs} slides={slides} />,
+      <SlideList {...navigationStubs} {...props} />,
     );
     expect(queryAllByText('view slide').length).toEqual(3);
   });
 
-  it('renders loading if there is no slide info', () => {
-    const { queryByText } = render(
-      <SlideList {...navigationStubs} slides={slides} />,
+  it('navigates to the correct slide when the slide is pressed', () => {
+    const { getAllByText } = render(
+      <SlideList {...navigationStubs} {...props} />,
     );
-    expect(queryByText('Loading...')).toBeTruthy();
+    const btns = getAllByText('view slide');
+    expect(btns.length).toEqual(3);
+    fireEvent.press(btns[0]);
+    expect(navigationStubs.goToSlide).toHaveBeenCalledWith(
+      expect.objectContaining({ condition: 'Otitis Media' }),
+    );
   });
 
-  it('navigates to the correct slide when the slide is pressed', () => {
-    const { getByText } = render(
-      <SlideList {...navigationStubs} slides={slides} />,
+  it('shows favourites view is isFavourites is true', () => {
+    props.isFavourites = true;
+    const { queryAllByText } = render(
+      <SlideList {...navigationStubs} {...props} />,
     );
-    const btn = getByText('view slide');
-    fireEvent.press(btn);
-    expect(navigationStubs.goToSlide).toHaveBeenCalledWith('Otitis Media');
+    expect(queryAllByText('Otitis Media').length).toEqual(3);
+    expect(queryAllByText('remove').length).toEqual(3);
   });
 });
