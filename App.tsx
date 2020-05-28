@@ -9,7 +9,7 @@ import {
 } from '@react-navigation/stack';
 import { UserProvider } from 'model/user';
 import { ConditionProvider } from 'model/condition';
-import { Condition } from 'model/condition/types';
+import { Condition, Slide } from 'model/condition/types';
 import MenuScreen from 'components/screens/MenuScreen';
 import ReferenceScreen from 'components/screens/ReferenceScreen';
 import ConditionScreen from 'components/screens/ConditionScreen';
@@ -20,8 +20,8 @@ export type RootStackParamList = {
   Menu: undefined;
   Reference: undefined;
   Condition: { condition: Condition };
-  Slide: { slides: string } | undefined;
-  SlideList: { slides: string } | undefined;
+  Slide: { slide: Slide } | undefined;
+  SlideList: { slides: Slide[]; isFavourites: boolean };
 };
 
 type SlideProps = {
@@ -30,7 +30,7 @@ type SlideProps = {
 };
 
 const SlideScreen: React.FC<SlideProps> = ({ route }) => {
-  const text = (route.params && route.params.slides) || '';
+  const text = (route.params && route.params.slide) || '';
   return (
     <View style={styles.screen}>
       <Text>Slide{text ? ` - ${text}` : ''}</Text>

@@ -1,91 +1,39 @@
 /** @format */
 
 import React from 'react';
-import {
-  View,
-  TouchableOpacity,
-  Image,
-  FlatList,
-  StyleSheet,
-} from 'react-native';
-import { slideData } from './__mocks__/slide-data';
-import { COLOURS, OtoText, OtoIcon } from 'components/design';
+import { View, FlatList, StyleSheet } from 'react-native';
+import { COLOURS } from 'components/design';
 import { Slide } from 'model/condition/types';
+import { Footer } from 'components/Footer';
+import SlideListItem from './SlideListItem';
+import FavouriteSlideListItem from './FavouriteSlideListItem';
 
 type Props = {
-  text: string;
+  slides: Slide[];
+  isFavourites: boolean;
   goToSlide: (slide: Slide) => void;
 };
 
-const SlideList: React.FC<Props> = ({ text, goToSlide }) => {
+const SlideList: React.FC<Props> = ({ slides, isFavourites, goToSlide }) => {
+  const ListItem = isFavourites ? FavouriteSlideListItem : SlideListItem;
   return (
-    <View style={styles.screen}>
-      <FlatList
-        data={slideData}
-        keyExtractor={(item) => item.thumbnail_url}
-        renderItem={({ item }) => (
-          <SlideListItem slide={item} onPress={() => goToSlide(item)} />
-        )}
-      />
-    </View>
+    <React.Fragment>
+      <View style={styles.screen}>
+        <FlatList
+          data={slides}
+          keyExtractor={(item) => item.thumbnail_url}
+          renderItem={({ item: slide }) => (
+            <ListItem slide={slide} onPress={() => goToSlide(slide)} />
+          )}
+        />
+      </View>
+      <Footer />
+    </React.Fragment>
   );
 };
 
 const styles = StyleSheet.create({
   screen: { flex: 1, alignItems: 'stretch', backgroundColor: COLOURS.veryDark },
-});
-
-type SlideListItemProps = {
-  slide: Slide;
-  onPress: () => void;
-};
-
-const SlideListItem: React.FC<SlideListItemProps> = ({ slide, onPress }) => {
-  return (
-    <View style={slideListItemStyles.container}>
-      <View style={slideListItemStyles.imageContainer}>
-        <OtoText size="medium">IMG</OtoText>
-      </View>
-      <View style={slideListItemStyles.infoContainer}>
-        <View style={slideListItemStyles.infoHeader}>
-          <View>
-            <OtoText size="medium">{slide.condition}</OtoText>
-          </View>
-          <View>
-            <TouchableOpacity
-              onPress={onPress}
-              style={slideListItemStyles.viewSlideButton}>
-              <OtoText size="small">view slide</OtoText>
-              <OtoIcon name="caret-right" size={30} color={COLOURS.grey} />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={slideListItemStyles.infoText}>
-          <OtoText size="small">{slide.diagnosis}</OtoText>
-        </View>
-      </View>
-    </View>
-  );
-};
-
-const slideListItemStyles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    flex: 1,
-    height: 120,
-    borderBottomColor: COLOURS.dark,
-    borderBottomWidth: 1,
-  },
-  imageContainer: { flex: 2, alignItems: 'center', justifyContent: 'center' },
-  infoContainer: { flex: 5 },
-  infoHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 8,
-  },
-  viewSlideButton: { flexDirection: 'row', alignItems: 'center' },
-  infoText: { paddingVertical: 6 },
 });
 
 export default SlideList;

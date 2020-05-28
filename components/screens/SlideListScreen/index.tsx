@@ -6,6 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import { RootStackParamList } from 'App';
 import SlideList from 'components/SlideList';
+import { Slide } from 'model/condition/types';
 
 type SlideListProps = {
   navigation: StackNavigationProp<RootStackParamList, 'SlideList'>;
@@ -13,13 +14,11 @@ type SlideListProps = {
 };
 
 const SlideListScreen: React.FC<SlideListProps> = ({ route, navigation }) => {
-  const text = (route.params && route.params.slides) || '';
   return (
     <SlideList
-      text={text}
-      goToSlide={(slide: { slides: string }) =>
-        navigation.navigate('Slide', slide)
-      }
+      slides={route.params.slides}
+      isFavourites={route.params.isFavourites}
+      goToSlide={(slide: Slide) => navigation.navigate('Slide', { slide })}
     />
   );
 };
