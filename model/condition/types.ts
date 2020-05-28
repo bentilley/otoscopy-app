@@ -31,3 +31,14 @@ type SectionDetail = {
   title: string;
   information: string[];
 };
+
+export type Slide = {
+  condition: string;
+  diagnosis: string;
+  diagram: string;
+  img_url: string;
+  legend: {
+    [index: string]: string;
+  };
+  thumbnail_url: string;
+};

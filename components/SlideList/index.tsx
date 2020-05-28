@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { slideData } from './__mocks__/slide-data';
 import { COLOURS, OtoText, OtoIcon } from 'components/design';
+import { Slide } from 'model/condition/types';
 
 type Props = {
   text: string;
@@ -37,17 +38,6 @@ const styles = StyleSheet.create({
 type SlideListItemProps = {
   slide: Slide;
   onPress: () => void;
-};
-
-type Slide = {
-  condition: string;
-  diagnosis: string;
-  diagram: string;
-  img_url: string;
-  legend: {
-    [index: string]: string;
-  };
-  thumbnail_url: string;
 };
 
 const SlideListItem: React.FC<SlideListItemProps> = ({ slide, onPress }) => {
