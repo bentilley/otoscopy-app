@@ -1,8 +1,8 @@
 /** @format */
 
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { NavigationContainer, RouteProp } from '@react-navigation/native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 import {
   createStackNavigator,
   StackNavigationProp,
@@ -14,28 +14,15 @@ import MenuScreen from 'components/screens/MenuScreen';
 import ReferenceScreen from 'components/screens/ReferenceScreen';
 import ConditionViewScreen from 'components/screens/ConditionViewScreen';
 import SlideListScreen from 'components/screens/SlideListScreen';
+import SlideViewScreen from 'components/screens/SlideViewScreen';
 import { OtoIcon, COLOURS } from 'components/design/';
 
 export type RootStackParamList = {
   Menu: undefined;
   Reference: undefined;
   Condition: { condition: Condition };
-  Slide: { slide: Slide } | undefined;
+  Slide: { slide: Slide };
   SlideList: { slides: Slide[]; isFavourites: boolean };
-};
-
-type SlideProps = {
-  navigation: StackNavigationProp<RootStackParamList, 'Slide'>;
-  route: RouteProp<RootStackParamList, 'Slide'>;
-};
-
-const SlideScreen: React.FC<SlideProps> = ({ route }) => {
-  const text = (route.params && route.params.slide) || '';
-  return (
-    <View style={styles.screen}>
-      <Text>Slide{text ? ` - ${text}` : ''}</Text>
-    </View>
-  );
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -79,7 +66,7 @@ const App = () => {
             />
             <Stack.Screen name="Reference" component={ReferenceScreen} />
             <Stack.Screen name="Condition" component={ConditionViewScreen} />
-            <Stack.Screen name="Slide" component={SlideScreen} />
+            <Stack.Screen name="Slide" component={SlideViewScreen} />
             <Stack.Screen name="SlideList" component={SlideListScreen} />
           </Stack.Navigator>
         </NavigationContainer>
@@ -89,7 +76,6 @@ const App = () => {
 };
 
 const styles = StyleSheet.create({
-  screen: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   menuButton: { paddingHorizontal: 10 },
 });
 
