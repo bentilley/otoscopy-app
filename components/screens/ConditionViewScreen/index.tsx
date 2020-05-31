@@ -12,7 +12,10 @@ type ConditionProps = {
   route: RouteProp<RootStackParamList, 'Condition'>;
 };
 
-const ConditionScreen: React.FC<ConditionProps> = ({ route, navigation }) => {
+const ConditionViewScreen: React.FC<ConditionProps> = ({
+  route,
+  navigation,
+}) => {
   const navigationFunctions = {
     goToSlides: () => {
       navigation.navigate('SlideList', { slides: 'condition slides' });
@@ -26,4 +29,4 @@ const ConditionScreen: React.FC<ConditionProps> = ({ route, navigation }) => {
   );
 };
 
-export default ConditionScreen;
+export default ConditionViewScreen;

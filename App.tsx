@@ -12,7 +12,7 @@ import { ConditionProvider } from 'model/condition';
 import { Condition, Slide } from 'model/condition/types';
 import MenuScreen from 'components/screens/MenuScreen';
 import ReferenceScreen from 'components/screens/ReferenceScreen';
-import ConditionScreen from 'components/screens/ConditionScreen';
+import ConditionViewScreen from 'components/screens/ConditionViewScreen';
 import SlideListScreen from 'components/screens/SlideListScreen';
 import { OtoIcon, COLOURS } from 'components/design/';
 
@@ -78,7 +78,7 @@ const App = () => {
               options={{ title: '' }}
             />
             <Stack.Screen name="Reference" component={ReferenceScreen} />
-            <Stack.Screen name="Condition" component={ConditionScreen} />
+            <Stack.Screen name="Condition" component={ConditionViewScreen} />
             <Stack.Screen name="Slide" component={SlideScreen} />
             <Stack.Screen name="SlideList" component={SlideListScreen} />
           </Stack.Navigator>
