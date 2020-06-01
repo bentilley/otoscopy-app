@@ -4,7 +4,7 @@ import React from 'react';
 import { ScrollView, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Category, Condition } from 'model/condition/types';
 import { useConditions, useConditionsActions } from 'model/condition';
-import { Footer } from 'components';
+import Footer from 'components/Footer';
 import { OtoText, OtoIcon, COLOURS } from 'components/design';
 import { categoryData } from './__mocks__/category-data';
 

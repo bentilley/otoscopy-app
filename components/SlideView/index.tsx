@@ -5,7 +5,7 @@ import { View, Image, StyleSheet } from 'react-native';
 import { Slide } from 'model/condition/types';
 import { OtoText } from 'components/design';
 import { COLOURS } from 'components/design';
-import { Footer } from 'components/Footer';
+import { Footer } from 'components';
 
 type Props = {
   slide: Slide;
@@ -26,7 +26,9 @@ const SlideView: React.FC<Props> = ({ slide, goToCondition }) => {
         </View>
         <View style={styles.spacer} />
       </View>
-      <Footer />
+      <Footer>
+        <OtoText size="medium">Hello Bug</OtoText>
+      </Footer>
     </React.Fragment>
   );
 };
