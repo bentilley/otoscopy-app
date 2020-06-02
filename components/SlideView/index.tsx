@@ -1,10 +1,10 @@
 /** @format */
 
 import React from 'react';
-import { View, Image, StyleSheet, Animated, PanResponder } from 'react-native';
+import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Slide } from 'model/condition/types';
-import { OtoText } from 'components/design';
-import { COLOURS } from 'components/design';
+import { OtoText, OtoIcon, COLOURS } from 'components/design';
+import Otoscope, { OTOSCOPE_BOUNDARY_RADIUS } from './Otoscope';
 import { Footer } from 'components';
 
 type Props = {
@@ -12,38 +12,13 @@ type Props = {
   goToCondition: () => void;
 };
 
-function currentDistFromCenter(x: number, y: number): number {
-  return Math.sqrt(x * x + y * y);
-}
+const action = () => {
+  console.log('press');
+};
 
 const SlideView: React.FC<Props> = ({ slide, goToCondition }) => {
-  const otoscopePos = React.useRef({ x: 0, y: 0 });
-  const otoscopePan = React.useRef(new Animated.ValueXY()).current;
-  const panResponder = React.useRef(
-    PanResponder.create({
-      onMoveShouldSetPanResponder: () => true,
-      onPanResponderGrant: () => {
-        otoscopePan.setOffset({
-          x: otoscopePos.current.x,
-          y: otoscopePos.current.y,
-        });
-      },
-      onPanResponderMove: (_, gestureState) => {
-        if (
-          currentDistFromCenter(
-            otoscopePos.current.x + gestureState.dx,
-            otoscopePos.current.y + gestureState.dy,
-          ) < 100
-        ) {
-          otoscopePan.setValue({ x: gestureState.dx, y: gestureState.dy });
-        }
-      },
-      onPanResponderRelease: () => {
-        otoscopePan.flattenOffset();
-        otoscopePan.stopAnimation((pos) => (otoscopePos.current = pos));
-      },
-    }),
-  ).current;
+  const [showOtoscope, setShowOtoscope] = React.useState(true);
+  const [isFavourite, setIsFavourite] = React.useState(false);
   return (
     <React.Fragment>
       <View style={styles.screen}>
@@ -54,42 +29,49 @@ const SlideView: React.FC<Props> = ({ slide, goToCondition }) => {
         </View>
         <View style={styles.imageContainer}>
           <Image source={{ uri: slide.img_url }} style={styles.image} />
-          <Animated.View
-            style={[
-              otoscopeStyles.animation,
-              {
-                transform: [
-                  { translateX: otoscopePan.x },
-                  { translateY: otoscopePan.y },
-                ],
-              },
-            ]}
-            {...panResponder.panHandlers}>
-            <View style={otoscopeStyles.overlay} />
-          </Animated.View>
+          {showOtoscope ? <Otoscope /> : null}
         </View>
         <View style={styles.spacer} />
       </View>
       <Footer>
-        <OtoText size="medium">Hello Bug</OtoText>
+        <View style={styles.footer}>
+          <FooterIcon
+            iconName="otoscope"
+            colour={showOtoscope ? COLOURS.primary : COLOURS.grey}
+            onPress={() => setShowOtoscope(!showOtoscope)}
+          />
+          <FooterIcon
+            iconName={isFavourite ? 'star' : 'star-o'}
+            colour={isFavourite ? COLOURS.favourite : COLOURS.grey}
+            onPress={() => setIsFavourite(!isFavourite)}
+          />
+          <FooterIcon
+            iconName="eardrum"
+            colour={COLOURS.grey}
+            onPress={action}
+          />
+        </View>
       </Footer>
     </React.Fragment>
   );
 };
 
-const otoscopeStyles = StyleSheet.create({
-  animation: {
-    position: 'absolute',
-    left: -200,
-  },
-  overlay: {
-    borderColor: COLOURS.dark,
-    borderWidth: 300,
-    width: 800,
-    height: 800,
-    borderRadius: 800 / 2,
-  },
-});
+type FooterIconProps = {
+  iconName: string;
+  colour: string;
+  onPress: () => void;
+};
+const FooterIcon: React.FC<FooterIconProps> = ({
+  iconName,
+  colour,
+  onPress,
+}) => {
+  return (
+    <TouchableOpacity onPress={onPress}>
+      <OtoIcon name={iconName} size={40} color={colour} />
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   screen: {
@@ -98,9 +80,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: COLOURS.black,
   },
-  imageContainer: { justifyContent: 'center', overflow: 'hidden' },
-  image: { width: 400, height: 400 },
+  imageContainer: { justifyContent: 'center' },
+  image: {
+    width: OTOSCOPE_BOUNDARY_RADIUS * 2,
+    height: OTOSCOPE_BOUNDARY_RADIUS * 2,
+  },
   spacer: { flex: 1, justifyContent: 'center' },
+  footer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
 });
 
 export default SlideView;
