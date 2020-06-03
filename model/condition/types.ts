@@ -33,6 +33,7 @@ type SectionDetail = {
 };
 
 export type Slide = {
+  id: string;
   condition: string;
   diagnosis: string;
   diagram: string;

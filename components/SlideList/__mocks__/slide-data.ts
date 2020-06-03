@@ -2,6 +2,7 @@
 
 export const slideData = [
   {
+    id: 'wombat',
     condition: 'Otitis Media',
     diagnosis:
       'Right ear Acute Otitis Media. Bulging tympanic membrane with purulent effusion visible.',
@@ -18,6 +19,7 @@ export const slideData = [
       'https://cached.imagescaler.hbpl.co.uk/resize/scaleWidth/800/cached.offlinehbpl.hbpl.co.uk/news/PGH/023A264D-00E4-AB9E-E53B57ADCFD6FF8C.jpg',
   },
   {
+    id: 'martingale',
     condition: 'Otitis Media',
     diagnosis: 'Right ear Acute Otitis Media.',
     diagram: '<diagram-url>',
@@ -32,6 +34,7 @@ export const slideData = [
       'https://upload.wikimedia.org/wikipedia/commons/5/58/Otitis_media_entdifferenziert2.jpg',
   },
   {
+    id: 'crocodile',
     condition: 'Otitis Media',
     diagnosis: 'Right ear Acute Otitis Media.',
     diagram: '<diagram-url>',
