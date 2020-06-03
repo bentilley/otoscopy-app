@@ -6,48 +6,70 @@ import {
   Image,
   StyleSheet,
   TouchableWithoutFeedback,
+  Animated,
+  useWindowDimensions,
 } from 'react-native';
 import { Slide } from 'model/condition/types';
 import { OtoText, COLOURS } from 'components/design';
 import Otoscope, { OTOSCOPE_BOUNDARY_RADIUS } from './Otoscope';
-import Draw from './Draw';
+import { useDraw } from './Draw';
 import { DiagnosisInfo } from './DiagnosisInfo';
 import { Footer, FooterIcon } from 'components';
 import { FavouriteStar } from 'components';
+
+const HEADER_HEIGHT = 85; // this is an estimate of the React Navigation header
 
 type Props = {
   slide: Slide;
   goToCondition: () => void;
 };
 
-const action = () => {
-  console.log('press');
-};
-
 const SlideView: React.FC<Props> = ({ slide, goToCondition }) => {
   const [showOtoscope, setShowOtoscope] = React.useState(false);
-  const [isDiagnosed, setIsDiagnosed] = React.useState(true);
+  const [isDiagnosed, setIsDiagnosed] = React.useState(false);
+  const windowHeight = useWindowDimensions().height;
+  const imageTranslationY = React.useRef(new Animated.Value(0)).current;
+  const moveImageUp = () => {
+    Animated.timing(imageTranslationY, {
+      toValue: -(windowHeight / 2 - OTOSCOPE_BOUNDARY_RADIUS - HEADER_HEIGHT),
+      useNativeDriver: false,
+    }).start();
+  };
+  const moveImageDown = () => {
+    Animated.timing(imageTranslationY, {
+      toValue: 0,
+      useNativeDriver: false,
+    }).start();
+  };
+  const [DrawComp, openDraw] = useDraw({
+    onDrawCloseComplete: () => setIsDiagnosed(false),
+    onDrawCloseStart: () => moveImageDown(),
+    onDrawOpenStart: () => moveImageUp(),
+  });
   return (
     <React.Fragment>
       <View style={styles.screen}>
-        {!isDiagnosed ? <View style={styles.spacer} /> : null}
-        <View style={styles.imageContainer}>
+        <View style={styles.spacer} />
+        <Animated.View
+          style={[
+            styles.imageContainer,
+            { transform: [{ translateY: imageTranslationY }] },
+          ]}>
           <Image source={{ uri: slide.img_url }} style={styles.image} />
           {showOtoscope ? <Otoscope /> : null}
-        </View>
-        {!isDiagnosed ? (
-          <TouchableWithoutFeedback
-            onPress={() => setIsDiagnosed(!isDiagnosed)}>
-            <View style={styles.spacer}>
-              <OtoText size="large" weight="bold">
-                Tap to reveal diagnosis
-              </OtoText>
-            </View>
-          </TouchableWithoutFeedback>
-        ) : (
-          <View style={styles.spacer} />
-        )}
-        <Draw
+        </Animated.View>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            setIsDiagnosed(!isDiagnosed);
+            openDraw();
+          }}>
+          <View style={styles.spacer}>
+            <OtoText size="large" weight="bold">
+              Tap to reveal diagnosis
+            </OtoText>
+          </View>
+        </TouchableWithoutFeedback>
+        <DrawComp
           content={
             <DiagnosisInfo
               slideId={slide.id}
@@ -68,7 +90,7 @@ const SlideView: React.FC<Props> = ({ slide, goToCondition }) => {
           <FooterIcon
             iconName="eardrum"
             colour={COLOURS.grey}
-            onPress={action}
+            onPress={() => console.log('pressed')}
           />
         </View>
       </Footer>
