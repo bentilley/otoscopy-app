@@ -2,8 +2,14 @@
 
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { COLOURS, OtoIcon } from 'components/design';
+import { COLOURS } from 'components/design';
+import { FooterIcon } from './icons';
 
+/**
+ * Footer
+ * Component for the app to ensure consistent footer across views.
+ * @param children - Components rendered in the footer, normally <FooterIcon />.
+ */
 export const Footer: React.FC = ({ children }) => {
   return <View style={styles.footer}>{children}</View>;
 };
@@ -12,6 +18,7 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
+    alignItems: 'center',
     height: 70,
     backgroundColor: COLOURS.veryDark,
     borderTopWidth: 1,
@@ -26,12 +33,8 @@ const styles = StyleSheet.create({
 const TestFooter: React.FC = () => {
   return (
     <Footer>
-      <View style={styles.icons}>
-        <OtoIcon name="star-o" size={40} style={{ color: COLOURS.grey }} />
-      </View>
-      <View style={styles.icons}>
-        <OtoIcon name="search" size={50} style={{ color: COLOURS.grey }} />
-      </View>
+      <FooterIcon iconName="star-o" colour={COLOURS.grey} onPress={() => {}} />
+      <FooterIcon iconName="search" colour={COLOURS.grey} onPress={() => {}} />
     </Footer>
   );
 };
