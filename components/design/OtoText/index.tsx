@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
+import { COLOURS } from 'components/design/colours';
 
 type OtoTextProps = {
   size: FontSizes;
@@ -52,7 +53,7 @@ const weight: { [key in FontWeights]: '100' | '300' | '500' | '700' } = {
 
 const style = StyleSheet.create({
   font: {
-    color: '#dedede',
+    color: COLOURS.lightGrey,
   },
   largeFont: { fontSize: 24 },
   mediumFont: { fontSize: 18 },
