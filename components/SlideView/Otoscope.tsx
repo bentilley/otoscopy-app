@@ -16,7 +16,9 @@ const Otoscope: React.FC = () => {
   const panResponder = React.useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: () => true,
-      onPanResponderGrant: () => setHasInteractions(true),
+      onPanResponderGrant: () => {
+        setHasInteractions(true);
+      },
       onPanResponderMove: (_, { dx, dy }) => {
         const { x, y } = otoscopePos.current;
         otoscopePan.setValue(getNewPosWithBoundaryLimits(x + dx, y + dy));

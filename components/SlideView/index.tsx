@@ -1,11 +1,19 @@
 /** @format */
 
 import React from 'react';
-import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Image,
+  StyleSheet,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import { Slide } from 'model/condition/types';
-import { OtoText, OtoIcon, COLOURS } from 'components/design';
+import { OtoText, COLOURS } from 'components/design';
 import Otoscope, { OTOSCOPE_BOUNDARY_RADIUS } from './Otoscope';
-import { Footer } from 'components';
+import Draw from './Draw';
+import { DiagnosisInfo } from './DiagnosisInfo';
+import { Footer, FooterIcon } from 'components';
+import { FavouriteStar } from 'components';
 
 type Props = {
   slide: Slide;
@@ -17,21 +25,37 @@ const action = () => {
 };
 
 const SlideView: React.FC<Props> = ({ slide, goToCondition }) => {
-  const [showOtoscope, setShowOtoscope] = React.useState(true);
-  const [isFavourite, setIsFavourite] = React.useState(false);
+  const [showOtoscope, setShowOtoscope] = React.useState(false);
+  const [isDiagnosed, setIsDiagnosed] = React.useState(true);
   return (
     <React.Fragment>
       <View style={styles.screen}>
-        <View style={styles.spacer}>
-          <OtoText size="large" weight="bold">
-            Tap to reveal diagnosis
-          </OtoText>
-        </View>
+        {!isDiagnosed ? <View style={styles.spacer} /> : null}
         <View style={styles.imageContainer}>
           <Image source={{ uri: slide.img_url }} style={styles.image} />
           {showOtoscope ? <Otoscope /> : null}
         </View>
-        <View style={styles.spacer} />
+        {!isDiagnosed ? (
+          <TouchableWithoutFeedback
+            onPress={() => setIsDiagnosed(!isDiagnosed)}>
+            <View style={styles.spacer}>
+              <OtoText size="large" weight="bold">
+                Tap to reveal diagnosis
+              </OtoText>
+            </View>
+          </TouchableWithoutFeedback>
+        ) : (
+          <View style={styles.spacer} />
+        )}
+        <Draw
+          content={
+            <DiagnosisInfo
+              slideId={slide.id}
+              condition={slide.condition}
+              diagnosis={slide.diagnosis}
+            />
+          }
+        />
       </View>
       <Footer>
         <View style={styles.footer}>
@@ -40,11 +64,7 @@ const SlideView: React.FC<Props> = ({ slide, goToCondition }) => {
             colour={showOtoscope ? COLOURS.primary : COLOURS.grey}
             onPress={() => setShowOtoscope(!showOtoscope)}
           />
-          <FooterIcon
-            iconName={isFavourite ? 'star' : 'star-o'}
-            colour={isFavourite ? COLOURS.favourite : COLOURS.grey}
-            onPress={() => setIsFavourite(!isFavourite)}
-          />
+          <FavouriteStar slideId={slide.id} />
           <FooterIcon
             iconName="eardrum"
             colour={COLOURS.grey}
@@ -56,27 +76,10 @@ const SlideView: React.FC<Props> = ({ slide, goToCondition }) => {
   );
 };
 
-type FooterIconProps = {
-  iconName: string;
-  colour: string;
-  onPress: () => void;
-};
-const FooterIcon: React.FC<FooterIconProps> = ({
-  iconName,
-  colour,
-  onPress,
-}) => {
-  return (
-    <TouchableOpacity onPress={onPress}>
-      <OtoIcon name={iconName} size={40} color={colour} />
-    </TouchableOpacity>
-  );
-};
-
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'stretch',
     justifyContent: 'center',
     backgroundColor: COLOURS.black,
   },
@@ -85,7 +88,7 @@ const styles = StyleSheet.create({
     width: OTOSCOPE_BOUNDARY_RADIUS * 2,
     height: OTOSCOPE_BOUNDARY_RADIUS * 2,
   },
-  spacer: { flex: 1, justifyContent: 'center' },
+  spacer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   footer: {
     flex: 1,
     flexDirection: 'row',
