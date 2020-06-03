@@ -26,3 +26,5 @@ export const UserProvider: React.FC<Props> = ({ children }) => {
     </UserContext.Provider>
   );
 };
+
+export { useFavourite } from './useFavourite';
