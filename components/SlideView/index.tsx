@@ -41,7 +41,7 @@ const SlideView: React.FC<Props> = ({ slide, goToCondition }) => {
       useNativeDriver: false,
     }).start();
   };
-  const [DrawComp, openDraw] = useDraw({
+  const [Draw, openDraw] = useDraw({
     onDrawCloseComplete: () => setIsDiagnosed(false),
     onDrawCloseStart: () => moveImageDown(),
     onDrawOpenStart: () => moveImageUp(),
@@ -69,15 +69,15 @@ const SlideView: React.FC<Props> = ({ slide, goToCondition }) => {
             </OtoText>
           </View>
         </TouchableWithoutFeedback>
-        <DrawComp
-          content={
-            <DiagnosisInfo
-              slideId={slide.id}
-              condition={slide.condition}
-              diagnosis={slide.diagnosis}
-            />
-          }
+          }}
         />
+        <Draw>
+          <DiagnosisInfo
+            slideId={slide.id}
+            condition={slide.condition}
+            diagnosis={slide.diagnosis}
+          />
+        </Draw>
       </View>
       <Footer>
         <View style={styles.footer}>

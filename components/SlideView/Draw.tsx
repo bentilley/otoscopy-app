@@ -7,8 +7,7 @@ import { OtoIcon, COLOURS } from 'components/design';
 const MAX_DRAW_HEIGHT = 370;
 const MIN_MOVEMENT_FOR_CLOSE = 20;
 
-type DrawProps = { content: Element };
-type DrawAndCallbacks = [React.FC<DrawProps>, () => void, () => void];
+type DrawAndCallbacks = [React.FC, () => void, () => void];
 interface DrawMovementCallbacks {
   onDrawOpenStart?: () => void;
   onDrawOpenComplete?: () => void;
@@ -50,17 +49,16 @@ export const useDraw: UseDrawFunc = ({
       toValue: 0,
       useNativeDriver: false,
     }).start(({ finished }) =>
-      finished && onDrawCloseComplete ? onDrawCloseComplete : null,
+      finished && onDrawCloseComplete ? onDrawCloseComplete() : null,
     );
   };
 
   /**
    * Draw
    * Slide up draw at bottom of app.
-   * @param content - Component to display in the draw.
-   * @param onDrawClosed - A callback to call when the draw is closed.
+   * @param children - Component(s) to display in the draw.
    */
-  const DrawComponent: React.FC<DrawProps> = ({ content }) => (
+  const DrawComponent: React.FC = ({ children }) => (
     <Animated.View style={[styles.container, { height: drawHeight }]}>
       <View
         style={styles.pullTab}
@@ -88,7 +86,7 @@ export const useDraw: UseDrawFunc = ({
         }}>
         <OtoIcon name="caret-down" size={45} color={COLOURS.lightGrey} />
       </View>
-      {content}
+      {children}
     </Animated.View>
   );
   return [DrawComponent, openDraw, closeDraw];
