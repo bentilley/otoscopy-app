@@ -1,7 +1,7 @@
 /** @format */
 
 import React from 'react';
-import { View, Image, StyleSheet, useWindowDimensions } from 'react-native';
+import { View, Image, StyleSheet } from 'react-native';
 import { Slide } from 'model/condition/types';
 import { COLOURS } from 'components/design';
 import { Otoscope } from './Otoscope';
@@ -12,36 +12,39 @@ import { Footer, FooterIcon } from 'components';
 import { FavouriteStar } from 'components';
 import { Spacer } from './Spacer';
 import { OTOSCOPE_BOUNDARY_RADIUS, useMaxImageY } from './dimensions';
+import { useSlideViewState } from './context';
 
 type Props = {
   slide: Slide;
   goToCondition: () => void;
+  goToNextSlide: () => void;
 };
 
-const SlideView: React.FC<Props> = ({ slide, goToCondition }) => {
-  const [showOtoscope, setShowOtoscope] = React.useState(false);
-  const [isDiagnosed, setIsDiagnosed] = React.useState(false);
+export const SlideView: React.FC<Props> = ({
+  slide,
+  goToCondition,
+  goToNextSlide,
+}) => {
+  const { state, update } = useSlideViewState();
   const [MovableYContainer, moveContainerTo] = useMovableYContainer();
-
   const maxImageHeight = useMaxImageY();
   const [Draw, openDraw] = useDraw({
-    onDrawCloseComplete: () => setIsDiagnosed(false),
+    onDrawCloseComplete: () => update.setIsDiagnosed(false),
     onDrawCloseStart: () => moveContainerTo(0),
     onDrawOpenStart: () => moveContainerTo(maxImageHeight),
   });
-
   return (
     <React.Fragment>
       <View style={styles.screen}>
         <Spacer />
         <MovableYContainer>
           <Image source={{ uri: slide.img_url }} style={styles.image} />
-          {showOtoscope ? <Otoscope /> : null}
+          {state.showOtoscope ? <Otoscope /> : null}
         </MovableYContainer>
         <Spacer
-          text={!isDiagnosed ? 'Tap to reveal diagnosis' : ''}
+          text={!state.isDiagnosed ? 'Tap to reveal diagnosis' : ''}
           onPress={() => {
-            setIsDiagnosed(true);
+            update.setIsDiagnosed(true);
             openDraw();
           }}
         />
@@ -94,4 +97,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SlideView;
+export { SlideViewProvider } from './context';
