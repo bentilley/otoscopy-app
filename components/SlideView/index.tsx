@@ -8,10 +8,9 @@ import { Otoscope } from './Otoscope';
 import { useDraw } from './Draw';
 import { useMovableYContainer } from './MovableYContainer';
 import { DiagnosisInfo } from './DiagnosisInfo';
-import { Footer, FooterIcon } from 'components';
-import { FavouriteStar } from 'components';
 import { Spacer } from './Spacer';
 import { OTOSCOPE_BOUNDARY_RADIUS, useMaxImageY } from './dimensions';
+import { SlideViewFooter } from './footers';
 import { useSlideViewState } from './context';
 
 type Props = {
@@ -56,21 +55,11 @@ export const SlideView: React.FC<Props> = ({
           />
         </Draw>
       </View>
-      <Footer>
-        <View style={styles.footer}>
-          <FooterIcon
-            iconName="otoscope"
-            colour={showOtoscope ? COLOURS.primary : COLOURS.grey}
-            onPress={() => setShowOtoscope(!showOtoscope)}
-          />
-          <FavouriteStar slideId={slide.id} />
-          <FooterIcon
-            iconName="eardrum"
-            colour={COLOURS.grey}
-            onPress={() => console.log('pressed')}
-          />
-        </View>
-      </Footer>
+      <SlideViewFooter
+        slideId={slide.id}
+        goToCondition={goToCondition}
+        goToNextSlide={goToNextSlide}
+      />
     </React.Fragment>
   );
 };
@@ -82,18 +71,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: COLOURS.black,
   },
-  imageContainer: { justifyContent: 'center' },
   image: {
     width: OTOSCOPE_BOUNDARY_RADIUS * 2,
     height: OTOSCOPE_BOUNDARY_RADIUS * 2,
-  },
-  spacer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  footer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 20,
   },
 });
 
