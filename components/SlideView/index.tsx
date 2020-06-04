@@ -4,15 +4,14 @@ import React from 'react';
 import { View, Image, StyleSheet, useWindowDimensions } from 'react-native';
 import { Slide } from 'model/condition/types';
 import { COLOURS } from 'components/design';
-import Otoscope, { OTOSCOPE_BOUNDARY_RADIUS } from './Otoscope';
+import { Otoscope } from './Otoscope';
 import { useDraw } from './Draw';
 import { useMovableYContainer } from './MovableYContainer';
 import { DiagnosisInfo } from './DiagnosisInfo';
 import { Footer, FooterIcon } from 'components';
 import { FavouriteStar } from 'components';
 import { Spacer } from './Spacer';
-
-const HEADER_HEIGHT = 85; // this is an estimate of the React Navigation header
+import { OTOSCOPE_BOUNDARY_RADIUS, useMaxImageY } from './dimensions';
 
 type Props = {
   slide: Slide;
@@ -22,16 +21,13 @@ type Props = {
 const SlideView: React.FC<Props> = ({ slide, goToCondition }) => {
   const [showOtoscope, setShowOtoscope] = React.useState(false);
   const [isDiagnosed, setIsDiagnosed] = React.useState(false);
-  const windowHeight = useWindowDimensions().height;
   const [MovableYContainer, moveContainerTo] = useMovableYContainer();
 
+  const maxImageHeight = useMaxImageY();
   const [Draw, openDraw] = useDraw({
     onDrawCloseComplete: () => setIsDiagnosed(false),
     onDrawCloseStart: () => moveContainerTo(0),
-    onDrawOpenStart: () =>
-      moveContainerTo(
-        -(windowHeight / 2 - OTOSCOPE_BOUNDARY_RADIUS - HEADER_HEIGHT),
-      ),
+    onDrawOpenStart: () => moveContainerTo(maxImageHeight),
   });
 
   return (

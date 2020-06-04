@@ -3,11 +3,9 @@
 import React from 'react';
 import { View, StyleSheet, Animated, PanResponder } from 'react-native';
 import { COLOURS } from 'components/design';
+import { OTOSCOPE_BOUNDARY_RADIUS, OTOSCOPE_RADIUS } from './dimensions';
 
-export const OTOSCOPE_BOUNDARY_RADIUS = 200;
-export const OTOSCOPE_RADIUS = 120;
-
-const Otoscope: React.FC = () => {
+export const Otoscope: React.FC = () => {
   const [hasInteractions, setHasInteractions] = React.useState(false);
 
   const otoscopePos = React.useRef({ x: 0, y: 0 });
@@ -99,5 +97,3 @@ type TransformStyle = {
 function transformFromPosition(pos: Animated.ValueXY): TransformStyle {
   return { transform: [{ translateX: pos.x }, { translateY: pos.y }] };
 }
-
-export default Otoscope;
