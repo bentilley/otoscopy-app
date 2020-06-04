@@ -1,17 +1,12 @@
 /** @format */
 
 import React from 'react';
-import {
-  View,
-  Image,
-  StyleSheet,
-  Animated,
-  useWindowDimensions,
-} from 'react-native';
+import { View, Image, StyleSheet, useWindowDimensions } from 'react-native';
 import { Slide } from 'model/condition/types';
-import { OtoText, COLOURS } from 'components/design';
+import { COLOURS } from 'components/design';
 import Otoscope, { OTOSCOPE_BOUNDARY_RADIUS } from './Otoscope';
 import { useDraw } from './Draw';
+import { useMovableYContainer } from './MovableYContainer';
 import { DiagnosisInfo } from './DiagnosisInfo';
 import { Footer, FooterIcon } from 'components';
 import { FavouriteStar } from 'components';
@@ -28,36 +23,25 @@ const SlideView: React.FC<Props> = ({ slide, goToCondition }) => {
   const [showOtoscope, setShowOtoscope] = React.useState(false);
   const [isDiagnosed, setIsDiagnosed] = React.useState(false);
   const windowHeight = useWindowDimensions().height;
-  const imageTranslationY = React.useRef(new Animated.Value(0)).current;
-  const moveImageUp = () => {
-    Animated.timing(imageTranslationY, {
-      toValue: -(windowHeight / 2 - OTOSCOPE_BOUNDARY_RADIUS - HEADER_HEIGHT),
-      useNativeDriver: false,
-    }).start();
-  };
-  const moveImageDown = () => {
-    Animated.timing(imageTranslationY, {
-      toValue: 0,
-      useNativeDriver: false,
-    }).start();
-  };
+  const [MovableYContainer, moveContainerTo] = useMovableYContainer();
+
   const [Draw, openDraw] = useDraw({
     onDrawCloseComplete: () => setIsDiagnosed(false),
-    onDrawCloseStart: () => moveImageDown(),
-    onDrawOpenStart: () => moveImageUp(),
+    onDrawCloseStart: () => moveContainerTo(0),
+    onDrawOpenStart: () =>
+      moveContainerTo(
+        -(windowHeight / 2 - OTOSCOPE_BOUNDARY_RADIUS - HEADER_HEIGHT),
+      ),
   });
+
   return (
     <React.Fragment>
       <View style={styles.screen}>
-        <Animated.View
-          style={[
-            styles.imageContainer,
-            { transform: [{ translateY: imageTranslationY }] },
-          ]}>
         <Spacer />
+        <MovableYContainer>
           <Image source={{ uri: slide.img_url }} style={styles.image} />
           {showOtoscope ? <Otoscope /> : null}
-        </Animated.View>
+        </MovableYContainer>
         <Spacer
           text={!isDiagnosed ? 'Tap to reveal diagnosis' : ''}
           onPress={() => {
