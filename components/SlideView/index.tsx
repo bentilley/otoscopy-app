@@ -5,7 +5,6 @@ import {
   View,
   Image,
   StyleSheet,
-  TouchableWithoutFeedback,
   Animated,
   useWindowDimensions,
 } from 'react-native';
@@ -16,6 +15,7 @@ import { useDraw } from './Draw';
 import { DiagnosisInfo } from './DiagnosisInfo';
 import { Footer, FooterIcon } from 'components';
 import { FavouriteStar } from 'components';
+import { Spacer } from './Spacer';
 
 const HEADER_HEIGHT = 85; // this is an estimate of the React Navigation header
 
@@ -49,26 +49,20 @@ const SlideView: React.FC<Props> = ({ slide, goToCondition }) => {
   return (
     <React.Fragment>
       <View style={styles.screen}>
-        <View style={styles.spacer} />
         <Animated.View
           style={[
             styles.imageContainer,
             { transform: [{ translateY: imageTranslationY }] },
           ]}>
+        <Spacer />
           <Image source={{ uri: slide.img_url }} style={styles.image} />
           {showOtoscope ? <Otoscope /> : null}
         </Animated.View>
-        <TouchableWithoutFeedback
+        <Spacer
+          text={!isDiagnosed ? 'Tap to reveal diagnosis' : ''}
           onPress={() => {
-            setIsDiagnosed(!isDiagnosed);
+            setIsDiagnosed(true);
             openDraw();
-          }}>
-          <View style={styles.spacer}>
-            <OtoText size="large" weight="bold">
-              Tap to reveal diagnosis
-            </OtoText>
-          </View>
-        </TouchableWithoutFeedback>
           }}
         />
         <Draw>
