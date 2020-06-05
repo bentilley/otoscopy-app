@@ -1,10 +1,10 @@
 /** @format */
 
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { OtoText, OtoIcon, COLOURS } from 'components/design';
+import { StyleSheet } from 'react-native';
+import { COLOURS } from 'components/design';
 import { useSlideViewState } from './context';
-import { Footer, FooterIcon } from 'components';
+import { Footer, FooterIcon, FooterText } from 'components';
 import { FavouriteStar } from 'components';
 
 interface SlideViewFooterProps
@@ -79,21 +79,9 @@ export const DiagnosedFooter: React.FC<DiagnosedFooterProps> = ({
   goToNextSlide,
 }) => {
   return (
-        <TouchableOpacity onPress={goToCondition}>
-          <OtoText size="medium" weight="semibold">
-            see condition
-          </OtoText>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={goToNextSlide}
-          style={styles.footerTextContainer}>
-          <OtoText size="medium" weight="semibold">
-            next
-          </OtoText>
-          <OtoIcon name="caret-right" size={30} color={COLOURS.grey} />
-        </TouchableOpacity>
-      </View>
     <Footer style={styles.footer}>
+      <FooterText text="see condition" onPress={goToCondition} />
+      <FooterText text="next" caret="R" onPress={goToNextSlide} />
     </Footer>
   );
 };
@@ -103,5 +91,4 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 30,
   },
-  footerTextContainer: { flexDirection: 'row', alignItems: 'center' },
 });
