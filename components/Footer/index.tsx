@@ -1,17 +1,23 @@
 /** @format */
 
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ViewStyle } from 'react-native';
 import { COLOURS } from 'components/design';
 import { FooterIcon } from './icons';
+
+interface Props {
+  children: Element;
+  style?: ViewStyle;
+}
 
 /**
  * Footer
  * Component for the app to ensure consistent footer across views.
  * @param children - Components rendered in the footer, normally <FooterIcon />.
  */
-export const Footer: React.FC = ({ children }) => {
-  return <View style={styles.footer}>{children}</View>;
+export const Footer: React.FC<Props> = ({ children, style }) => {
+  const mergedStyles = style ? [styles.footer, style] : styles.footer;
+  return <View style={mergedStyles}>{children}</View>;
 };
 
 const styles = StyleSheet.create({

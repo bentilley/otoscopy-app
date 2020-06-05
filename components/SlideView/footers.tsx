@@ -47,20 +47,18 @@ export const UndiagnosedFooter: React.FC<UndiagnosedFooterProps> = ({
 }) => {
   const { state, update } = useSlideViewState();
   return (
-    <Footer>
-      <View style={styles.footer}>
-        <FooterIcon
-          iconName="otoscope"
-          colour={state.showOtoscope ? COLOURS.primary : COLOURS.grey}
-          onPress={() => update.setShowOtoscope(!state.showOtoscope)}
-        />
-        <FavouriteStar slideId={slideId} />
-        <FooterIcon
-          iconName="eardrum"
-          colour={COLOURS.grey}
-          onPress={() => console.log('pressed')}
-        />
-      </View>
+    <Footer style={styles.footer}>
+      <FooterIcon
+        iconName="otoscope"
+        colour={state.showOtoscope ? COLOURS.primary : COLOURS.grey}
+        onPress={() => update.setShowOtoscope(!state.showOtoscope)}
+      />
+      <FavouriteStar slideId={slideId} />
+      <FooterIcon
+        iconName="eardrum"
+        colour={COLOURS.grey}
+        onPress={() => console.log('pressed')}
+      />
     </Footer>
   );
 };
@@ -81,8 +79,6 @@ export const DiagnosedFooter: React.FC<DiagnosedFooterProps> = ({
   goToNextSlide,
 }) => {
   return (
-    <Footer>
-      <View style={styles.footer}>
         <TouchableOpacity onPress={goToCondition}>
           <OtoText size="medium" weight="semibold">
             see condition
@@ -97,17 +93,15 @@ export const DiagnosedFooter: React.FC<DiagnosedFooterProps> = ({
           <OtoIcon name="caret-right" size={30} color={COLOURS.grey} />
         </TouchableOpacity>
       </View>
+    <Footer style={styles.footer}>
     </Footer>
   );
 };
 
 const styles = StyleSheet.create({
   footer: {
-    flex: 1,
-    flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 30,
   },
   footerTextContainer: { flexDirection: 'row', alignItems: 'center' },
 });
