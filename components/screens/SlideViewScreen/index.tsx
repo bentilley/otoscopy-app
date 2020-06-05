@@ -5,7 +5,7 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import { RootStackParamList } from 'App';
-/* import { Slide } from 'model/condition/types'; */
+import { Condition, Slide } from 'model/condition/types';
 import { slideData } from 'components/SlideList/__mocks__/slide-data';
 import { SlideView, SlideViewProvider } from 'components/SlideView';
 
@@ -14,22 +14,26 @@ type SlideProps = {
   route: RouteProp<RootStackParamList, 'Slide'>;
 };
 
-const SlideViewScreen: React.FC<SlideProps> = ({ route }) => {
-  /* const text = (route.params && route.params.slide) || ''; */
+const SlideViewScreen: React.FC<SlideProps> = ({ navigation, route }) => {
   const slide = route.params.slide;
+  const navigationFunctions = {
+    goToCondition: () => {
+      navigation.navigate('Condition', { condition: getCondition(slide) });
+    },
+    goToNextSlide: () => {
+      console.log('goToNextSlide');
+    },
+  };
   return (
     <SlideViewProvider>
-      <SlideView
-        goToCondition={() => {
-          console.log('goToCondition');
-        }}
-        goToNextSlide={() => {
-          console.log('goToNextSlide');
-        }}
-        slide={slideData[0]}
-      />
+      <SlideView {...navigationFunctions} slide={slideData[0]} />
     </SlideViewProvider>
   );
 };
+
+const getCondition = (slide: Slide): Condition => ({
+  id: slide.conditionId,
+  name: slide.condition,
+});
 
 export default SlideViewScreen;
