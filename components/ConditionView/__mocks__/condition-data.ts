@@ -1,8 +1,8 @@
 /** @format */
 
-import { ConditionData } from 'model/condition/types';
+import { Condition } from 'model/condition/types';
 
-export const conditionData: ConditionData = {
+export const conditionData: Condition = {
   aetiology: {
     bacterial: {
       information: ['Strep Pneumoniae', 'Haemophilus', 'Moraxella Catarrhalis'],

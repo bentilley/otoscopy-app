@@ -2,14 +2,14 @@
 
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
-import { Category, Condition } from 'model/condition/types';
+import { Category, ConditionHead } from 'model/condition/types';
 import { CategoryItem } from './CategoryItem';
 import { COLOURS } from 'components/design';
 import { ReferenceFooter } from './footer';
 
 type Props = {
   categories: Category[];
-  goToCondition: (condition: Condition) => void;
+  goToCondition: (condition: ConditionHead) => void;
   goToFavourites: () => void;
 };
 

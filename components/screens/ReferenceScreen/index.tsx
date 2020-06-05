@@ -6,7 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import { RootStackParamList } from 'App';
 import Reference from 'components/Reference';
-import { Condition } from 'model/condition/types';
+import { ConditionHead } from 'model/condition/types';
 import { useConditions, useConditionsActions } from 'model/condition';
 import { slideData } from 'components/SlideList/__mocks__/slide-data';
 
@@ -20,7 +20,7 @@ const ReferenceScreen: React.FC<Props> = ({ navigation }) => {
   const { fetchCondition } = useConditionsActions();
 
   const navigationFunctions = {
-    goToCondition: (condition: Condition) => {
+    goToCondition: (condition: ConditionHead) => {
       fetchCondition(condition);
       navigation.navigate('Condition', { condition });
     },

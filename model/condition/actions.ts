@@ -1,18 +1,18 @@
 /** @format */
 
 import React from 'react';
-import { Category, Condition, ConditionData } from './types';
+import { Category, ConditionHead, Condition, Slide } from './types';
 import { State } from './reducer';
 
 export type Action =
   | { type: 'FETCH_CATEGORIES' }
   | { type: 'SET_CATEGORIES'; payload: Category[] }
-  | { type: 'FETCH_CONDITION'; payload: Condition }
-  | { type: 'SET_CONDITION'; payload: { id: string; data: ConditionData } };
+  | { type: 'FETCH_CONDITION'; payload: ConditionHead }
+  | { type: 'SET_CONDITION'; payload: { id: string; data: Condition } }
 
 export type ActionHandlers = {
   fetchCategories: () => void;
-  fetchCondition: (condition: Condition) => void;
+  fetchCondition: (condition: ConditionHead) => void;
 };
 
 const useActions = (
@@ -27,7 +27,7 @@ const useActions = (
       [dispatch],
     ),
     fetchCondition: React.useMemo(
-      () => (condition: Condition) => {
+      () => (condition: ConditionHead) => {
         if (!state.conditions[condition.id]) {
           dispatch({ type: 'FETCH_CONDITION', payload: condition });
         }

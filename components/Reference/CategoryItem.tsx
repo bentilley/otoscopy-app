@@ -2,13 +2,13 @@
 
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { Category, Condition } from 'model/condition/types';
+import { Category, ConditionHead } from 'model/condition/types';
 import { OtoText, OtoIcon, COLOURS } from 'components/design';
 
 type CategoryItemProps = Category & {
   name: string;
-  conditions: Condition[];
-  goToCondition: (condition: Condition) => void;
+  conditions: ConditionHead[];
+  goToCondition: (condition: ConditionHead) => void;
 };
 
 /**
@@ -50,7 +50,7 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({
   );
 };
 
-type ConditionItemProps = Condition & { onPress: () => void };
+type ConditionItemProps = ConditionHead & { onPress: () => void };
 
 /**
  * ConditionItem

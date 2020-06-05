@@ -1,29 +1,35 @@
 /** @format */
 
+/**
+ * Category
+ * A group of related conditions.
+ */
 export type Category = {
   name: string;
-  conditions: Condition[];
+  conditions: ConditionHead[];
 };
 
-export type Condition = {
+/**
+ * ConditionHead
+ * Minimal condition information that is held in categories.
+ */
+export interface ConditionHead {
   id: string;
   name: string;
-};
+}
 
 /**
  * ConditionData
  * The complete interface for condition data in the condition context store -
  * includes other app state data.
  */
-export interface ConditionData extends ConditionDataDB {
-  hasSlides: boolean;
-}
+export interface Condition extends ConditionHead, ConditionDataDB {}
 
 /**
  * ConditionDataDB
  * The format of the data that comes from the Firebase database.
  */
-interface ConditionDataDB {
+export interface ConditionDataDB {
   name: string;
   description: string;
   aetiology: ConditionSection;
@@ -38,8 +44,16 @@ interface ConditionDataDB {
   symptoms: ConditionSection;
 }
 
+/**
+ * ConditionSection
+ * A single fact section in the ConditionView.
+ */
 export type ConditionSection = string[] | { [index: string]: SectionDetail };
 
+/**
+ * SectionDetail
+ * A sub-section of a ConditionSection in the ConditionView.
+ */
 type SectionDetail = {
   title: string;
   information: string[];
@@ -58,7 +72,7 @@ export interface Slide extends SlideDataDB {
  * SlideDataDB
  * The format of the data that comes from the Firebase database.
  */
-interface SlideDataDB {
+export interface SlideDataDB {
   id: string;
   condition: string;
   diagnosis: string;

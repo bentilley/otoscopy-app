@@ -3,7 +3,7 @@
 import React, { Dispatch } from 'react';
 import firestore from '@react-native-firebase/firestore';
 
-import { Category, Condition, ConditionData } from './types';
+import { Category, ConditionHead, ConditionDataDB, SlideDataDB } from './types';
 import { Action } from './actions';
 
 const useMiddleware = (dispatch: Dispatch<Action>): Dispatch<Action> => {
@@ -39,12 +39,13 @@ const fetchCategories = async (dispatch: Dispatch<Action>): Promise<void> => {
 
 const fetchCondition = async (
   dispatch: Dispatch<Action>,
-  condition: Condition,
+  condition: ConditionHead,
 ): Promise<void> => {
   const conditionDoc = firestore().collection('conditions').doc(condition.id);
   conditionDoc.get().then(
     (doc) => {
-      const data = doc.data() as ConditionData;
+      const conditionData = doc.data() as ConditionDataDB;
+      const data = { ...conditionData, id: doc.id };
       dispatch({ type: 'SET_CONDITION', payload: { id: doc.id, data } });
     },
     (err) => {

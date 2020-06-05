@@ -9,7 +9,7 @@ import {
 } from '@react-navigation/stack';
 import { UserProvider } from 'model/user';
 import { ConditionProvider } from 'model/condition';
-import { Condition, Slide } from 'model/condition/types';
+import { ConditionHead, Slide } from 'model/condition/types';
 import MenuScreen from 'components/screens/MenuScreen';
 import ReferenceScreen from 'components/screens/ReferenceScreen';
 import ConditionViewScreen from 'components/screens/ConditionViewScreen';
@@ -20,7 +20,7 @@ import { OtoIcon, COLOURS } from 'components/design/';
 export type RootStackParamList = {
   Menu: undefined;
   Reference: undefined;
-  Condition: { condition: Condition };
+  Condition: { condition: ConditionHead };
   Slide: { slide: Slide };
   SlideList: { slides: Slide[]; isFavourites: boolean };
 };

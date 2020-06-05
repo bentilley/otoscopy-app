@@ -3,7 +3,7 @@
 import React from 'react';
 import Reference from '../index';
 import { render, fireEvent, cleanup } from '@testing-library/react-native';
-import { Condition } from 'model/condition/types';
+import { ConditionHead } from 'model/condition/types';
 
 // This is a fix for a TouchableOpacity bug - see
 // https://github.com/testing-library/native-testing-library/issues/113 to see
@@ -41,7 +41,7 @@ jest.mock('model/condition', () => ({
 }));
 
 let navigationStubs: {
-  goToCondition: (condition: Condition) => void;
+  goToCondition: (condition: ConditionHead) => void;
 };
 
 beforeEach(() => {

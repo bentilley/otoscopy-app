@@ -1,14 +1,14 @@
 /** @format */
 
-import { Category, ConditionData } from './types';
+import { Category, Condition, Slide } from './types';
 import { Action } from './actions';
 
 export type State = {
   categories: Category[];
-  conditions: { [index: string]: ConditionData };
+  conditions: { [index: string]: Condition };
 };
 
-export const initialState = {
+export const initialState: State = {
   categories: [],
   conditions: {},
 };

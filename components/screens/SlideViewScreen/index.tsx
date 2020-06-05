@@ -5,7 +5,7 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import { RootStackParamList } from 'App';
-import { Condition, Slide } from 'model/condition/types';
+import { ConditionHead, Slide } from 'model/condition/types';
 import { slideData } from 'components/SlideList/__mocks__/slide-data';
 import { SlideView, SlideViewProvider } from 'components/SlideView';
 
@@ -31,7 +31,7 @@ const SlideViewScreen: React.FC<SlideProps> = ({ navigation, route }) => {
   );
 };
 
-const getCondition = (slide: Slide): Condition => ({
+const getCondition = (slide: Slide): ConditionHead => ({
   id: slide.conditionId,
   name: slide.condition,
 });

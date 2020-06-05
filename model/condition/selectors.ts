@@ -2,11 +2,11 @@
 
 import React from 'react';
 import { State } from './reducer';
-import { Category, ConditionData } from './types';
+import { Category, Condition, Slide } from './types';
 
 export type Selectors = {
   getCategories: () => Category[];
-  getCondition: (id: string) => ConditionData;
+  getCondition: (id: string) => Condition;
 };
 
 const useSelectors = (state: State): Selectors => {
