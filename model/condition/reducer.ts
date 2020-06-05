@@ -6,11 +6,15 @@ import { Action } from './actions';
 export type State = {
   categories: Category[];
   conditions: { [index: string]: Condition };
+  conditionsWithSlides: string[];
+  slides: Slide[];
 };
 
 export const initialState: State = {
   categories: [],
   conditions: {},
+  conditionsWithSlides: [],
+  slides: [],
 };
 
 const reducer = (state: State, action: Action): State => {
@@ -24,6 +28,15 @@ const reducer = (state: State, action: Action): State => {
           ...state.conditions,
           [action.payload.id]: action.payload.data,
         },
+      };
+    case 'SET_SLIDES':
+      return {
+        ...state,
+        slides: [...state.slides, ...action.payload.slides],
+        conditionsWithSlides: [
+          ...state.conditionsWithSlides,
+          action.payload.condition.id,
+        ],
       };
     default:
       return state;

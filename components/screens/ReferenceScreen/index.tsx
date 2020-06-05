@@ -17,11 +17,12 @@ type Props = {
 
 const ReferenceScreen: React.FC<Props> = ({ navigation }) => {
   const { getCategories } = useConditions();
-  const { fetchCondition } = useConditionsActions();
+  const { fetchCondition, fetchSlides } = useConditionsActions();
 
   const navigationFunctions = {
     goToCondition: (condition: ConditionHead) => {
       fetchCondition(condition);
+      fetchSlides(condition);
       navigation.navigate('Condition', { condition });
     },
     goToFavourites: () =>

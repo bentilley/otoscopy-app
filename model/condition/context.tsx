@@ -16,6 +16,7 @@ const ConditionActionsContext = React.createContext<ActionHandlers | null>(
 
 export const ConditionProvider: React.FC = ({ children }) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
+  console.log('ConditionProvider', state);
 
   const selectors = useSelectors(state);
   const enhancedDispatch = useMiddleware(dispatch);

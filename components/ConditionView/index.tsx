@@ -1,14 +1,12 @@
 /** @format */
 
 import React from 'react';
-import { ScrollView, StyleSheet, Button, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { Condition } from 'model/condition/types';
-import { useConditions } from 'model/condition';
-import Footer from 'components/Footer';
 import { OtoText, COLOURS } from 'components/design';
-import { conditionData } from './__mocks__/condition-data';
 import Section from './Section';
 import { sections } from './sections';
+import { ConditionViewFooter } from './footer';
 
 type Props = {
   goToSlides: () => void;
@@ -16,30 +14,25 @@ type Props = {
 };
 
 const ConditionView: React.FC<Props> = ({ goToSlides, condition }) => {
-  const { getCondition } = useConditions();
-  /* const info = getCondition(condition.id); */
-  const info = conditionData;
-
   return (
     <React.Fragment>
-      {info ? (
+      {condition ? (
         <ScrollView style={styles.screen}>
-          <Description>{info.description}</Description>
+          <Description>{condition.description}</Description>
           {sections.map((section) => (
             <Section
-              information={info[section]}
+              information={condition[section]}
               key={section}
               section={section}
             />
           ))}
-          <Button title="View Slides" onPress={goToSlides} />
         </ScrollView>
       ) : (
         <View>
           <OtoText size="medium">Loading...</OtoText>
         </View>
       )}
-      <Footer />
+      <ConditionViewFooter goToSlides={goToSlides} />
     </React.Fragment>
   );
 };

@@ -7,6 +7,7 @@ import { Category, Condition, Slide } from './types';
 export type Selectors = {
   getCategories: () => Category[];
   getCondition: (id: string) => Condition;
+  getSlidesForCondition: (conditionId: string) => Slide[];
 };
 
 const useSelectors = (state: State): Selectors => {
@@ -14,6 +15,8 @@ const useSelectors = (state: State): Selectors => {
     () => ({
       getCategories: () => state.categories,
       getCondition: (conditionId: string) => state.conditions[conditionId],
+      getSlidesForCondition: (conditionId: string) =>
+        state.slides.filter((slide) => slide.conditionId === conditionId),
     }),
     [state],
   );

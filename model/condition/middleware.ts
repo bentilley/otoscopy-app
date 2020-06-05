@@ -18,10 +18,16 @@ const getWrappedDispatch = (dispatch: Dispatch<Action>) => {
     const value = dispatch(action);
     switch (action.type) {
       case 'FETCH_CATEGORIES':
+        console.log('fetchCategories');
         fetchCategories(dispatch);
         break;
       case 'FETCH_CONDITION':
+        console.log('fetchCondition');
         fetchCondition(dispatch, action.payload);
+        break;
+      case 'FETCH_SLIDES':
+        console.log('fetchSlides');
+        fetchSlides(dispatch, action.payload);
         break;
       default:
         return value;
@@ -50,6 +56,28 @@ const fetchCondition = async (
     },
     (err) => {
       console.error('Fetch Condition has failed!');
+      console.error(err);
+    },
+  );
+};
+
+const fetchSlides = async (
+  dispatch: Dispatch<Action>,
+  condition: ConditionHead,
+): Promise<void> => {
+  const conditionDoc = firestore().collection('conditions').doc(condition.id);
+  const slideCollection = conditionDoc.collection('slides');
+  slideCollection.get().then(
+    (snapshot) => {
+      const slideData = snapshot.docs.map((doc) => doc.data()) as SlideDataDB[];
+      const slides = slideData.map((slide) => ({
+        ...slide,
+        conditionId: condition.id,
+      }));
+      dispatch({ type: 'SET_SLIDES', payload: { slides, condition } });
+    },
+    (err) => {
+      console.error('Fetch Slides has failed!');
       console.error(err);
     },
   );

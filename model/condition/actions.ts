@@ -9,10 +9,16 @@ export type Action =
   | { type: 'SET_CATEGORIES'; payload: Category[] }
   | { type: 'FETCH_CONDITION'; payload: ConditionHead }
   | { type: 'SET_CONDITION'; payload: { id: string; data: Condition } }
+  | { type: 'FETCH_SLIDES'; payload: ConditionHead }
+  | {
+      type: 'SET_SLIDES';
+      payload: { slides: Slide[]; condition: ConditionHead };
+    };
 
 export type ActionHandlers = {
   fetchCategories: () => void;
   fetchCondition: (condition: ConditionHead) => void;
+  fetchSlides: (condition: ConditionHead) => void;
 };
 
 const useActions = (
@@ -30,6 +36,14 @@ const useActions = (
       () => (condition: ConditionHead) => {
         if (!state.conditions[condition.id]) {
           dispatch({ type: 'FETCH_CONDITION', payload: condition });
+        }
+      },
+      [state, dispatch],
+    ),
+    fetchSlides: React.useMemo(
+      () => (condition: ConditionHead) => {
+        if (!state.conditionsWithSlides.includes(condition.id)) {
+          dispatch({ type: 'FETCH_SLIDES', payload: condition });
         }
       },
       [state, dispatch],
