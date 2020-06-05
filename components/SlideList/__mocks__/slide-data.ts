@@ -4,6 +4,7 @@ export const slideData = [
   {
     id: 'wombat',
     condition: 'Otitis Media',
+    conditionId: 'asldfjkhweu',
     diagnosis:
       'Right ear Acute Otitis Media. Bulging tympanic membrane with purulent effusion visible.',
     diagram: '<diagram-url>',
@@ -21,6 +22,7 @@ export const slideData = [
   {
     id: 'martingale',
     condition: 'Otitis Media',
+    conditionId: 'asldfjkhweu',
     diagnosis: 'Right ear Acute Otitis Media.',
     diagram: '<diagram-url>',
     img_url: '/slide-img/otitis-media/100002.jpg',
@@ -36,6 +38,7 @@ export const slideData = [
   {
     id: 'crocodile',
     condition: 'Otitis Media',
+    conditionId: 'asldfjkhweu',
     diagnosis: 'Right ear Acute Otitis Media.',
     diagram: '<diagram-url>',
     img_url: '/slide-img/otitis-media/100003.jpg',

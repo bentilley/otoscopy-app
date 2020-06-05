@@ -10,7 +10,20 @@ export type Condition = {
   name: string;
 };
 
-export type ConditionData = {
+/**
+ * ConditionData
+ * The complete interface for condition data in the condition context store -
+ * includes other app state data.
+ */
+export interface ConditionData extends ConditionDataDB {
+  hasSlides: boolean;
+}
+
+/**
+ * ConditionDataDB
+ * The format of the data that comes from the Firebase database.
+ */
+interface ConditionDataDB {
   name: string;
   description: string;
   aetiology: ConditionSection;
@@ -23,7 +36,7 @@ export type ConditionData = {
   population: ConditionSection;
   risk_factors: ConditionSection;
   symptoms: ConditionSection;
-};
+}
 
 export type ConditionSection = string[] | { [index: string]: SectionDetail };
 
@@ -32,7 +45,20 @@ type SectionDetail = {
   information: string[];
 };
 
-export type Slide = {
+/**
+ * Slide
+ * The complete interface for slide data in the condition context store -
+ * includes other app state data.
+ */
+export interface Slide extends SlideDataDB {
+  conditionId: string;
+}
+
+/**
+ * SlideDataDB
+ * The format of the data that comes from the Firebase database.
+ */
+interface SlideDataDB {
   id: string;
   condition: string;
   diagnosis: string;
@@ -42,4 +68,4 @@ export type Slide = {
     [index: string]: string;
   };
   thumbnail_url: string;
-};
+}
