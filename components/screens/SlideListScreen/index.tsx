@@ -4,7 +4,7 @@ import React from 'react';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import { RootStackParamList } from 'App';
+import { RootStackParamList } from 'components/screens';
 import SlideList from 'components/SlideList';
 import { Slide } from 'model/condition/types';
 
@@ -13,7 +13,10 @@ type SlideListProps = {
   route: RouteProp<RootStackParamList, 'SlideList'>;
 };
 
-const SlideListScreen: React.FC<SlideListProps> = ({ route, navigation }) => {
+export const SlideListScreen: React.FC<SlideListProps> = ({
+  route,
+  navigation,
+}) => {
   return (
     <SlideList
       slides={route.params.slides}
@@ -22,5 +25,3 @@ const SlideListScreen: React.FC<SlideListProps> = ({ route, navigation }) => {
     />
   );
 };
-
-export default SlideListScreen;

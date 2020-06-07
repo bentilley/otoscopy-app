@@ -4,7 +4,7 @@ import React from 'react';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import { RootStackParamList } from 'App';
+import { RootStackParamList } from 'components/screens';
 import ConditionView from 'components/ConditionView';
 import { useConditions } from 'model/condition';
 
@@ -13,7 +13,7 @@ type ConditionProps = {
   route: RouteProp<RootStackParamList, 'Condition'>;
 };
 
-const ConditionViewScreen: React.FC<ConditionProps> = ({
+export const ConditionViewScreen: React.FC<ConditionProps> = ({
   route,
   navigation,
 }) => {
@@ -35,5 +35,3 @@ const ConditionViewScreen: React.FC<ConditionProps> = ({
     />
   );
 };
-
-export default ConditionViewScreen;

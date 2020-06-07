@@ -4,7 +4,7 @@ import React from 'react';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import { RootStackParamList } from 'App';
+import { RootStackParamList } from 'components/screens';
 import Reference from 'components/Reference';
 import { ConditionHead } from 'model/condition/types';
 import { useConditions, useConditionsActions } from 'model/condition';
@@ -15,7 +15,7 @@ type Props = {
   route: RouteProp<RootStackParamList, 'Reference'>;
 };
 
-const ReferenceScreen: React.FC<Props> = ({ navigation }) => {
+export const ReferenceScreen: React.FC<Props> = ({ navigation }) => {
   const { getCategories } = useConditions();
   const { fetchCondition, fetchSlides } = useConditionsActions();
 
@@ -34,5 +34,3 @@ const ReferenceScreen: React.FC<Props> = ({ navigation }) => {
 
   return <Reference {...navigationFunctions} categories={getCategories()} />;
 };
-
-export default ReferenceScreen;
