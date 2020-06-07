@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Footer, FooterIcon, FooterText } from 'components';
+import { Footer, FooterIcon, FooterText } from 'components/Footer';
 import { COLOURS } from 'components/design';
 
 type Props = {

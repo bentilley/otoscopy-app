@@ -3,7 +3,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { OtoText } from 'components/design';
-import { FavouriteStar } from 'components';
+import { FavouriteStar } from 'components/Footer/icons';
 
 /**
  * DiagnosisInfo

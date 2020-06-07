@@ -3,7 +3,6 @@
 import React from 'react';
 import { View, StyleSheet, ViewStyle } from 'react-native';
 import { COLOURS } from 'components/design';
-import { FooterIcon } from './icons';
 
 interface Props {
   children: Element;
@@ -36,13 +35,5 @@ const styles = StyleSheet.create({
   },
 });
 
-const TestFooter: React.FC = () => {
-  return (
-    <Footer>
-      <FooterIcon iconName="star-o" colour={COLOURS.grey} onPress={() => {}} />
-      <FooterIcon iconName="search" colour={COLOURS.grey} onPress={() => {}} />
-    </Footer>
-  );
-};
-
-export default TestFooter;
+export { FooterIcon } from './icons';
+export { FooterText } from './text';

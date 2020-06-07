@@ -4,8 +4,8 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { COLOURS } from 'components/design';
 import { useSlideViewState } from './context';
-import { Footer, FooterIcon, FooterText } from 'components';
-import { FavouriteStar } from 'components';
+import { Footer, FooterIcon, FooterText } from 'components/Footer';
+import { FavouriteStar } from 'components/Footer/icons';
 
 interface SlideViewFooterProps
   extends DiagnosedFooterProps,

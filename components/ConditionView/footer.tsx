@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Footer, FooterText } from 'components';
+import { Footer, FooterText } from 'components/Footer';
 
 type Props = {
   goToSlides: () => void;

@@ -4,7 +4,7 @@ import React from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import { COLOURS } from 'components/design';
 import { Slide } from 'model/condition/types';
-import Footer from 'components/Footer';
+import { Footer, FooterText } from 'components/Footer';
 import SlideListItem from './SlideListItem';
 import FavouriteSlideListItem from './FavouriteSlideListItem';
 
@@ -27,7 +27,9 @@ const SlideList: React.FC<Props> = ({ slides, isFavourites, goToSlide }) => {
           )}
         />
       </View>
-      <Footer />
+      <Footer>
+        <FooterText text="TODO" onPress={() => {}} />
+      </Footer>
     </React.Fragment>
   );
 };
