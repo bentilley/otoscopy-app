@@ -8,6 +8,7 @@ import useMiddleware from './middleware';
 
 import { Selectors } from './selectors';
 import { ActionHandlers } from './actions';
+import { checkIfInvalidContext } from 'utils';
 
 const ConditionStateContext = React.createContext<Selectors | null>(null);
 const ConditionActionsContext = React.createContext<ActionHandlers | null>(
@@ -36,20 +37,9 @@ export const ConditionProvider: React.FC = ({ children }) => {
   );
 };
 
-const checkIfInvalidContext = (
-  context: Selectors | ActionHandlers | null | undefined,
-): void => {
-  if (context === undefined) {
-    throw new Error('Probably not in Provider!');
-  }
-  if (context === null) {
-    throw new Error('Using context before it is instantiated!');
-  }
-};
-
 export const useConditions = (): Selectors => {
   const context = React.useContext<Selectors | null>(ConditionStateContext);
-  checkIfInvalidContext(context);
+  checkIfInvalidContext<Selectors>(context);
   return context as Selectors;
 };
 
@@ -57,6 +47,6 @@ export const useConditionsActions = (): ActionHandlers => {
   const context = React.useContext<ActionHandlers | null>(
     ConditionActionsContext,
   );
-  checkIfInvalidContext(context);
+  checkIfInvalidContext<ActionHandlers>(context);
   return context as ActionHandlers;
 };
