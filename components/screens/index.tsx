@@ -12,6 +12,8 @@ import { SlideListScreen } from 'components/screens/SlideListScreen';
 import { SlideViewScreen } from 'components/screens/SlideViewScreen';
 import { COLOURS } from 'components/design/';
 import { MenuButton } from './MenuButton';
+import { LoginScreen } from 'components/screens/LoginScreen';
+import { SignUpScreen } from 'components/screens/SignUpScreen';
 
 export type RootStackParamList = {
   Menu: undefined;
@@ -52,5 +54,32 @@ export const AppScreens = () => {
         </Stack.Navigator>
       </NavigationContainer>
     </ConditionProvider>
+  );
+};
+
+export type LoginStackParamList = {
+  Login: undefined;
+  SignUp: undefined;
+};
+
+const LoginStack = createStackNavigator<LoginStackParamList>();
+
+export const LoginScreens = () => {
+  return (
+    <NavigationContainer>
+      <LoginStack.Navigator
+        initialRouteName="Login"
+        screenOptions={() => ({
+          title: '',
+          headerStyle: {
+            backgroundColor: COLOURS.veryDark,
+            shadowColor: COLOURS.dark,
+          },
+          headerTintColor: COLOURS.lightGrey,
+        })}>
+        <LoginStack.Screen name="Login" component={LoginScreen} />
+        <LoginStack.Screen name="SignUp" component={SignUpScreen} />
+      </LoginStack.Navigator>
+    </NavigationContainer>
   );
 };

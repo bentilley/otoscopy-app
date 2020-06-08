@@ -7,7 +7,7 @@ import { COLOURS } from 'components/design';
 type Props = {
   reactState: [string, React.Dispatch<React.SetStateAction<string>>];
   placeholder: string;
-  textContentType: 'emailAddress' | 'password';
+  textContentType: 'emailAddress' | 'password' | 'none';
   secureTextEntry?: boolean;
   onChangeText: () => void;
 };

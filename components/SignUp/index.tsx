@@ -11,21 +11,20 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import { COLOURS } from 'components/design';
-import { LoginForm } from './LoginForm';
-import { Header } from './Header';
+import { SignUpForm } from './SignUpForm';
 
 type Props = {
-  loginUser: (email: string, password: string) => void;
+  createUser: (email: string, password: string, position: string) => void;
   authErrorMsg: string | null;
   resetAuthError: () => void;
-  goToSignUp: () => void;
+  goToLogin: () => void;
 };
 
-export const Login: React.FC<Props> = ({
-  loginUser,
+export const SignUp: React.FC<Props> = ({
+  createUser,
   authErrorMsg,
   resetAuthError,
-  goToSignUp,
+  goToLogin,
 }) => {
   const windowWidth = useWindowDimensions().width;
   return (
@@ -34,10 +33,9 @@ export const Login: React.FC<Props> = ({
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={[styles.container, { width: 0.7 * windowWidth }]}>
-          <Header />
-          <LoginForm
-            createUser={goToSignUp}
-            loginUser={loginUser}
+          <SignUpForm
+            createUser={createUser}
+            goToLogin={goToLogin}
             authErrorMsg={authErrorMsg}
             resetAuthError={resetAuthError}
           />
