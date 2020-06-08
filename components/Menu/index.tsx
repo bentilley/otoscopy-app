@@ -8,15 +8,17 @@ type Props = {
   goToReference: () => void;
   goToFavourites: () => void;
   goToBrowse: () => void;
+  signoutUser: () => void;
 };
 
-const Menu: React.FC<Props> = (props) => {
+export const Menu: React.FC<Props> = (props) => {
   return (
     <View style={styles.menuScreen}>
       <MenuTitle>Otoscopy App</MenuTitle>
       <MenuItem onPress={props.goToReference}>Conditions</MenuItem>
       <MenuItem onPress={props.goToFavourites}>Favourites</MenuItem>
       <MenuItem onPress={props.goToBrowse}>Random Browse</MenuItem>
+      <MenuItem onPress={props.signoutUser}>Sign Out</MenuItem>
     </View>
   );
 };
@@ -59,5 +61,3 @@ const styles = StyleSheet.create({
   },
   menuButtonContainer: { paddingHorizontal: 30, paddingVertical: 10 },
 });
-
-export default Menu;

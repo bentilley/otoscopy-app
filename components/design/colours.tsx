@@ -26,4 +26,5 @@ export const COLOURS: COLOURS = Object.freeze({
   pirmaryLight: '#68fff0',
   primaryDark: '#00a48e',
   favourite: '#cfb113',
+  error: '#c10002',
 });

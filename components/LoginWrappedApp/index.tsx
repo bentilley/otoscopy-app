@@ -7,6 +7,5 @@ import { useUser } from 'model/user';
 
 export const LoginWrappedApp: React.FC = () => {
   const { user } = useUser();
-  console.log(user);
   return user ? <AppScreens /> : <LoginScreen />;
 };

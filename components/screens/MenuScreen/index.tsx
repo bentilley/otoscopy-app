@@ -5,8 +5,9 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import { RootStackParamList } from 'components/screens';
-import Menu from 'components/Menu';
+import { Menu } from 'components/Menu';
 import { slideData } from 'components/SlideList/__mocks__/slide-data';
+import { useUser } from 'model/user';
 
 type MenuProps = {
   navigation: StackNavigationProp<RootStackParamList, 'Menu'>;
@@ -14,6 +15,7 @@ type MenuProps = {
 };
 
 export const MenuScreen: React.FC<MenuProps> = ({ navigation }) => {
+  const { signoutUser } = useUser();
   const navigationFunctions = {
     goToReference: () => navigation.navigate('Reference'),
     goToFavourites: () =>
@@ -22,6 +24,7 @@ export const MenuScreen: React.FC<MenuProps> = ({ navigation }) => {
         isFavourites: true,
       }),
     goToBrowse: () => navigation.navigate('Slide', { slide: 'random' }),
+    signoutUser,
   };
   return <Menu {...navigationFunctions} />;
 };
