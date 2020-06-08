@@ -8,6 +8,7 @@ export type State = {
   conditions: { [index: string]: Condition };
   conditionsWithSlides: string[];
   slides: Slide[];
+  favourites: Slide[];
 };
 
 export const initialState: State = {
@@ -15,6 +16,7 @@ export const initialState: State = {
   conditions: {},
   conditionsWithSlides: [],
   slides: [],
+  favourites: [],
 };
 
 const reducer = (state: State, action: Action): State => {
@@ -37,6 +39,11 @@ const reducer = (state: State, action: Action): State => {
           ...state.conditionsWithSlides,
           action.payload.condition.id,
         ],
+      };
+    case 'SET_FAVOURITES':
+      return {
+        ...state,
+        favourites: action.payload,
       };
     default:
       return state;

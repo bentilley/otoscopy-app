@@ -1,6 +1,15 @@
 /** @format */
 
 /**
+ * UserData
+ * Data stored in the user document. Separate from Firebase auth.
+ */
+export interface UserData {
+  email: string;
+  position: string;
+}
+
+/**
  * Category
  * A group of related conditions.
  */
@@ -64,16 +73,22 @@ type SectionDetail = {
  * The complete interface for slide data in the condition context store -
  * includes other app state data.
  */
-export interface Slide extends SlideDataDB {
-  conditionId: string;
+export interface Slide extends FavouriteDataDB {
+  id: string;
 }
 
+/**
+ * FavouriteDataDB
+ * The format of the favourite slide data that comes from the Firebase database.
+ */
+export interface FavouriteDataDB extends SlideDataDB {
+  conditionId: string;
+}
 /**
  * SlideDataDB
  * The format of the data that comes from the Firebase database.
  */
 export interface SlideDataDB {
-  id: string;
   condition: string;
   diagnosis: string;
   diagram: string;

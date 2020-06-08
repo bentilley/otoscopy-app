@@ -9,6 +9,7 @@ import useMiddleware from './middleware';
 import { Selectors } from './selectors';
 import { ActionHandlers } from './actions';
 import { checkIfInvalidContext } from 'utils';
+import { useUser } from 'model/user';
 
 const ConditionStateContext = React.createContext<Selectors | null>(null);
 const ConditionActionsContext = React.createContext<ActionHandlers | null>(
@@ -16,17 +17,18 @@ const ConditionActionsContext = React.createContext<ActionHandlers | null>(
 );
 
 export const ConditionProvider: React.FC = ({ children }) => {
+  const { uid } = useUser().getUserSafe();
   const [state, dispatch] = React.useReducer(reducer, initialState);
-  console.log('ConditionProvider', state);
 
   const selectors = useSelectors(state);
   const enhancedDispatch = useMiddleware(dispatch);
   const actions = useActions(state, enhancedDispatch);
 
-  const { fetchCategories } = actions;
+  const { fetchCategories, fetchUserFavourites } = actions;
   React.useEffect(() => {
     fetchCategories();
-  }, [fetchCategories]);
+    fetchUserFavourites(uid);
+  }, [uid, fetchCategories, fetchUserFavourites]);
 
   return (
     <ConditionStateContext.Provider value={selectors}>

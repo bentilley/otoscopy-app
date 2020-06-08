@@ -3,7 +3,13 @@
 import React, { Dispatch } from 'react';
 import firestore from '@react-native-firebase/firestore';
 
-import { Category, ConditionHead, ConditionDataDB, SlideDataDB } from './types';
+import {
+  Category,
+  ConditionHead,
+  ConditionDataDB,
+  SlideDataDB,
+  FavouriteDataDB,
+} from './types';
 import { Action } from './actions';
 
 const useMiddleware = (dispatch: Dispatch<Action>): Dispatch<Action> => {
@@ -28,6 +34,10 @@ const getWrappedDispatch = (dispatch: Dispatch<Action>) => {
       case 'FETCH_SLIDES':
         console.log('fetchSlides');
         fetchSlides(dispatch, action.payload);
+        break;
+      case 'FETCH_USER_FAVOURITES':
+        console.log('fetchUserFavourites');
+        fetchUserFavourites(dispatch, action.payload);
         break;
       default:
         return value;
@@ -69,11 +79,10 @@ const fetchSlides = async (
   const slideCollection = conditionDoc.collection('slides');
   slideCollection.get().then(
     (snapshot) => {
-      const slideData = snapshot.docs.map((doc) => doc.data()) as SlideDataDB[];
-      const slides = slideData.map((slide) => ({
-        ...slide,
-        conditionId: condition.id,
-      }));
+      const slides = snapshot.docs.map((doc) => {
+        const slideData = doc.data() as SlideDataDB;
+        return { ...slideData, id: doc.id, conditionId: condition.id };
+      });
       dispatch({ type: 'SET_SLIDES', payload: { slides, condition } });
     },
     (err) => {
@@ -81,6 +90,21 @@ const fetchSlides = async (
       console.error(err);
     },
   );
+};
+
+const fetchUserFavourites = async (
+  dispatch: Dispatch<Action>,
+  userUid: string,
+): Promise<void> => {
+  const userCollection = firestore().collection('users');
+  const userFavourites = userCollection.doc(userUid).collection('favourites');
+  userFavourites.onSnapshot(({ docs }) => {
+    const favourites = docs.map((doc) => {
+      const slideData = doc.data() as FavouriteDataDB;
+      return { ...slideData, id: doc.id };
+    });
+    dispatch({ type: 'SET_FAVOURITES', payload: favourites });
+  });
 };
 
 export default useMiddleware;
