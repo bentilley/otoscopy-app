@@ -4,7 +4,7 @@ import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import { OtoIcon, COLOURS } from 'components/design';
-import { useFavourite } from 'model/user';
+import { useFavourite } from 'model/condition';
 
 /**
  * FooterIcon

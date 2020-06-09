@@ -157,5 +157,3 @@ export const useUser = () => {
   checkIfInvalidContext<ContextInterface>(context);
   return context as ContextInterface;
 };
-
-export { useFavourite } from './useFavourite';

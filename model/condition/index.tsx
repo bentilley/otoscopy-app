@@ -5,3 +5,5 @@ export {
   useConditions,
   useConditionsActions,
 } from './context';
+
+export { useFavourite } from './useFavourite';
