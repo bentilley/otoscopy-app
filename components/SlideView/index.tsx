@@ -1,13 +1,14 @@
 /** @format */
 
 import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Slide } from 'model/condition/types';
 import { COLOURS } from 'components/design';
 import { Otoscope } from './Otoscope';
 import { Drawer } from './Draw';
 import { MovableYContainer } from './MovableYContainer';
 import { DiagnosisInfo } from './DiagnosisInfo';
+import { SlideImage } from './SlideImage';
 import { Spacer } from './Spacer';
 import { useMaxImageY } from './dimensions';
 import { SlideViewFooter } from './footers';
@@ -31,7 +32,7 @@ export const SlideView: React.FC<Props> = ({
       <View style={styles.screen}>
         <Spacer />
         <MovableYContainer>
-          <Image source={{ uri: slide.img_url }} style={styles.image} />
+          <SlideImage slideId={slide.id} />
           {state.showOtoscope ? <Otoscope /> : null}
         </MovableYContainer>
         <Spacer
@@ -69,10 +70,6 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'center',
     backgroundColor: COLOURS.black,
-  },
-  image: {
-    width: OTOSCOPE_BOUNDARY_RADIUS * 2,
-    height: OTOSCOPE_BOUNDARY_RADIUS * 2,
   },
 });
 
