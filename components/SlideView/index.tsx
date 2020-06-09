@@ -5,11 +5,11 @@ import { View, Image, StyleSheet } from 'react-native';
 import { Slide } from 'model/condition/types';
 import { COLOURS } from 'components/design';
 import { Otoscope } from './Otoscope';
-import { useDraw } from './Draw';
-import { useMovableYContainer } from './MovableYContainer';
+import { Drawer } from './Draw';
+import { MovableYContainer } from './MovableYContainer';
 import { DiagnosisInfo } from './DiagnosisInfo';
 import { Spacer } from './Spacer';
-import { OTOSCOPE_BOUNDARY_RADIUS, useMaxImageY } from './dimensions';
+import { useMaxImageY } from './dimensions';
 import { SlideViewFooter } from './footers';
 import { useSlideViewState } from './context';
 
@@ -24,14 +24,8 @@ export const SlideView: React.FC<Props> = ({
   goToCondition,
   goToNextSlide,
 }) => {
-  const { state, update } = useSlideViewState();
-  const [MovableYContainer, moveContainerTo] = useMovableYContainer();
+  const { state, update, movableYContainer, drawer } = useSlideViewState();
   const maxImageHeight = useMaxImageY();
-  const [Draw, openDraw] = useDraw({
-    onDrawCloseComplete: () => update.setIsDiagnosed(false),
-    onDrawCloseStart: () => moveContainerTo(0),
-    onDrawOpenStart: () => moveContainerTo(maxImageHeight),
-  });
   return (
     <React.Fragment>
       <View style={styles.screen}>
@@ -44,16 +38,21 @@ export const SlideView: React.FC<Props> = ({
           text={!state.isDiagnosed ? 'Tap to reveal diagnosis' : ''}
           onPress={() => {
             update.setIsDiagnosed(true);
-            openDraw();
+            drawer.openDrawer(() =>
+              movableYContainer.moveContainerTo(maxImageHeight),
+            );
           }}
         />
-        <Draw>
+        <Drawer
+          onCloseComplete={() => update.setIsDiagnosed(false)}
+          onCloseStart={() => movableYContainer.moveContainerTo(0)}
+          onOpenStart={() => movableYContainer.moveContainerTo(maxImageHeight)}>
           <DiagnosisInfo
             slideId={slide.id}
             condition={slide.condition}
             diagnosis={slide.diagnosis}
           />
-        </Draw>
+        </Drawer>
       </View>
       <SlideViewFooter
         slideId={slide.id}

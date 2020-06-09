@@ -1,6 +1,10 @@
 /** @format */
 
 import React from 'react';
+import { Animated } from 'react-native';
+
+// TODO Move to dimensions and calculate from screen dimensions.
+const MAX_DRAW_HEIGHT = 370;
 
 /**
  * SlideViewState
@@ -16,6 +20,17 @@ interface Context {
     setShowOtoscope: (b: boolean) => void;
     setIsDiagnosed: (b: boolean) => void;
   };
+  movableYContainer: {
+    imageTranslationY: Animated.Value;
+    moveContainerTo: (Y: number) => void;
+  };
+  drawer: {
+    drawerHeight: Animated.Value;
+    moveStartY: React.MutableRefObject<number>;
+    setMoveStartY: (Y: number) => void;
+    openDrawer: (onStart?: () => void, onComplete?: () => void) => void;
+    closeDrawer: (onStart?: () => void, onComplete?: () => void) => void;
+  };
 }
 
 const SlideViewContext = React.createContext<Context | null>(null);
@@ -30,13 +45,59 @@ export const SlideViewProvider: React.FC = ({ children }) => {
     showOtoscope: false,
     isDiagnosed: false,
   });
+
   const setShowOtoscope = (value: boolean) =>
     setState((prevState) => ({ ...prevState, showOtoscope: value }));
   const setIsDiagnosed = (value: boolean) =>
     setState((prevState) => ({ ...prevState, isDiagnosed: value }));
+
+  const imageTranslationY = React.useRef(new Animated.Value(0)).current;
+  const movableYContainer = {
+    imageTranslationY,
+    moveContainerTo: (Y: number) => {
+      Animated.timing(imageTranslationY, {
+        toValue: Y,
+        useNativeDriver: false,
+      }).start();
+    },
+  };
+
+  const drawerHeight = React.useRef(new Animated.Value(0)).current;
+  const moveStartY = React.useRef(0);
+  const drawer = {
+    drawerHeight,
+    moveStartY,
+    setMoveStartY: (Y: number) => {
+      moveStartY.current = Y;
+    },
+    openDrawer: (onStart?: () => void, onComplete?: () => void) => {
+      onStart && onStart();
+      Animated.timing(drawerHeight, {
+        toValue: MAX_DRAW_HEIGHT,
+        useNativeDriver: false,
+      }).start(({ finished }) =>
+        finished && onComplete ? onComplete() : null,
+      );
+    },
+    closeDrawer: (onStart?: () => void, onComplete?: () => void) => {
+      onStart && onStart();
+      Animated.timing(drawerHeight, {
+        toValue: 0,
+        useNativeDriver: false,
+      }).start(({ finished }) =>
+        finished && onComplete ? onComplete() : null,
+      );
+    },
+  };
+
   return (
     <SlideViewContext.Provider
-      value={{ state, update: { setShowOtoscope, setIsDiagnosed } }}>
+      value={{
+        state,
+        update: { setShowOtoscope, setIsDiagnosed },
+        movableYContainer,
+        drawer,
+      }}>
       {children}
     </SlideViewContext.Provider>
   );
