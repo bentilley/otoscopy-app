@@ -7,7 +7,7 @@ export type State = {
   categories: Category[];
   conditions: { [index: string]: Condition };
   conditionsWithSlides: string[];
-  slides: Slide[];
+  slides: { [slideId: string]: Slide };
   favourites: { [slideId: string]: Slide };
 };
 
@@ -15,11 +15,12 @@ export const initialState: State = {
   categories: [],
   conditions: {},
   conditionsWithSlides: [],
-  slides: [],
+  slides: {},
   favourites: {},
 };
 
 const reducer = (state: State, action: Action): State => {
+  let favourites: { [slideId: string]: Slide };
   switch (action.type) {
     case 'SET_CATEGORIES':
       return { ...state, categories: action.payload };
@@ -34,7 +35,16 @@ const reducer = (state: State, action: Action): State => {
     case 'SET_SLIDES':
       return {
         ...state,
-        slides: [...state.slides, ...action.payload.slides],
+        slides: {
+          ...state.slides,
+          ...action.payload.slides.reduce(
+            (slideObj: { [slideId: string]: Slide }, slide) => {
+              slideObj[slide.id] = slide;
+              return slideObj;
+            },
+            {},
+          ),
+        },
         conditionsWithSlides: [
           ...state.conditionsWithSlides,
           action.payload.condition.id,
@@ -51,6 +61,14 @@ const reducer = (state: State, action: Action): State => {
           {},
         ),
       };
+    case 'ADD_TO_FAVOURITES':
+      favourites = { ...state.favourites };
+      favourites[action.payload.id] = action.payload;
+      return { ...state, favourites };
+    case 'REMOVE_FROM_FAVOURITES':
+      favourites = { ...state.favourites };
+      delete favourites[action.payload];
+      return { ...state, favourites };
     default:
       return state;
   }

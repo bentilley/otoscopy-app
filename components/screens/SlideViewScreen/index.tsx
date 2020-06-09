@@ -6,8 +6,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import { RootStackParamList } from 'components/screens';
 import { ConditionHead, Slide } from 'model/condition/types';
-import { slideData } from 'components/SlideList/__mocks__/slide-data';
 import { SlideView, SlideViewProvider } from 'components/SlideView';
+import { useConditions } from 'model/condition';
 
 type SlideProps = {
   navigation: StackNavigationProp<RootStackParamList, 'Slide'>;
@@ -18,18 +18,19 @@ export const SlideViewScreen: React.FC<SlideProps> = ({
   navigation,
   route,
 }) => {
+  const { getRandomSlide } = useConditions();
   const slide = route.params.slide;
   const navigationFunctions = {
     goToCondition: () => {
       navigation.navigate('Condition', { condition: getCondition(slide) });
     },
     goToNextSlide: () => {
-      console.log('goToNextSlide');
+      navigation.setParams({ slide: getRandomSlide() });
     },
   };
   return (
     <SlideViewProvider>
-      <SlideView {...navigationFunctions} slide={slideData[0]} />
+      <SlideView {...navigationFunctions} slide={slide} />
     </SlideViewProvider>
   );
 };

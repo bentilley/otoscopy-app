@@ -5,8 +5,6 @@ import { Category, ConditionHead, Condition, Slide } from './types';
 import { State } from './reducer';
 
 export type Action =
-  | { type: 'FETCH_USER_FAVOURITES'; payload: string }
-  | { type: 'SET_FAVOURITES'; payload: Slide[] }
   | { type: 'FETCH_CATEGORIES' }
   | { type: 'SET_CATEGORIES'; payload: Category[] }
   | { type: 'FETCH_CONDITION'; payload: ConditionHead }
@@ -15,20 +13,26 @@ export type Action =
   | {
       type: 'SET_SLIDES';
       payload: { slides: Slide[]; condition: ConditionHead };
-    };
+    }
+  | { type: 'FETCH_USER_FAVOURITES'; payload: string }
+  | { type: 'SET_FAVOURITES'; payload: Slide[] }
+  | { type: 'ADD_TO_FAVOURITES'; payload: Slide }
+  | { type: 'REMOVE_FROM_FAVOURITES'; payload: string };
 
 export type ActionHandlers = {
   fetchCategories: () => void;
   fetchCondition: (condition: ConditionHead) => void;
   fetchSlides: (condition: ConditionHead) => void;
   fetchUserFavourites: (userEmail: string) => void;
+  addToFavourites: (slideId: string) => void;
+  removeFromFavourites: (slideId: string) => void;
 };
 
 const useActions = (
   state: State,
   dispatch: React.Dispatch<Action>,
 ): ActionHandlers => {
-  const { conditions, conditionsWithSlides } = state;
+  const { conditions, conditionsWithSlides, slides } = state;
   return {
     fetchCategories: React.useMemo(
       () => () => {
@@ -55,6 +59,18 @@ const useActions = (
     fetchUserFavourites: React.useMemo(
       () => (userUid: string) => {
         dispatch({ type: 'FETCH_USER_FAVOURITES', payload: userUid });
+      },
+      [dispatch],
+    ),
+    addToFavourites: React.useMemo(
+      () => (slideId: string) => {
+        dispatch({ type: 'ADD_TO_FAVOURITES', payload: slides[slideId] });
+      },
+      [dispatch, slides],
+    ),
+    removeFromFavourites: React.useMemo(
+      () => (slideId: string) => {
+        dispatch({ type: 'REMOVE_FROM_FAVOURITES', payload: slideId });
       },
       [dispatch],
     ),

@@ -16,7 +16,7 @@ type MenuProps = {
 
 export const MenuScreen: React.FC<MenuProps> = ({ navigation }) => {
   const { signoutUser } = useUser();
-  const { getFavourites } = useConditions();
+  const { getFavourites, getRandomSlide } = useConditions();
 
   const navigationFunctions = {
     goToReference: () => navigation.navigate('Reference'),
@@ -25,7 +25,7 @@ export const MenuScreen: React.FC<MenuProps> = ({ navigation }) => {
         slides: getFavourites(),
         isFavourites: true,
       }),
-    goToBrowse: () => navigation.navigate('Slide', { slide: 'random' }),
+    goToBrowse: () => navigation.navigate('Slide', { slide: getRandomSlide() }),
     signoutUser,
   };
   return <Menu {...navigationFunctions} />;

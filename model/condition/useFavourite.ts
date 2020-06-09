@@ -1,6 +1,6 @@
 /** @format */
 
-import { useConditions, useConditionsActions } from './index';
+import { useConditions, useConditionsActions } from './context';
 
 export const useFavourite = (slideId: string): [boolean, () => void] => {
   const { isFavourite } = useConditions();
