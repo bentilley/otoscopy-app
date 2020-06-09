@@ -9,7 +9,7 @@ import SlideListItem from './SlideListItem';
 import FavouriteSlideListItem from './FavouriteSlideListItem';
 
 type Props = {
-  slides: Slide[];
+  slides: { [slideId: string]: Slide };
   isFavourites: boolean;
   goToSlide: (slide: Slide) => void;
 };
@@ -20,7 +20,7 @@ const SlideList: React.FC<Props> = ({ slides, isFavourites, goToSlide }) => {
     <React.Fragment>
       <View style={styles.screen}>
         <FlatList
-          data={slides}
+          data={Object.values(slides)}
           keyExtractor={(item) => item.thumbnail_url}
           renderItem={({ item: slide }) => (
             <ListItem slide={slide} onPress={() => goToSlide(slide)} />

@@ -20,7 +20,7 @@ export type RootStackParamList = {
   Reference: undefined;
   Condition: { condition: ConditionHead };
   Slide: { slide: Slide };
-  SlideList: { slides: Slide[]; isFavourites: boolean };
+  SlideList: { slides: { [slideId: string]: Slide }; isFavourites: boolean };
 };
 
 const Stack = createStackNavigator<RootStackParamList>();

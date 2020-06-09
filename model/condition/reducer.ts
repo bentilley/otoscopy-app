@@ -8,7 +8,7 @@ export type State = {
   conditions: { [index: string]: Condition };
   conditionsWithSlides: string[];
   slides: Slide[];
-  favourites: Slide[];
+  favourites: { [slideId: string]: Slide };
 };
 
 export const initialState: State = {
@@ -16,7 +16,7 @@ export const initialState: State = {
   conditions: {},
   conditionsWithSlides: [],
   slides: [],
-  favourites: [],
+  favourites: {},
 };
 
 const reducer = (state: State, action: Action): State => {
@@ -43,7 +43,13 @@ const reducer = (state: State, action: Action): State => {
     case 'SET_FAVOURITES':
       return {
         ...state,
-        favourites: action.payload,
+        favourites: action.payload.reduce(
+          (slideObj: { [slideId: string]: Slide }, slide) => {
+            slideObj[slide.id] = slide;
+            return slideObj;
+          },
+          {},
+        ),
       };
     default:
       return state;
