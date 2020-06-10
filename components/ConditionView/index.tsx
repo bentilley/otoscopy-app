@@ -17,23 +17,31 @@ const ConditionView: React.FC<Props> = ({ goToSlides, condition }) => {
   return (
     <React.Fragment>
       {condition ? (
-        <ScrollView style={styles.screen}>
-          <Description>{condition.description}</Description>
-          {sections.map((section) => (
-            <Section
-              information={condition[section]}
-              key={section}
-              section={section}
-            />
-          ))}
-        </ScrollView>
+        <React.Fragment>
+          <ScrollView style={styles.screen}>
+            <Description>{condition.description}</Description>
+            {sections.map((section) => (
+              <Section
+                information={condition[section]}
+                key={section}
+                section={section}
+              />
+            ))}
+          </ScrollView>
+          <ConditionViewFooter goToSlides={goToSlides} />
+        </React.Fragment>
       ) : (
-        <View>
-          <OtoText size="medium">Loading...</OtoText>
-        </View>
+        <LoadingView />
       )}
-      <ConditionViewFooter goToSlides={goToSlides} />
     </React.Fragment>
+  );
+};
+
+const LoadingView = () => {
+  return (
+    <View style={[styles.screen, styles.loading]}>
+      <OtoText size="medium">Loading...</OtoText>
+    </View>
   );
 };
 
@@ -57,6 +65,7 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     paddingBottom: 10,
   },
+  loading: { justifyContent: 'center', alignItems: 'center' },
 });
 
 export default ConditionView;
