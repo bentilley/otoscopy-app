@@ -9,7 +9,7 @@ export type Selectors = {
   getCategories: () => Category[];
   getSlides: () => { [slideId: string]: Slide };
   getCondition: (id: string) => Condition;
-  getSlidesForCondition: (conditionId: string) => Slide[];
+  getSlidesForCondition: (conditionId: string) => { [slideId: string]: Slide };
   isFavourite: (slideId: string) => boolean;
   getFavourites: () => { [slideId: string]: Slide };
   getRandomSlide: () => Slide;
@@ -23,8 +23,10 @@ const useSelectors = (state: State): Selectors => {
       getSlides: () => state.slides,
       getCondition: (conditionId: string) => state.conditions[conditionId],
       getSlidesForCondition: (conditionId: string) =>
-        Object.values(state.slides).filter(
-          (slide) => slide.conditionId === conditionId,
+        Object.fromEntries(
+          Object.entries(state.slides).filter(
+            (entry) => entry[1].conditionId === conditionId,
+          ),
         ),
       isFavourite: (slideId: string) => !!state.favourites[slideId],
       getFavourites: () => state.favourites,
