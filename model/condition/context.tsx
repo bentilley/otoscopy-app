@@ -22,13 +22,22 @@ export const ConditionProvider: React.FC = ({ children }) => {
 
   const selectors = useSelectors(state);
   const enhancedDispatch = useMiddleware(dispatch);
-  const actions = useActions(state, enhancedDispatch);
+  const actions = useActions(state, enhancedDispatch, uid);
 
   const { fetchCategories, fetchUserFavourites } = actions;
   React.useEffect(() => {
     fetchCategories();
     fetchUserFavourites(uid);
   }, [uid, fetchCategories, fetchUserFavourites]);
+
+  const { getCategories, getSlides, getRandomCondition } = selectors;
+  const { fetchSlidesForCondition } = actions;
+  React.useEffect(() => {
+    const slides = getSlides();
+    if (getCategories().length && !Object.values(slides).length) {
+      fetchSlidesForCondition(getRandomCondition());
+    }
+  }, [getCategories, getSlides, fetchSlidesForCondition, getRandomCondition]);
 
   return (
     <ConditionStateContext.Provider value={selectors}>

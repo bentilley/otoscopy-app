@@ -9,20 +9,23 @@ export type Action =
   | { type: 'SET_CATEGORIES'; payload: Category[] }
   | { type: 'FETCH_CONDITION'; payload: ConditionHead }
   | { type: 'SET_CONDITION'; payload: { id: string; data: Condition } }
-  | { type: 'FETCH_SLIDES'; payload: ConditionHead }
+  | { type: 'FETCH_SLIDES_FOR_CONDITION'; payload: ConditionHead }
   | {
       type: 'SET_SLIDES';
       payload: { slides: Slide[]; condition: ConditionHead };
     }
   | { type: 'FETCH_USER_FAVOURITES'; payload: string }
   | { type: 'SET_FAVOURITES'; payload: Slide[] }
-  | { type: 'ADD_TO_FAVOURITES'; payload: Slide }
-  | { type: 'REMOVE_FROM_FAVOURITES'; payload: string };
+  | { type: 'ADD_TO_FAVOURITES'; payload: { slide: Slide; userUid: string } }
+  | {
+      type: 'REMOVE_FROM_FAVOURITES';
+      payload: { slideId: string; userUid: string };
+    };
 
 export type ActionHandlers = {
   fetchCategories: () => void;
   fetchCondition: (condition: ConditionHead) => void;
-  fetchSlides: (condition: ConditionHead) => void;
+  fetchSlidesForCondition: (condition: ConditionHead) => void;
   fetchUserFavourites: (userEmail: string) => void;
   addToFavourites: (slideId: string) => void;
   removeFromFavourites: (slideId: string) => void;
@@ -31,6 +34,7 @@ export type ActionHandlers = {
 const useActions = (
   state: State,
   dispatch: React.Dispatch<Action>,
+  userUid: string,
 ): ActionHandlers => {
   const { conditions, conditionsWithSlides, slides } = state;
   return {
@@ -48,31 +52,37 @@ const useActions = (
       },
       [conditions, dispatch],
     ),
-    fetchSlides: React.useMemo(
+    fetchSlidesForCondition: React.useMemo(
       () => (condition: ConditionHead) => {
         if (!conditionsWithSlides.includes(condition.id)) {
-          dispatch({ type: 'FETCH_SLIDES', payload: condition });
+          dispatch({ type: 'FETCH_SLIDES_FOR_CONDITION', payload: condition });
         }
       },
       [conditionsWithSlides, dispatch],
     ),
     fetchUserFavourites: React.useMemo(
-      () => (userUid: string) => {
+      () => () => {
         dispatch({ type: 'FETCH_USER_FAVOURITES', payload: userUid });
       },
-      [dispatch],
+      [dispatch, userUid],
     ),
     addToFavourites: React.useMemo(
       () => (slideId: string) => {
-        dispatch({ type: 'ADD_TO_FAVOURITES', payload: slides[slideId] });
+        dispatch({
+          type: 'ADD_TO_FAVOURITES',
+          payload: { slide: slides[slideId], userUid },
+        });
       },
-      [dispatch, slides],
+      [dispatch, slides, userUid],
     ),
     removeFromFavourites: React.useMemo(
       () => (slideId: string) => {
-        dispatch({ type: 'REMOVE_FROM_FAVOURITES', payload: slideId });
+        dispatch({
+          type: 'REMOVE_FROM_FAVOURITES',
+          payload: { slideId, userUid },
+        });
       },
-      [dispatch],
+      [dispatch, userUid],
     ),
   };
 };

@@ -8,7 +8,6 @@ import { RootStackParamList } from 'components/screens';
 import Reference from 'components/Reference';
 import { ConditionHead } from 'model/condition/types';
 import { useConditions, useConditionsActions } from 'model/condition';
-import { slideData } from 'components/SlideList/__mocks__/slide-data';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Reference'>;
@@ -16,18 +15,18 @@ type Props = {
 };
 
 export const ReferenceScreen: React.FC<Props> = ({ navigation }) => {
-  const { getCategories } = useConditions();
-  const { fetchCondition, fetchSlides } = useConditionsActions();
+  const { getCategories, getFavourites } = useConditions();
+  const { fetchCondition, fetchSlidesForCondition } = useConditionsActions();
 
   const navigationFunctions = {
     goToCondition: (condition: ConditionHead) => {
       fetchCondition(condition);
-      fetchSlides(condition);
+      fetchSlidesForCondition(condition);
       navigation.navigate('Condition', { condition });
     },
     goToFavourites: () =>
       navigation.navigate('SlideList', {
-        slides: slideData,
+        slides: getFavourites(),
         isFavourites: true,
       }),
   };

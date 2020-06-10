@@ -63,11 +63,11 @@ const reducer = (state: State, action: Action): State => {
       };
     case 'ADD_TO_FAVOURITES':
       favourites = { ...state.favourites };
-      favourites[action.payload.id] = action.payload;
+      favourites[action.payload.slide.id] = action.payload.slide;
       return { ...state, favourites };
     case 'REMOVE_FROM_FAVOURITES':
       favourites = { ...state.favourites };
-      delete favourites[action.payload];
+      delete favourites[action.payload.slideId];
       return { ...state, favourites };
     default:
       return state;

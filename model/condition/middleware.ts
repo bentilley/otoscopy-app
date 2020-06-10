@@ -3,12 +3,14 @@
 import React, { Dispatch } from 'react';
 import firestore from '@react-native-firebase/firestore';
 
+// TODO Import types as a namespace
 import {
   Category,
   ConditionHead,
   ConditionDataDB,
   SlideDataDB,
   FavouriteDataDB,
+  Slide,
 } from './types';
 import { Action } from './actions';
 
@@ -31,13 +33,21 @@ const getWrappedDispatch = (dispatch: Dispatch<Action>) => {
         console.log('fetchCondition');
         fetchCondition(dispatch, action.payload);
         break;
-      case 'FETCH_SLIDES':
-        console.log('fetchSlides');
-        fetchSlides(dispatch, action.payload);
+      case 'FETCH_SLIDES_FOR_CONDITION':
+        console.log('fetchSlidesForCondition');
+        fetchSlidesForCondition(dispatch, action.payload);
         break;
       case 'FETCH_USER_FAVOURITES':
         console.log('fetchUserFavourites');
         fetchUserFavourites(dispatch, action.payload);
+        break;
+      case 'ADD_TO_FAVOURITES':
+        console.log('addToFavourites');
+        addToFavourites(action.payload);
+        break;
+      case 'REMOVE_FROM_FAVOURITES':
+        console.log('removeFromFavourites');
+        removeFromFavourites(action.payload);
         break;
       default:
         return value;
@@ -71,7 +81,7 @@ const fetchCondition = async (
   );
 };
 
-const fetchSlides = async (
+const fetchSlidesForCondition = async (
   dispatch: Dispatch<Action>,
   condition: ConditionHead,
 ): Promise<void> => {
@@ -105,6 +115,22 @@ const fetchUserFavourites = async (
     });
     dispatch({ type: 'SET_FAVOURITES', payload: favourites });
   });
+};
+
+const addToFavourites = async (payload: {
+  slide: Slide;
+  userUid: string;
+}): Promise<void> => {
+  const userDoc = firestore().collection('users').doc(payload.userUid);
+  userDoc.collection('favourites').doc(payload.slide.id).set(payload.slide);
+};
+
+const removeFromFavourites = async (payload: {
+  slideId: string;
+  userUid: string;
+}): Promise<void> => {
+  const userDoc = firestore().collection('users').doc(payload.userUid);
+  userDoc.collection('favourites').doc(payload.slideId).delete();
 };
 
 export default useMiddleware;
