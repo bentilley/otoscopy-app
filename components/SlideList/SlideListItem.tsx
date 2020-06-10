@@ -1,9 +1,11 @@
 /** @format */
 
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { COLOURS, OtoText, OtoIcon } from 'components/design';
 import { Slide } from 'model/condition/types';
+import { FavouriteStar } from 'components/Footer/icons';
+import { Thumbnail } from './Thumbnail';
 
 type SlideListItemProps = {
   slide: Slide;
@@ -14,15 +16,12 @@ const SlideListItem: React.FC<SlideListItemProps> = ({ slide, onPress }) => {
   return (
     <View style={slideListItemStyles.container}>
       <View style={slideListItemStyles.imageContainer}>
-        <Image
-          style={slideListItemStyles.image}
-          source={{ uri: slide.thumbnail_url }}
-        />
+        <Thumbnail slideId={slide.id} />
       </View>
       <View style={slideListItemStyles.infoContainer}>
         <View style={slideListItemStyles.infoHeader}>
           <View style={slideListItemStyles.title}>
-            <FavouriteStar slideId={'hi'} />
+            <FavouriteStar slideId={slide.id} size={30} />
           </View>
           <View>
             <TouchableOpacity
@@ -40,23 +39,6 @@ const SlideListItem: React.FC<SlideListItemProps> = ({ slide, onPress }) => {
         </View>
       </View>
     </View>
-  );
-};
-
-type FavouriteStarProps = {
-  slideId: string;
-};
-
-const FavouriteStar: React.FC<FavouriteStarProps> = ({ slideId }) => {
-  const [favourited, setFavourited] = React.useState(false);
-  const iconName = favourited ? 'star' : 'star-o';
-  const colour = favourited ? COLOURS.favourite : COLOURS.grey;
-  return (
-    <TouchableOpacity onPress={() => setFavourited(!favourited)}>
-      <Text>
-        <OtoIcon name={iconName} size={30} color={colour} />;
-      </Text>
-    </TouchableOpacity>
   );
 };
 
