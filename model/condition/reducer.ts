@@ -1,29 +1,37 @@
 /** @format */
 
-import { Category, Condition, Slide } from './types';
+import { Category, ConditionHead, Condition, Slide } from './types';
 import { Action } from './actions';
 
 export type State = {
   categories: Category[];
+  conditionsToFetch: ConditionHead[];
   conditions: { [index: string]: Condition };
-  conditionsWithSlides: string[];
   slides: { [slideId: string]: Slide };
+  conditionsWithSlides: string[];
   favourites: { [slideId: string]: Slide };
 };
 
 export const initialState: State = {
   categories: [],
   conditions: {},
-  conditionsWithSlides: [],
   slides: {},
+  conditionsWithSlides: [],
   favourites: {},
+  conditionsToFetch: [],
 };
 
 const reducer = (state: State, action: Action): State => {
   let favourites: { [slideId: string]: Slide };
   switch (action.type) {
     case 'SET_CATEGORIES':
-      return { ...state, categories: action.payload };
+      const conditionsToFetch = action.payload.reduce(
+        (conditions, category) => conditions.concat(category.conditions),
+        [] as ConditionHead[],
+      );
+      return { ...state, categories: action.payload, conditionsToFetch };
+    case 'SET_CONDITIONS_TO_FETCH':
+      return { ...state, conditionsToFetch: action.payload };
     case 'SET_CONDITION':
       return {
         ...state,

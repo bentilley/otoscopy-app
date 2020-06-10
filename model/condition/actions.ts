@@ -7,6 +7,7 @@ import { State } from './reducer';
 export type Action =
   | { type: 'FETCH_CATEGORIES' }
   | { type: 'SET_CATEGORIES'; payload: Category[] }
+  | { type: 'SET_CONDITIONS_TO_FETCH'; payload: ConditionHead[] }
   | { type: 'FETCH_CONDITION'; payload: ConditionHead }
   | { type: 'SET_CONDITION'; payload: { id: string; data: Condition } }
   | { type: 'FETCH_SLIDES_FOR_CONDITION'; payload: ConditionHead }
@@ -29,6 +30,7 @@ export type ActionHandlers = {
   fetchUserFavourites: (userEmail: string) => void;
   addToFavourites: (slideId: string) => void;
   removeFromFavourites: (slideId: string) => void;
+  popConditionToFetch: () => ConditionHead | undefined;
 };
 
 const useActions = (
@@ -44,6 +46,14 @@ const useActions = (
       },
       [dispatch],
     ),
+    popConditionToFetch: () => {
+      const toFetch = [...state.conditionsToFetch];
+      const next = toFetch.pop();
+      if (next) {
+        dispatch({ type: 'SET_CONDITIONS_TO_FETCH', payload: toFetch });
+      }
+      return next;
+    },
     fetchCondition: React.useMemo(
       () => (condition: ConditionHead) => {
         if (!conditions[condition.id]) {

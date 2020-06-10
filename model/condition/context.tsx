@@ -30,14 +30,18 @@ export const ConditionProvider: React.FC = ({ children }) => {
     fetchUserFavourites(uid);
   }, [uid, fetchCategories, fetchUserFavourites]);
 
-  const { getCategories, getSlides, getRandomCondition } = selectors;
-  const { fetchSlidesForCondition } = actions;
+  const {
+    popConditionToFetch,
+    fetchCondition,
+    fetchSlidesForCondition,
+  } = actions;
   React.useEffect(() => {
-    const slides = getSlides();
-    if (getCategories().length && !Object.values(slides).length) {
-      fetchSlidesForCondition(getRandomCondition());
+    const condition = popConditionToFetch();
+    if (condition) {
+      fetchCondition(condition);
+      fetchSlidesForCondition(condition);
     }
-  }, [getCategories, getSlides, fetchSlidesForCondition, getRandomCondition]);
+  }, [popConditionToFetch, fetchCondition, fetchSlidesForCondition]);
 
   return (
     <ConditionStateContext.Provider value={selectors}>
