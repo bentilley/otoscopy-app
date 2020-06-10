@@ -3,7 +3,7 @@
 import React from 'react';
 import SlideView from '../index';
 import { render, fireEvent, cleanup } from '@testing-library/react-native';
-import { slideData } from 'components/SlideList/__mocks__/slide-data';
+import { slideData } from 'components/ConditionSlides/__mocks__/slide-data';
 import { Slide } from 'model/condition/types';
 
 // This is a fix for a TouchableOpacity bug - see

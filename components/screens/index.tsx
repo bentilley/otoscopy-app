@@ -5,22 +5,27 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ConditionProvider } from 'model/condition';
 import { ConditionHead, Slide } from 'model/condition/types';
+import { LoginScreen } from 'components/screens/LoginScreen';
+import { SignUpScreen } from 'components/screens/SignUpScreen';
 import { MenuScreen } from 'components/screens/MenuScreen';
 import { ReferenceScreen } from 'components/screens/ReferenceScreen';
 import { ConditionViewScreen } from 'components/screens/ConditionViewScreen';
-import { SlideListScreen } from 'components/screens/SlideListScreen';
 import { SlideViewScreen } from 'components/screens/SlideViewScreen';
+import { ConditionSlidesScreen } from 'components/screens/ConditionSlidesScreen';
+import { FavouriteSlidesScreen } from 'components/screens/FavouriteSlidesScreen';
 import { COLOURS } from 'components/design/';
 import { MenuButton } from './MenuButton';
-import { LoginScreen } from 'components/screens/LoginScreen';
-import { SignUpScreen } from 'components/screens/SignUpScreen';
 
 export type RootStackParamList = {
   Menu: undefined;
   Reference: undefined;
   Condition: { condition: ConditionHead };
   Slide: { slide: Slide };
-  SlideList: { slides: { [slideId: string]: Slide }; isFavourites: boolean };
+  ConditionSlides: {
+    condition: ConditionHead;
+    slides: { [slideId: string]: Slide };
+  };
+  Favourites: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -50,7 +55,11 @@ export const AppScreens = () => {
           <Stack.Screen name="Reference" component={ReferenceScreen} />
           <Stack.Screen name="Condition" component={ConditionViewScreen} />
           <Stack.Screen name="Slide" component={SlideViewScreen} />
-          <Stack.Screen name="SlideList" component={SlideListScreen} />
+          <Stack.Screen
+            name="ConditionSlides"
+            component={ConditionSlidesScreen}
+          />
+          <Stack.Screen name="Favourites" component={FavouriteSlidesScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </ConditionProvider>

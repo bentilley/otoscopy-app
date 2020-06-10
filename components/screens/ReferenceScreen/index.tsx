@@ -15,7 +15,7 @@ type Props = {
 };
 
 export const ReferenceScreen: React.FC<Props> = ({ navigation }) => {
-  const { getCategories, getFavourites } = useConditions();
+  const { getCategories } = useConditions();
   const { fetchCondition, fetchSlidesForCondition } = useConditionsActions();
 
   const navigationFunctions = {
@@ -24,11 +24,7 @@ export const ReferenceScreen: React.FC<Props> = ({ navigation }) => {
       fetchSlidesForCondition(condition);
       navigation.navigate('Condition', { condition });
     },
-    goToFavourites: () =>
-      navigation.navigate('SlideList', {
-        slides: getFavourites(),
-        isFavourites: true,
-      }),
+    goToFavourites: () => navigation.navigate('Favourites'),
   };
 
   return <Reference {...navigationFunctions} categories={getCategories()} />;

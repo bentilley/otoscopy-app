@@ -22,9 +22,9 @@ export const ConditionViewScreen: React.FC<ConditionProps> = ({
 
   const navigationFunctions = {
     goToSlides: () => {
-      navigation.navigate('SlideList', {
+      navigation.navigate('ConditionSlides', {
+        condition,
         slides: getSlidesForCondition(condition.id),
-        isFavourites: false,
       });
     },
   };

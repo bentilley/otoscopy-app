@@ -1,9 +1,9 @@
 /** @format */
 
 import React from 'react';
-import SlideList from '../index';
+import { FavouritesSlideList } from '../index';
 import { render, fireEvent, cleanup } from '@testing-library/react-native';
-import { slideData } from 'components/SlideList/__mocks__/slide-data';
+import { slideData } from 'components/ConditionSlideList/__mocks__/slide-data';
 import { Slide } from 'model/condition/types';
 
 // This is a fix for a TouchableOpacity bug - see
@@ -16,38 +16,37 @@ jest.mock(
 
 let navigationStubs: {
   goToSlide: () => void;
+  studyFavourites: () => void;
 };
 
 let props: {
-  slides: Slide[];
-  isFavourites: boolean;
+  slides: { [slideId: string]: Slide };
 } = {
   slides: slideData,
-  isFavourites: false,
 };
 
 beforeEach(() => {
   navigationStubs = {
     goToSlide: jest.fn(),
+    studyFavourites: jest.fn(),
   };
 
   props.slides = slideData;
-  props.isFavourites = false;
 });
 
 afterEach(cleanup);
 
-describe('<SlideList />', () => {
+describe('<FavouritesSlideList />', () => {
   it('renders correctly', () => {
     const { queryAllByText } = render(
-      <SlideList {...navigationStubs} {...props} />,
+      <FavouritesSlideList {...navigationStubs} {...props} />,
     );
     expect(queryAllByText('view slide').length).toEqual(3);
   });
 
   it('navigates to the correct slide when the slide is pressed', () => {
     const { getAllByText } = render(
-      <SlideList {...navigationStubs} {...props} />,
+      <FavouritesSlideList {...navigationStubs} {...props} />,
     );
     const btns = getAllByText('view slide');
     expect(btns.length).toEqual(3);
@@ -55,14 +54,5 @@ describe('<SlideList />', () => {
     expect(navigationStubs.goToSlide).toHaveBeenCalledWith(
       expect.objectContaining({ condition: 'Otitis Media' }),
     );
-  });
-
-  it('shows favourites view is isFavourites is true', () => {
-    props.isFavourites = true;
-    const { queryAllByText } = render(
-      <SlideList {...navigationStubs} {...props} />,
-    );
-    expect(queryAllByText('Otitis Media').length).toEqual(3);
-    expect(queryAllByText('remove').length).toEqual(3);
   });
 });

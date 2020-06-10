@@ -16,16 +16,13 @@ type MenuProps = {
 
 export const MenuScreen: React.FC<MenuProps> = ({ navigation }) => {
   const { signoutUser } = useUser();
-  const { getFavourites, getRandomSlide } = useConditions();
+  const { getSlidesArray } = useConditions();
 
   const navigationFunctions = {
     goToReference: () => navigation.navigate('Reference'),
-    goToFavourites: () =>
-      navigation.navigate('SlideList', {
-        slides: getFavourites(),
-        isFavourites: true,
-      }),
-    goToBrowse: () => navigation.navigate('Slide', { slide: getRandomSlide() }),
+    goToFavourites: () => navigation.navigate('Favourites'),
+    goToBrowse: () =>
+      navigation.navigate('Slide', { slidePool: getSlidesArray() }),
     signoutUser,
   };
   return <Menu {...navigationFunctions} />;
