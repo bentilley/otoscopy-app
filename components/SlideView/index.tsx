@@ -15,24 +15,29 @@ import { SlideViewFooter } from './footers';
 import { useSlideViewState } from './context';
 
 type Props = {
-  slide: Slide;
-  goToCondition: () => void;
-  goToNextSlide: () => void;
+  slidePool: Slide[];
+  startingIndex: number;
+  goToCondition: (slide: Slide) => void;
 };
 
 export const SlideView: React.FC<Props> = ({
-  slide,
+  slidePool,
+  startingIndex,
   goToCondition,
-  goToNextSlide,
 }) => {
   const { state, update, movableYContainer, drawer } = useSlideViewState();
   const maxImageHeight = useMaxImageY();
+  const numSlides = slidePool.length;
+  React.useEffect(() => {
+    update.setSlideIndex(startingIndex);
+    update.setNumSlides(numSlides);
+  }, [startingIndex, update, numSlides]);
   return (
     <React.Fragment>
       <View style={styles.screen}>
         <Spacer />
         <MovableYContainer>
-          <SlideImage slideId={slide.id} />
+          <SlideImage slideId={slidePool[state.slideIndex].id} />
           {state.showOtoscope ? <Otoscope /> : null}
         </MovableYContainer>
         <Spacer
@@ -49,16 +54,22 @@ export const SlideView: React.FC<Props> = ({
           onCloseStart={() => movableYContainer.moveContainerTo(0)}
           onOpenStart={() => movableYContainer.moveContainerTo(maxImageHeight)}>
           <DiagnosisInfo
-            slideId={slide.id}
-            condition={slide.condition}
-            diagnosis={slide.diagnosis}
+            slideId={slidePool[state.slideIndex].id}
+            condition={slidePool[state.slideIndex].condition}
+            diagnosis={slidePool[state.slideIndex].diagnosis}
           />
         </Drawer>
       </View>
       <SlideViewFooter
-        slideId={slide.id}
-        goToCondition={goToCondition}
-        goToNextSlide={goToNextSlide}
+        slideId={slidePool[state.slideIndex].id}
+        goToCondition={() => goToCondition(slidePool[state.slideIndex])}
+        goToNextSlide={() => {
+          update.incrementSlideIndex();
+          drawer.closeDrawer(
+            () => movableYContainer.moveContainerTo(0),
+            () => update.setIsDiagnosed(false),
+          );
+        }}
       />
     </React.Fragment>
   );

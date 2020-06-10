@@ -8,6 +8,7 @@ import { getRandomInt } from 'utils';
 export type Selectors = {
   getCategories: () => Category[];
   getSlides: () => { [slideId: string]: Slide };
+  getSlidesArray: () => Slide[];
   getCondition: (id: string) => Condition;
   getSlidesForCondition: (conditionId: string) => { [slideId: string]: Slide };
   isFavourite: (slideId: string) => boolean;
@@ -21,6 +22,7 @@ const useSelectors = (state: State): Selectors => {
     () => ({
       getCategories: () => state.categories,
       getSlides: () => state.slides,
+      getSlidesArray: () => Object.values(state.slides),
       getCondition: (conditionId: string) => state.conditions[conditionId],
       getSlidesForCondition: (conditionId: string) =>
         Object.fromEntries(

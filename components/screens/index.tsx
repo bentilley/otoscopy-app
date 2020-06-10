@@ -20,7 +20,7 @@ export type RootStackParamList = {
   Menu: undefined;
   Reference: undefined;
   Condition: { condition: ConditionHead };
-  Slide: { slide: Slide };
+  Slide: { slidePool: Slide[]; startingIndex?: number };
   ConditionSlides: {
     condition: ConditionHead;
     slides: { [slideId: string]: Slide };

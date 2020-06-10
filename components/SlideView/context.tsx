@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Animated } from 'react-native';
+import { useSimpleUpdater } from 'utils';
 
 // TODO Move to dimensions and calculate from screen dimensions.
 const MAX_DRAW_HEIGHT = 370;
@@ -11,14 +12,23 @@ const MAX_DRAW_HEIGHT = 370;
  * Shared state for the SlideView component.
  * @param showOtoscope - Whether the otoscope view is showing.
  * @param isDiagnosed - Whether the slide is diagnosed or not.
+ * @param slideIndex - The index of the slide from the slidePool to show.
  */
-type State = { showOtoscope: boolean; isDiagnosed: boolean };
+type State = {
+  showOtoscope: boolean;
+  isDiagnosed: boolean;
+  slideIndex: number;
+  numSlides: number;
+};
 
 interface Context {
   state: State;
   update: {
     setShowOtoscope: (b: boolean) => void;
     setIsDiagnosed: (b: boolean) => void;
+    setSlideIndex: (b: number) => void;
+    incrementSlideIndex: () => void;
+    setNumSlides: (b: number) => void;
   };
   movableYContainer: {
     imageTranslationY: Animated.Value;
@@ -44,12 +54,39 @@ export const SlideViewProvider: React.FC = ({ children }) => {
   const [state, setState] = React.useState<State>({
     showOtoscope: false,
     isDiagnosed: false,
+    slideIndex: 0,
+    numSlides: 0,
   });
 
-  const setShowOtoscope = (value: boolean) =>
-    setState((prevState) => ({ ...prevState, showOtoscope: value }));
-  const setIsDiagnosed = (value: boolean) =>
-    setState((prevState) => ({ ...prevState, isDiagnosed: value }));
+  const setShowOtoscope = useSimpleUpdater<State>('showOtoscope', setState);
+  const setIsDiagnosed = useSimpleUpdater<State>('isDiagnosed', setState);
+  const setSlideIndex = useSimpleUpdater<State>('slideIndex', setState);
+  const setNumSlides = useSimpleUpdater<State>('numSlides', setState);
+  const { slideIndex, numSlides } = state;
+  const incrementSlideIndex = React.useCallback(() => {
+    const nextIndex = slideIndex + 1;
+    if (nextIndex < numSlides) {
+      setState((prevState) => ({ ...prevState, slideIndex: nextIndex }));
+    } else {
+      setState((prevState) => ({ ...prevState, slideIndex: 0 }));
+    }
+  }, [slideIndex, numSlides]);
+  const update = React.useMemo(
+    () => ({
+      setShowOtoscope,
+      setIsDiagnosed,
+      setSlideIndex,
+      setNumSlides,
+      incrementSlideIndex,
+    }),
+    [
+      setShowOtoscope,
+      setIsDiagnosed,
+      setSlideIndex,
+      setNumSlides,
+      incrementSlideIndex,
+    ],
+  );
 
   const imageTranslationY = React.useRef(new Animated.Value(0)).current;
   const movableYContainer = {
@@ -92,12 +129,7 @@ export const SlideViewProvider: React.FC = ({ children }) => {
 
   return (
     <SlideViewContext.Provider
-      value={{
-        state,
-        update: { setShowOtoscope, setIsDiagnosed },
-        movableYContainer,
-        drawer,
-      }}>
+      value={{ state, update, movableYContainer, drawer }}>
       {children}
     </SlideViewContext.Provider>
   );
