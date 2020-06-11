@@ -28,10 +28,13 @@ export const SlideView: React.FC<Props> = ({
   const { state, update, movableYContainer, drawer } = useSlideViewState();
   const maxImageHeight = useMaxImageY();
   const numSlides = slidePool.length;
+
+  const { setSlideIndex, setNumSlides } = update;
   React.useEffect(() => {
-    update.setSlideIndex(startingIndex);
-    update.setNumSlides(numSlides);
-  }, [startingIndex, update, numSlides]);
+    setSlideIndex(startingIndex);
+    setNumSlides(numSlides);
+  }, [startingIndex, setSlideIndex, numSlides, setNumSlides]);
+
   return (
     <React.Fragment>
       <View style={styles.screen}>
@@ -70,10 +73,12 @@ export const SlideView: React.FC<Props> = ({
         slideId={slidePool[state.slideIndex].id}
         goToCondition={() => goToCondition(slidePool[state.slideIndex])}
         goToNextSlide={() => {
-          update.incrementSlideIndex();
           drawer.closeDrawer(
             () => movableYContainer.moveContainerTo(0),
-            () => update.setIsDiagnosed(false),
+            () => {
+              update.incrementSlideIndex();
+              update.setIsDiagnosed(false);
+            },
           );
         }}
       />

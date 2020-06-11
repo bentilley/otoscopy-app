@@ -22,4 +22,6 @@ export const MovableYContainer: React.FC = ({ children }) => {
   );
 };
 
-const styles = StyleSheet.create({ container: { justifyContent: 'center' } });
+const styles = StyleSheet.create({
+  container: { justifyContent: 'center', alignItems: 'center' },
+});
