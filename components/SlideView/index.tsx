@@ -8,9 +8,9 @@ import { Otoscope } from './Otoscope';
 import { Drawer } from './Draw';
 import { MovableYContainer } from './MovableYContainer';
 import { DiagnosisInfo } from './DiagnosisInfo';
-import { SlideImage } from './SlideImage';
+import { SlideImage } from 'components/UI';
 import { Spacer } from './Spacer';
-import { useMaxImageY } from './dimensions';
+import { useMaxImageY, OTOSCOPE_BOUNDARY_RADIUS } from './dimensions';
 import { SlideViewFooter } from './footers';
 import { useSlideViewState } from './context';
 
@@ -37,7 +37,13 @@ export const SlideView: React.FC<Props> = ({
       <View style={styles.screen}>
         <Spacer />
         <MovableYContainer>
-          <SlideImage slideId={slidePool[state.slideIndex].id} />
+          <SlideImage
+            firebaseRef={
+              '/slide-img/' + slidePool[state.slideIndex].id + '.jpg'
+            }
+            width={OTOSCOPE_BOUNDARY_RADIUS * 2}
+            height={OTOSCOPE_BOUNDARY_RADIUS * 2}
+          />
           {state.showOtoscope ? <Otoscope /> : null}
         </MovableYContainer>
         <Spacer
