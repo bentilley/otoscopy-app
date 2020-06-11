@@ -3,6 +3,7 @@
 import React from 'react';
 import { View, Image } from 'react-native';
 import storage from '@react-native-firebase/storage';
+import { useErrorHandling } from 'services/error-handling';
 
 type Props = {
   firebaseRef: string;
@@ -12,6 +13,7 @@ type Props = {
 
 export const SlideImage: React.FC<Props> = ({ firebaseRef, width, height }) => {
   const [url, setUrl] = React.useState<string | null>(null);
+  const { logError } = useErrorHandling();
 
   React.useEffect(() => {
     storage()
@@ -19,9 +21,12 @@ export const SlideImage: React.FC<Props> = ({ firebaseRef, width, height }) => {
       .getDownloadURL()
       .then(
         (downloadUrl) => setUrl(downloadUrl),
-        (err) => console.error(err),
+        (err) => {
+          setUrl(null);
+          logError(err, { firebaseRef });
+        },
       );
-  }, [firebaseRef, setUrl]);
+  }, [firebaseRef, setUrl, logError]);
 
   return url ? (
     <Image source={{ uri: url }} style={{ width, height }} />
