@@ -12,6 +12,7 @@ interface COLOURS {
   pirmaryLight: string;
   primaryDark: string;
   favourite: string;
+  error: string;
 }
 
 export const COLOURS: COLOURS = Object.freeze({

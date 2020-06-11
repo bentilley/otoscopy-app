@@ -15,7 +15,7 @@ type Props = {
   information: ConditionSection;
 };
 
-const InfoSection: React.FC<Props> = ({ information }) => {
+export const InfoSection: React.FC<Props> = ({ information }) => {
   let body;
   if (isList(information)) {
     body = information.map((i) => <Bullet text={i} key={shortHash(i)} />);
@@ -49,12 +49,11 @@ const styles = StyleSheet.create({
   factSheetSectionSubSectionTitle: { paddingTop: 10, paddingBottom: 5 },
 });
 
-// TODO get a nice bullet icon for the factsheet lists
 const Bullet: React.FC<{ text: string }> = ({ text }) => {
   return (
     <View style={bullet.container}>
       <View style={bullet.point}>
-        <OtoIcon name="info" size={5} color={COLOURS.grey} />
+        <OtoIcon name="dash" size={5} color={COLOURS.grey} />
       </View>
       <View style={bullet.text}>
         <OtoText size="small">{text}</OtoText>
@@ -68,5 +67,3 @@ const bullet = StyleSheet.create({
   point: { paddingHorizontal: 5, paddingVertical: 5 },
   text: { flex: 1, paddingRight: 25 },
 });
-
-export default InfoSection;

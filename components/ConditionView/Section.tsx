@@ -5,16 +5,17 @@ import { StyleSheet, View, Text } from 'react-native';
 import { ConditionSection } from 'model/condition/types';
 import { OtoText, OtoIcon, COLOURS } from 'components/design';
 import { sectionMeta } from './sections';
-import InfoSection from './InfoSection';
+import { InfoSection } from './InfoSection';
 
 type Props = {
   information: ConditionSection;
   section: string;
 };
 
-// TODO icons for symptoms, clinical signs, investogations, audiology, management, and complications
-const Section: React.FC<Props> = ({ information, section }) => {
-  if (!information) return null;
+export const Section: React.FC<Props> = ({ information, section }) => {
+  if (!information) {
+    return null;
+  }
   return (
     <View style={styles.container}>
       <View style={styles.icon}>
@@ -49,5 +50,3 @@ const styles = StyleSheet.create({
   title: { paddingVertical: 8 },
   text: { flex: 8 },
 });
-
-export default Section;

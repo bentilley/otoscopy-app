@@ -68,9 +68,9 @@ const ToggleFavourite: React.FC<ToggleFavouriteProps> = ({
         isFavourite ? removeFromFavourites(slideId) : addToFavourites(slideId)
       }
       style={removeFavouriteStyles.container}>
-      <OtoIcon name="caret-right" size={15} color={COLOURS.primary} />
+      <OtoIcon name="close" size={11} color={COLOURS.error} />
       <OtoText size="small">
-        <Text style={{ color: COLOURS.primary }}>{text}</Text>
+        <Text style={{ color: COLOURS.error }}> {text}</Text>
       </OtoText>
     </TouchableOpacity>
   );
