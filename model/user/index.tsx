@@ -126,6 +126,7 @@ interface AuthError {
   code: string;
 }
 
+// TODO Set up Sentry error logging for authenication errors.
 /**
  * getAuthErrorHandler
  * Create a handler to convert Firebase auth codes into human readable strings.

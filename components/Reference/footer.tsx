@@ -9,6 +9,7 @@ type Props = {
   goToFavourites: () => void;
 };
 
+// TODO Add search feature to the category reference page
 export const ReferenceFooter: React.FC<Props> = ({ goToFavourites }) => {
   return (
     <Footer style={styles.footer}>

@@ -38,6 +38,7 @@ interface UndiagnosedFooterProps {
   slideId: string;
 }
 
+// TODO Set up diagram view
 /**
  * UndiagnosedFooter
  * Footer to display when the slide hasn't been diagnosed.
@@ -57,7 +58,7 @@ export const UndiagnosedFooter: React.FC<UndiagnosedFooterProps> = ({
       <FooterIcon
         iconName="eardrum"
         colour={COLOURS.grey}
-        onPress={() => console.log('pressed')}
+        onPress={() => console.log('show diagram')}
       />
     </Footer>
   );

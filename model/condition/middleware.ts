@@ -26,27 +26,21 @@ const getWrappedDispatch = (dispatch: Dispatch<Action>) => {
     const value = dispatch(action);
     switch (action.type) {
       case 'FETCH_CATEGORIES':
-        console.log('fetchCategories');
         fetchCategories(dispatch);
         break;
       case 'FETCH_CONDITION':
-        console.log('fetchCondition');
         fetchCondition(dispatch, action.payload);
         break;
       case 'FETCH_SLIDES_FOR_CONDITION':
-        console.log('fetchSlidesForCondition');
         fetchSlidesForCondition(dispatch, action.payload);
         break;
       case 'FETCH_USER_FAVOURITES':
-        console.log('fetchUserFavourites');
         fetchUserFavourites(dispatch, action.payload);
         break;
       case 'ADD_TO_FAVOURITES':
-        console.log('addToFavourites');
         addToFavourites(action.payload);
         break;
       case 'REMOVE_FROM_FAVOURITES':
-        console.log('removeFromFavourites');
         removeFromFavourites(action.payload);
         break;
       default:
@@ -63,6 +57,7 @@ const fetchCategories = async (dispatch: Dispatch<Action>): Promise<void> => {
   dispatch({ type: 'SET_CATEGORIES', payload: categories });
 };
 
+// TODO Set up Sentry error logging for condition firebase call
 const fetchCondition = async (
   dispatch: Dispatch<Action>,
   condition: ConditionHead,
@@ -75,12 +70,12 @@ const fetchCondition = async (
       dispatch({ type: 'SET_CONDITION', payload: { id: doc.id, data } });
     },
     (err) => {
-      console.error('Fetch Condition has failed!');
       console.error(err);
     },
   );
 };
 
+// TODO Set up Sentry error logging for slide firebase call
 const fetchSlidesForCondition = async (
   dispatch: Dispatch<Action>,
   condition: ConditionHead,
@@ -96,7 +91,6 @@ const fetchSlidesForCondition = async (
       dispatch({ type: 'SET_SLIDES', payload: { slides, condition } });
     },
     (err) => {
-      console.error('Fetch Slides has failed!');
       console.error(err);
     },
   );
