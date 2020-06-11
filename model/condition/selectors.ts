@@ -13,6 +13,7 @@ export type Selectors = {
   getSlidesForCondition: (conditionId: string) => { [slideId: string]: Slide };
   isFavourite: (slideId: string) => boolean;
   getFavourites: () => { [slideId: string]: Slide };
+  getFavouritesArray: () => Slide[];
   getRandomSlide: () => Slide;
   getRandomCondition: () => ConditionHead;
 };
@@ -32,6 +33,7 @@ const useSelectors = (state: State): Selectors => {
         ),
       isFavourite: (slideId: string) => !!state.favourites[slideId],
       getFavourites: () => state.favourites,
+      getFavouritesArray: () => Object.values(state.favourites),
       getRandomSlide: () => {
         const slideArray = Object.values(state.slides);
         return slideArray[getRandomInt(slideArray.length)];

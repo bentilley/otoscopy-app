@@ -13,10 +13,17 @@ type Props = {
 };
 
 export const FavouriteSlidesScreen: React.FC<Props> = ({ navigation }) => {
-  const { getFavourites } = useConditions();
+  const { getFavourites, getFavouritesArray, getSlidesArray } = useConditions();
   const navigationFunctions = {
-    goToSlide: (slide: Slide) => navigation.navigate('Slide', { slide }),
-    studyFavourites: () => console.log('study favourites'),
+    goToSlide: (slide: Slide) => {
+      const slidePool = getSlidesArray();
+      const startingIndex = slidePool.map((s) => s.id).indexOf(slide.id);
+      navigation.navigate('Slide', { slidePool, startingIndex });
+    },
+    studyFavourites: () => {
+      const slidePool = getFavouritesArray();
+      navigation.navigate('Slide', { slidePool });
+    },
   };
   return <FavouriteSlides slides={getFavourites()} {...navigationFunctions} />;
 };
