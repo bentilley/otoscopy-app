@@ -634,8 +634,14 @@ PODS:
     - React
   - RNScreens (2.7.0):
     - React
+  - RNSentry (1.4.5):
+    - React
+    - Sentry (~> 5.1.4)
   - RNVectorIcons (6.6.0):
     - React
+  - Sentry (5.1.4):
+    - Sentry/Core (= 5.1.4)
+  - Sentry/Core (5.1.4)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -696,6 +702,7 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -731,6 +738,7 @@ SPEC REPOS:
     - nanopb
     - OpenSSL-Universal
     - PromisesObjC
+    - Sentry
     - YogaKit
 
 EXTERNAL SOURCES:
@@ -800,6 +808,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSentry:
+    :path: "../node_modules/@sentry/react-native"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
   Yoga:
@@ -869,7 +879,9 @@ SPEC CHECKSUMS:
   RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
   RNReanimated: 955cf4068714003d2f1a6e2bae3fb1118f359aff
   RNScreens: cf198f915f8a2bf163de94ca9f5bfc8d326c3706
+  RNSentry: 0a70359ddacbfb9b1cbbb0971e54065b9f70ac57
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
+  Sentry: 74f2ad93a20a5567a1badaedf5b3f60b142ad082
   Yoga: 3ebccbdd559724312790e7742142d062476b698e
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
