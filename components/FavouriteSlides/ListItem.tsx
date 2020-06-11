@@ -26,8 +26,8 @@ export const ListItem: React.FC<Props> = ({ slide, onPress }) => {
         <React.Fragment>
           <View style={slideListItemStyles.infoHeader}>
             <View style={slideListItemStyles.title}>
-              <OtoText size="medium" weight="semibold">
-                {slide.condition}
+              <OtoText size="smallMedium" weight="semibold">
+                {clip(slide.condition, 24)}
               </OtoText>
             </View>
             <View>
@@ -89,5 +89,5 @@ const slideListItemStyles = StyleSheet.create({
   },
   title: { flexDirection: 'row' },
   viewSlideButton: { flexDirection: 'row', alignItems: 'center' },
-  infoText: { flex: 1, paddingVertical: 8, justifyContent: 'space-between' },
+  infoText: { flex: 1, paddingVertical: 6, justifyContent: 'space-between' },
 });
