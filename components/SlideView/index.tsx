@@ -16,25 +16,12 @@ import { useSlideViewState } from './context';
 
 type Props = {
   slidePool: Slide[];
-  startingIndex: number;
   goToCondition: (slide: Slide) => void;
 };
 
-export const SlideView: React.FC<Props> = ({
-  slidePool,
-  startingIndex,
-  goToCondition,
-}) => {
+export const SlideView: React.FC<Props> = ({ slidePool, goToCondition }) => {
   const { state, update, movableYContainer, drawer } = useSlideViewState();
   const maxImageHeight = useMaxImageY();
-  const numSlides = slidePool.length;
-
-  const { setSlideIndex, setNumSlides } = update;
-  React.useEffect(() => {
-    setSlideIndex(startingIndex);
-    setNumSlides(numSlides);
-  }, [startingIndex, setSlideIndex, numSlides, setNumSlides]);
-
   return (
     <React.Fragment>
       <View style={styles.screen}>

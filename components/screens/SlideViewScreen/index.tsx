@@ -28,12 +28,10 @@ export const SlideViewScreen: React.FC<SlideProps> = ({
     },
   };
   return (
-    <SlideViewProvider>
-      <SlideView
-        {...navigationFunctions}
-        slidePool={route.params.slidePool}
-        startingIndex={route.params.startingIndex || 0}
-      />
+    <SlideViewProvider
+      totalNumberOfSlides={route.params.slidePool.length}
+      startingIndex={route.params.startingIndex || 0}>
+      <SlideView {...navigationFunctions} slidePool={route.params.slidePool} />
     </SlideViewProvider>
   );
 };

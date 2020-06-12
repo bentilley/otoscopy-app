@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Animated } from 'react-native';
-import { useSimpleUpdater } from 'utils';
 
 // TODO Move to dimensions and calculate from screen dimensions.
 const MAX_DRAW_HEIGHT = 370;
@@ -45,48 +44,45 @@ interface Context {
 
 const SlideViewContext = React.createContext<Context | null>(null);
 
+interface Props {
+  totalNumberOfSlides: number;
+  startingIndex: number;
+}
+
 /**
  * SlideViewProvider
  * Provider component for the SlideView context state.
+ * @param totalNumberOfSlides - Total number of slides that the view that show.
+ * @param startingIndex - Index of the slide for the view to start on.
  * @param children - Child react components.
  */
-export const SlideViewProvider: React.FC = ({ children }) => {
-  const [state, setState] = React.useState<State>({
-    showOtoscope: false,
-    isDiagnosed: false,
-    slideIndex: 0,
-    numSlides: 0,
-  });
+export const SlideViewProvider: React.FC<Props> = ({
+  totalNumberOfSlides,
+  startingIndex,
+  children,
+}) => {
+  const [showOtoscope, setShowOtoscope] = React.useState(false);
+  const [isDiagnosed, setIsDiagnosed] = React.useState(false);
+  const [slideIndex, setSlideIndex] = React.useState(startingIndex);
+  const [numSlides, setNumSlides] = React.useState(totalNumberOfSlides);
 
-  const setShowOtoscope = useSimpleUpdater<State>('showOtoscope', setState);
-  const setIsDiagnosed = useSimpleUpdater<State>('isDiagnosed', setState);
-  const setSlideIndex = useSimpleUpdater<State>('slideIndex', setState);
-  const setNumSlides = useSimpleUpdater<State>('numSlides', setState);
-  const { slideIndex, numSlides } = state;
   const incrementSlideIndex = React.useCallback(() => {
     const nextIndex = slideIndex + 1;
     if (nextIndex < numSlides) {
-      setState((prevState) => ({ ...prevState, slideIndex: nextIndex }));
+      setSlideIndex(nextIndex);
     } else {
-      setState((prevState) => ({ ...prevState, slideIndex: 0 }));
+      setSlideIndex(0);
     }
   }, [slideIndex, numSlides]);
-  const update = React.useMemo(
-    () => ({
-      setShowOtoscope,
-      setIsDiagnosed,
-      setSlideIndex,
-      setNumSlides,
-      incrementSlideIndex,
-    }),
-    [
-      setShowOtoscope,
-      setIsDiagnosed,
-      setSlideIndex,
-      setNumSlides,
-      incrementSlideIndex,
-    ],
-  );
+
+  const state = { showOtoscope, isDiagnosed, slideIndex, numSlides };
+  const update = {
+    setShowOtoscope,
+    setIsDiagnosed,
+    setSlideIndex,
+    setNumSlides,
+    incrementSlideIndex,
+  };
 
   const imageTranslationY = React.useRef(new Animated.Value(0)).current;
   const movableYContainer = {

@@ -16,15 +16,13 @@ export const SlideImage: React.FC<Props> = ({ firebaseRef, width, height }) => {
   const { logError } = useErrorHandling();
 
   React.useEffect(() => {
+    setUrl(null);
     storage()
       .ref(firebaseRef)
       .getDownloadURL()
       .then(
         (downloadUrl) => setUrl(downloadUrl),
-        (err) => {
-          setUrl(null);
-          logError(err, { firebaseRef });
-        },
+        (err) => logError(err, { firebaseRef }),
       );
   }, [firebaseRef, setUrl, logError]);
 
