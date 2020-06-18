@@ -1,9 +1,10 @@
 /** @format */
 
 import React from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, ActivityIndicator, StyleSheet } from 'react-native';
 import storage from '@react-native-firebase/storage';
 import { useErrorHandling } from 'services/error-handling';
+import { COLOURS } from 'components/design';
 
 type Props = {
   firebaseRef: string;
@@ -39,5 +40,13 @@ const LoadingImgPlaceholder: React.FC<LoadingImgPlaceholderProps> = ({
   width,
   height,
 }) => {
-  return <View style={{ width, height }} />;
+  return (
+    <View style={[styles.loading, { width, height }]}>
+      <ActivityIndicator size="small" color={COLOURS.primary} />
+    </View>
+  );
 };
+
+const styles = StyleSheet.create({
+  loading: { justifyContent: 'center', alignItems: 'center' },
+});
