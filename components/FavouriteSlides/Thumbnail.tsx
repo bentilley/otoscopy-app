@@ -7,6 +7,7 @@ type Props = {
   slideId: string;
 };
 
+// TODO Make the dimensions adapt to screen size
 export const Thumbnail: React.FC<Props> = ({ slideId }) => {
   return (
     <SlideImage
