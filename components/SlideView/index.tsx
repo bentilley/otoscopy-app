@@ -30,7 +30,9 @@ export const SlideView: React.FC<Props> = ({ slidePool, goToCondition }) => {
   return (
     <React.Fragment>
       <View style={styles.screen}>
-        <SwipeContainer>
+        <SwipeContainer
+          onSwipeRightComplete={() => update.incrementSlideIndex()}
+          onSwipeLeftComplete={() => update.decrementSlideIndex()}>
           <Spacer />
           <MovableContainer>
             <MainImage firebaseRef={'/slide-img/' + currentSlide.id + '.jpg'} />

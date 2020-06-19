@@ -26,8 +26,9 @@ interface Context {
     setShowOtoscope: (b: boolean) => void;
     setIsDiagnosed: (b: boolean) => void;
     setSlideIndex: (b: number) => void;
-    incrementSlideIndex: () => void;
     setNumSlides: (b: number) => void;
+    incrementSlideIndex: () => void;
+    decrementSlideIndex: () => void;
   };
   movableContainer: {
     translation: Animated.ValueXY;
@@ -74,6 +75,14 @@ export const SlideViewProvider: React.FC<Props> = ({
       setSlideIndex(0);
     }
   }, [slideIndex, numSlides]);
+  const decrementSlideIndex = React.useCallback(() => {
+    const nextIndex = slideIndex - 1;
+    if (nextIndex >= 0) {
+      setSlideIndex(nextIndex);
+    } else {
+      setSlideIndex(numSlides - 1);
+    }
+  }, [slideIndex, numSlides]);
 
   const state = { showOtoscope, isDiagnosed, slideIndex, numSlides };
   const update = {
@@ -82,6 +91,7 @@ export const SlideViewProvider: React.FC<Props> = ({
     setSlideIndex,
     setNumSlides,
     incrementSlideIndex,
+    decrementSlideIndex,
   };
 
   const translation = React.useRef(new Animated.ValueXY()).current;

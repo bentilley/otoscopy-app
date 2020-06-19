@@ -16,11 +16,14 @@ interface Props {
   onCloseComplete?: () => void;
 }
 
-// TODO Complete this doc string
 /**
  * Draw
  * Slide up draw at bottom of app.
  * @param children - Component(s) to display in the draw.
+ * @param onOpenStart - Function to run when the drawer starts opening.
+ * @param onOpenComplete - Function to run when the drawer finishes opening.
+ * @param onCloseStart - Function to run when the drawer starts closing.
+ * @param onCloseComplete - Function to fun when the draw finishes closing.
  */
 export const Drawer: React.FC<Props> = ({
   children,
