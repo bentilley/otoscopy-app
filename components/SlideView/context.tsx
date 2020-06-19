@@ -29,9 +29,9 @@ interface Context {
     incrementSlideIndex: () => void;
     setNumSlides: (b: number) => void;
   };
-  movableYContainer: {
-    imageTranslationY: Animated.Value;
-    moveContainerTo: (Y: number) => void;
+  movableContainer: {
+    translation: Animated.ValueXY;
+    moveYTo: (Y: number) => void;
   };
   drawer: {
     drawerHeight: Animated.Value;
@@ -84,11 +84,11 @@ export const SlideViewProvider: React.FC<Props> = ({
     incrementSlideIndex,
   };
 
-  const imageTranslationY = React.useRef(new Animated.Value(0)).current;
-  const movableYContainer = {
-    imageTranslationY,
-    moveContainerTo: (Y: number) => {
-      Animated.timing(imageTranslationY, {
+  const translation = React.useRef(new Animated.ValueXY()).current;
+  const movableContainer = {
+    translation,
+    moveYTo: (Y: number) => {
+      Animated.timing(translation.y, {
         toValue: Y,
         useNativeDriver: false,
       }).start();
@@ -125,7 +125,7 @@ export const SlideViewProvider: React.FC<Props> = ({
 
   return (
     <SlideViewContext.Provider
-      value={{ state, update, movableYContainer, drawer }}>
+      value={{ state, update, movableContainer, drawer }}>
       {children}
     </SlideViewContext.Provider>
   );
