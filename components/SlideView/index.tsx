@@ -13,6 +13,7 @@ import { Spacer } from './Spacer';
 import { useMaxImageY } from './dimensions';
 import { SlideViewFooter } from './footers';
 import { useSlideViewState } from './context';
+import { SwipeContainer } from './SwipeContainer';
 
 // TODO Fix Drawer closing bug (not working with swipe)
 // TODO Add tap to close gesture to Drawer
@@ -29,6 +30,7 @@ export const SlideView: React.FC<Props> = ({ slidePool, goToCondition }) => {
   return (
     <React.Fragment>
       <View style={styles.screen}>
+        <SwipeContainer>
           <Spacer />
           <MovableContainer>
             <MainImage firebaseRef={'/slide-img/' + currentSlide.id + '.jpg'} />
@@ -51,6 +53,7 @@ export const SlideView: React.FC<Props> = ({ slidePool, goToCondition }) => {
               diagnosis={currentSlide.diagnosis}
             />
           </Drawer>
+        </SwipeContainer>
       </View>
       <SlideViewFooter
         slideId={currentSlide.id}
