@@ -4,6 +4,8 @@ import { createIconSetFromIcoMoon } from 'react-native-vector-icons';
 import icoMoonConfig from './otoicon.json';
 export const OtoIcon = createIconSetFromIcoMoon(icoMoonConfig);
 
+// TODO Fix missing icons for android build
+
 /*
  * If you need to add more icons to this then there are instructions for doing
  * that here =>

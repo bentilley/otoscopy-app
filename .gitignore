@@ -64,3 +64,4 @@ buck-out/
 android/app/google-services.json
 android/sentry.properties
 ios/GoogleService-Info.plist
+ios/sentry.properties

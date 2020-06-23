@@ -14,6 +14,9 @@ import { useMaxImageY, OTOSCOPE_BOUNDARY_RADIUS } from './dimensions';
 import { SlideViewFooter } from './footers';
 import { useSlideViewState } from './context';
 
+// TODO Fix Drawer closing bug (not working with swipe)
+// TODO Add tap to close gesture to Drawer
+
 type Props = {
   slidePool: Slide[];
   goToCondition: (slide: Slide) => void;
