@@ -17,7 +17,20 @@ of making a diagnosis during an ear exam, through an otoscope.
 
 ## Developing
 
-To run the app in development mode, run
+After cloning the repo, give it an `npm install`. Then run `cd ios && pod
+install` to install the iOS dependencies.
+
+You'll also need to provide your own Firebase config to run the app. Follow the
+instructions on the [React Native Firebase website](https://rnfirebase.io/) to
+set up a `ios/GoogleService-Info.plist` file and a
+`android/app/google-services.json` file.
+
+If you want to integrate with Sentry you'll also need to set up Sentry as
+describe in the [Sentry React Native
+docs](https://docs.sentry.io/platforms/react-native/), and create a
+`android/sentry.properties` file as described there.
+
+Once that's done, to run the app in devlopment mode, run
 
 ```bash
 npx react-native start
