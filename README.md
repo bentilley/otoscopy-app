@@ -1,10 +1,23 @@
 # Otoscopy App
 
-An app for learning about condition of the inner ear.
+An app for learning about condition of the inner ear. Mimicking the conditions
+of making a diagnosis during an ear exam, through an otoscope.
+
+![Otoscope Tour](docs/otoapp-otoscope-tour.gif 'Otoscope Showcase')
+
+## Features
+
+- Browse slides of otoscope views of the ear;
+- Toggle the otoscope to mimic an actual ear examination;
+- Toggle the diagnosis notes to view information about the ear;
+- Comprehensive notes on specific conditions and categories of conditions;
+- Add slides to favourites to create personal learning experience.
+
+![Fact sheet Tour](docs/otoapp-factsheet-tour.gif "Fact sheet Showcase")
 
 ## Developing
 
-To run the app in devlopment mode, run
+To run the app in development mode, run
 
 ```bash
 npx react-native start
