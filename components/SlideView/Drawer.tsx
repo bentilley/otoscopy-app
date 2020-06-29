@@ -4,10 +4,7 @@ import React from 'react';
 import { View, StyleSheet, Animated } from 'react-native';
 import { OtoIcon, COLOURS } from 'components/design';
 import { useSlideViewState } from './context';
-
-// TODO Move these to dimensions and make them depend on the screem dimensions
-const MAX_DRAW_HEIGHT = 370;
-const MIN_MOVEMENT_FOR_CLOSE = 20;
+import { MIN_MOVEMENT_FOR_CLOSE, useMaxDrawerHeight } from './dimensions';
 
 interface Props {
   onOpenStart?: () => void;
@@ -39,6 +36,7 @@ export const Drawer: React.FC<Props> = ({
     openDrawer,
     closeDrawer,
   } = useSlideViewState().drawer;
+  const maxDrawerHeight = useMaxDrawerHeight();
   return (
     <Animated.View style={[styles.container, { height: drawerHeight }]}>
       <View
@@ -50,7 +48,7 @@ export const Drawer: React.FC<Props> = ({
           if (movedSoFarY < -MIN_MOVEMENT_FOR_CLOSE) {
             openDrawer(onOpenStart, onOpenComplete);
           } else if (movedSoFarY < MIN_MOVEMENT_FOR_CLOSE) {
-            drawerHeight.setValue(MAX_DRAW_HEIGHT - movedSoFarY);
+            drawerHeight.setValue(maxDrawerHeight - movedSoFarY);
           } else {
             closeDrawer(onCloseStart, onCloseComplete);
           }

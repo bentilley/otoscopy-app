@@ -2,9 +2,7 @@
 
 import React from 'react';
 import { Animated } from 'react-native';
-
-// TODO Move to dimensions and calculate from screen dimensions.
-const MAX_DRAW_HEIGHT = 370;
+import { useMaxDrawerHeight } from './dimensions';
 
 /**
  * SlideViewState
@@ -66,6 +64,7 @@ export const SlideViewProvider: React.FC<Props> = ({
   const [isDiagnosed, setIsDiagnosed] = React.useState(false);
   const [slideIndex, setSlideIndex] = React.useState(startingIndex);
   const [numSlides, setNumSlides] = React.useState(totalNumberOfSlides);
+  const maxDrawerHeight = useMaxDrawerHeight();
 
   const incrementSlideIndex = React.useCallback(() => {
     const nextIndex = slideIndex + 1;
@@ -116,7 +115,7 @@ export const SlideViewProvider: React.FC<Props> = ({
     openDrawer: (onStart?: () => void, onComplete?: () => void) => {
       onStart && onStart();
       Animated.timing(drawerHeight, {
-        toValue: MAX_DRAW_HEIGHT,
+        toValue: maxDrawerHeight,
         useNativeDriver: false,
       }).start(({ finished }) =>
         finished && onComplete ? onComplete() : null,
