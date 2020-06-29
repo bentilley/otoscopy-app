@@ -6,17 +6,26 @@ import { COLOURS, OtoText, OtoIcon } from 'components/design';
 import { Slide } from 'model/condition/types';
 import { FavouriteStar } from 'components/Footer/icons';
 import { ListItemContainer } from 'components/UI';
-import { Thumbnail } from './Thumbnail';
+import { Thumbnail } from 'components/UI';
 
 type Props = {
+  width: number;
   slide: Slide;
   onPress: () => void;
 };
 
-export const ListItem: React.FC<Props> = ({ slide, onPress }) => {
+/**
+ * ListItem
+ * A single slide item on the condition slide list.
+ * @param width - the width of the item;
+ * @param slide - the slide data for the item;
+ * @param onPress - a callback for when the item is pressed.
+ */
+export const ListItem: React.FC<Props> = ({ width, slide, onPress }) => {
+  const thumbnailWidth = 0.25 * width;
   return (
     <ListItemContainer
-      img={<Thumbnail slideId={slide.id} />}
+      img={<Thumbnail size={thumbnailWidth} slideId={slide.id} />}
       content={
         <React.Fragment>
           <View style={slideListItemStyles.infoHeader}>

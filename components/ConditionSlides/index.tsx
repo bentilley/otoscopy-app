@@ -1,6 +1,7 @@
 /** @format */
 
 import React from 'react';
+import { useWindowDimensions } from 'react-native';
 import { Slide } from 'model/condition/types';
 import { ListItem } from './ListItem';
 import { ConditionSlidesFooter } from './footer';
@@ -17,12 +18,17 @@ export const ConditionSlides: React.FC<Props> = ({
   goToSlide,
   goToCondition,
 }) => {
+  const width = useWindowDimensions().width;
   const slideArray = Object.values(slides);
   return (
     <SlideList
       slideArray={slideArray}
       renderItem={({ item: slide }) => (
-        <ListItem slide={slide} onPress={() => goToSlide(slide)} />
+        <ListItem
+          width={width}
+          slide={slide}
+          onPress={() => goToSlide(slide)}
+        />
       )}
       footer={<ConditionSlidesFooter goToCondition={goToCondition} />}
     />

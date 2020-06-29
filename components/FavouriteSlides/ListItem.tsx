@@ -1,26 +1,35 @@
 /** @format */
 
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { COLOURS, OtoText, OtoIcon } from 'components/design';
 import { Slide } from 'model/condition/types';
-import { ListItemContainer } from 'components/UI';
-import { Thumbnail } from './Thumbnail';
-import { useConditions, useConditionsActions } from 'model/condition';
+import { ListItemContainer, Thumbnail } from 'components/UI';
+import { useConditions } from 'model/condition';
+import { ToggleFavourite } from './ToggleFavourite';
 import { clip } from 'utils';
 
 type Props = {
+  width: number;
   slide: Slide;
   onPress: () => void;
 };
 
-export const ListItem: React.FC<Props> = ({ slide, onPress }) => {
+/**
+ * ListItem
+ * A single slide item on the favourites list.
+ * @param width - the width of the item;
+ * @param slide - the slide data for the item;
+ * @param onPress - a callback for when the item is pressed.
+ */
+export const ListItem: React.FC<Props> = ({ width, slide, onPress }) => {
   const { isFavourite } = useConditions();
   const isFavouriteSlide = isFavourite(slide.id);
   const backgroundColor = isFavouriteSlide ? COLOURS.veryDark : '#3e0000';
+  const thumbnailWidth = 0.25 * width;
   return (
     <ListItemContainer
-      img={<Thumbnail slideId={slide.id} />}
+      img={<Thumbnail size={thumbnailWidth} slideId={slide.id} />}
       backgroundColor={backgroundColor}
       content={
         <React.Fragment>
@@ -53,32 +62,6 @@ export const ListItem: React.FC<Props> = ({ slide, onPress }) => {
     />
   );
 };
-
-type ToggleFavouriteProps = { slideId: string; isFavourite: boolean };
-
-const ToggleFavourite: React.FC<ToggleFavouriteProps> = ({
-  slideId,
-  isFavourite,
-}) => {
-  const { removeFromFavourites, addToFavourites } = useConditionsActions();
-  const text = isFavourite ? 'remove' : 'undo';
-  return (
-    <TouchableOpacity
-      onPress={() =>
-        isFavourite ? removeFromFavourites(slideId) : addToFavourites(slideId)
-      }
-      style={removeFavouriteStyles.container}>
-      <OtoIcon name="close" size={11} color={COLOURS.error} />
-      <OtoText size="small">
-        <Text style={{ color: COLOURS.error }}> {text}</Text>
-      </OtoText>
-    </TouchableOpacity>
-  );
-};
-
-const removeFavouriteStyles = StyleSheet.create({
-  container: { flexDirection: 'row', alignItems: 'center', paddingVertical: 4 },
-});
 
 const slideListItemStyles = StyleSheet.create({
   infoHeader: {
