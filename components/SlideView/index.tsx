@@ -16,7 +16,6 @@ import { useSlideViewState } from './context';
 import { SwipeContainer } from './SwipeContainer';
 import { useImageSize } from './dimensions';
 
-// TODO Fix Drawer closing bug (not working with swipe)
 // TODO Add tap to close gesture to Drawer
 
 type Props = {

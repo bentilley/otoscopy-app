@@ -42,6 +42,7 @@ export const Drawer: React.FC<Props> = ({
       <View
         style={styles.pullTab}
         onMoveShouldSetResponder={() => true}
+        onResponderTerminationRequest={() => false}
         onResponderGrant={({ nativeEvent: e }) => setMoveStartY(e.pageY)}
         onResponderMove={({ nativeEvent: e }) => {
           const movedSoFarY = e.pageY - moveStartY.current;
