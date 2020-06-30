@@ -3,9 +3,12 @@
 import React from 'react';
 import { View, StyleSheet, Animated, PanResponder } from 'react-native';
 import { COLOURS } from 'components/design';
-import { OTOSCOPE_BOUNDARY_RADIUS, OTOSCOPE_RADIUS } from './dimensions';
 
-export const Otoscope: React.FC = () => {
+interface Props {
+  radius: number;
+}
+
+export const Otoscope: React.FC<Props> = ({ radius }) => {
   const [hasInteractions, setHasInteractions] = React.useState(false);
 
   const otoscopePos = React.useRef({ x: 0, y: 0 });
@@ -14,12 +17,15 @@ export const Otoscope: React.FC = () => {
   const panResponder = React.useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: () => true,
+      onPanResponderTerminationRequest: () => false,
       onPanResponderGrant: () => {
         setHasInteractions(true);
       },
       onPanResponderMove: (_, { dx, dy }) => {
         const { x, y } = otoscopePos.current;
-        otoscopePan.setValue(getNewPosWithBoundaryLimits(x + dx, y + dy));
+        otoscopePan.setValue(
+          getNewPosWithBoundaryLimits(x + dx, y + dy, radius),
+        );
       },
       onPanResponderRelease: () => {
         setHasInteractions(false);
@@ -32,55 +38,87 @@ export const Otoscope: React.FC = () => {
   return (
     <View style={styles.container}>
       <Animated.View
-        style={[styles.animation, transformFromPosition(otoscopePan)]}>
-        <View style={styles.overlay} />
+        style={[
+          styles.animation,
+          animationStylesFromRadius(radius),
+          transformFromPosition(otoscopePan),
+        ]}>
+        <View style={[styles.overlay, overlayStylesFromRadius(radius)]} />
         <View
           style={[
-            styles.overlayHighligh,
+            styles.overlayHighlight,
+            overlayHighlighStylesFromRadius(radius),
             { borderColor: hasInteractions ? COLOURS.grey : COLOURS.black },
           ]}
         />
       </Animated.View>
-      <View style={styles.boundary} {...panResponder.panHandlers} />
+      <View
+        style={[styles.boundary, boundaryStylesFromRadius(radius)]}
+        {...panResponder.panHandlers}
+      />
     </View>
   );
+};
+
+const animationStylesFromRadius = (radius: number) => {
+  return { top: -radius, left: -radius };
+};
+
+const overlayStylesFromRadius = (radius: number) => {
+  const viewPortDiameter = radius;
+  return {
+    borderWidth: (radius * 4 - viewPortDiameter) / 2,
+    width: radius * 4,
+    height: radius * 4,
+    borderRadius: radius * 2,
+  };
+};
+
+const overlayHighlighStylesFromRadius = (radius: number) => {
+  const viewPortDiameter = radius;
+  return {
+    top: radius * 2 - viewPortDiameter / 2,
+    left: radius * 2 - viewPortDiameter / 2,
+    width: viewPortDiameter,
+    height: viewPortDiameter,
+    borderRadius: viewPortDiameter / 2,
+  };
+};
+
+const boundaryStylesFromRadius = (radius: number) => {
+  return {
+    width: radius * 2,
+    height: radius * 2,
+    borderRadius: radius,
+  };
 };
 
 const styles = StyleSheet.create({
   container: { position: 'absolute', overflow: 'hidden' },
   animation: {
     position: 'absolute',
-    top: -OTOSCOPE_BOUNDARY_RADIUS,
-    left: -OTOSCOPE_BOUNDARY_RADIUS,
   },
   overlay: {
     borderColor: COLOURS.black,
-    borderWidth: (OTOSCOPE_BOUNDARY_RADIUS * 4 - OTOSCOPE_RADIUS * 2) / 2,
-    width: OTOSCOPE_BOUNDARY_RADIUS * 4,
-    height: OTOSCOPE_BOUNDARY_RADIUS * 4,
-    borderRadius: OTOSCOPE_BOUNDARY_RADIUS * 2,
   },
-  overlayHighligh: {
+  overlayHighlight: {
     position: 'absolute',
-    top: OTOSCOPE_BOUNDARY_RADIUS * 2 - OTOSCOPE_RADIUS,
-    left: OTOSCOPE_BOUNDARY_RADIUS * 2 - OTOSCOPE_RADIUS,
-    width: OTOSCOPE_RADIUS * 2,
-    height: OTOSCOPE_RADIUS * 2,
-    borderRadius: OTOSCOPE_RADIUS,
     borderWidth: 1,
   },
   boundary: {
-    width: OTOSCOPE_BOUNDARY_RADIUS * 2,
-    height: OTOSCOPE_BOUNDARY_RADIUS * 2,
-    borderRadius: OTOSCOPE_BOUNDARY_RADIUS,
     borderColor: COLOURS.primary,
     borderWidth: 2,
   },
 });
 
 type Pos = { x: number; y: number };
-function getNewPosWithBoundaryLimits(x: number, y: number): Pos {
-  const r = OTOSCOPE_BOUNDARY_RADIUS - OTOSCOPE_RADIUS;
+function getNewPosWithBoundaryLimits(
+  x: number,
+  y: number,
+  radius: number,
+): Pos {
+  const viewPortRadius = 0.5 * radius;
+  const r = radius - viewPortRadius;
   if (x * x + y * y < r * r) {
     return { x, y };
   } else if (y === 0) {

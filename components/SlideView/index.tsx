@@ -14,6 +14,7 @@ import { useMaxImageY } from './dimensions';
 import { SlideViewFooter } from './footers';
 import { useSlideViewState } from './context';
 import { SwipeContainer } from './SwipeContainer';
+import { useImageSize } from './dimensions';
 
 // TODO Fix Drawer closing bug (not working with swipe)
 // TODO Add tap to close gesture to Drawer
@@ -26,6 +27,7 @@ type Props = {
 export const SlideView: React.FC<Props> = ({ slidePool, goToCondition }) => {
   const { state, update, movableContainer, drawer } = useSlideViewState();
   const maxImageHeight = useMaxImageY();
+  const imageSize = useImageSize();
   const currentSlide = slidePool[state.slideIndex];
   return (
     <React.Fragment>
@@ -35,8 +37,11 @@ export const SlideView: React.FC<Props> = ({ slidePool, goToCondition }) => {
           onSwipeLeftComplete={() => update.decrementSlideIndex()}>
           <Spacer />
           <MovableContainer>
-            <MainImage firebaseRef={'/slide-img/' + currentSlide.id + '.jpg'} />
-            {state.showOtoscope ? <Otoscope /> : null}
+            <MainImage
+              size={imageSize}
+              firebaseRef={'/slide-img/' + currentSlide.id + '.jpg'}
+            />
+            {state.showOtoscope ? <Otoscope radius={imageSize / 2} /> : null}
           </MovableContainer>
           <Spacer
             text={!state.isDiagnosed ? 'Tap to reveal diagnosis' : ''}
