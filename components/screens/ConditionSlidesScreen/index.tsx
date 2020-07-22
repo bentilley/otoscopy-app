@@ -18,15 +18,17 @@ export const ConditionSlidesScreen: React.FC<SlideListProps> = ({
   route,
   navigation,
 }) => {
-  const { getSlidesArray } = useConditions();
+  const { getSlidesArray, getSlidesArrayForCondition } = useConditions();
   const navigationFunctions = {
     goToSlide: (slide: Slide) => {
       const slidePool = getSlidesArray();
       const startingIndex = slidePool.map((s) => s.id).indexOf(slide.id);
       navigation.navigate('Slide', { slidePool, startingIndex });
     },
-    goToCondition: () =>
-      navigation.navigate('Condition', { condition: route.params.condition }),
+    goToStudySlides: () => {
+      const slidePool = getSlidesArrayForCondition(route.params.condition);
+      navigation.navigate('Slide', { slidePool });
+    },
   };
   return (
     <ConditionSlides slides={route.params.slides} {...navigationFunctions} />

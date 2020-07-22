@@ -10,13 +10,13 @@ import { SlideList } from 'components/UI/SlideList';
 type Props = {
   slides: { [slideId: string]: Slide };
   goToSlide: (slide: Slide) => void;
-  goToCondition: () => void;
+  goToStudySlides: () => void;
 };
 
 export const ConditionSlides: React.FC<Props> = ({
   slides,
   goToSlide,
-  goToCondition,
+  goToStudySlides,
 }) => {
   const width = useWindowDimensions().width;
   const slideArray = Object.values(slides);
@@ -30,7 +30,7 @@ export const ConditionSlides: React.FC<Props> = ({
           onPress={() => goToSlide(slide)}
         />
       )}
-      footer={<ConditionSlidesFooter goToCondition={goToCondition} />}
+      footer={<ConditionSlidesFooter goToStudySlides={goToStudySlides} />}
     />
   );
 };

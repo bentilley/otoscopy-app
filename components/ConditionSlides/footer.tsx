@@ -5,18 +5,18 @@ import { StyleSheet } from 'react-native';
 import { Footer, FooterText } from 'components/Footer';
 
 interface Props {
-  goToCondition: () => void;
+  goToStudySlides: () => void;
 }
 
 /**
  * ConditionSlidesFooter
  * Footer to display for list of condition slides.
- * @param goToCondition - Navigate the app to the condition view.
+ * @param goToStudySlides - Navigate to SlideView with all condition slides.
  */
-export const ConditionSlidesFooter: React.FC<Props> = ({ goToCondition }) => {
+export const ConditionSlidesFooter: React.FC<Props> = ({ goToStudySlides }) => {
   return (
     <Footer style={styles.footer}>
-      <FooterText text="see condition" onPress={goToCondition} />
+      <FooterText text="study" onPress={goToStudySlides} />
     </Footer>
   );
 };

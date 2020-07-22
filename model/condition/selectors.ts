@@ -9,6 +9,7 @@ export type Selectors = {
   getCategories: () => Category[];
   getSlides: () => { [slideId: string]: Slide };
   getSlidesArray: () => Slide[];
+  getSlidesArrayForCondition: (condition: ConditionHead) => Slide[];
   getCondition: (id: string) => Condition;
   getSlidesForCondition: (conditionId: string) => { [slideId: string]: Slide };
   isFavourite: (slideId: string) => boolean;
@@ -24,6 +25,10 @@ const useSelectors = (state: State): Selectors => {
       getCategories: () => state.categories,
       getSlides: () => state.slides,
       getSlidesArray: () => Object.values(state.slides),
+      getSlidesArrayForCondition: (condition: ConditionHead) =>
+        Object.values(state.slides).filter(
+          (slide) => slide.conditionId == condition.id,
+        ),
       getCondition: (conditionId: string) => state.conditions[conditionId],
       getSlidesForCondition: (conditionId: string) =>
         Object.fromEntries(
