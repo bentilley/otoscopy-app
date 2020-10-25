@@ -1,7 +1,7 @@
 /** @format */
 
 import React from 'react';
-import Menu from '../index';
+import { Menu } from '../index';
 import { render, fireEvent } from '@testing-library/react-native';
 
 // This is a fix for a TouchableOpacity bug - see
@@ -16,6 +16,7 @@ let navigationStubs: {
   goToReference: () => void;
   goToFavourites: () => void;
   goToBrowse: () => void;
+  signoutUser: () => void;
 };
 
 beforeEach(() => {
@@ -23,6 +24,7 @@ beforeEach(() => {
     goToReference: jest.fn(),
     goToFavourites: jest.fn(),
     goToBrowse: jest.fn(),
+    signoutUser: jest.fn(),
   };
 });
 
@@ -51,5 +53,12 @@ describe('<Menu />', () => {
     const btn = getByText('Random Browse');
     fireEvent.press(btn);
     expect(navigationStubs.goToBrowse).toHaveBeenCalled();
+  });
+
+  it('signs out the user', () => {
+    const { getByText } = render(<Menu {...navigationStubs} />);
+    const btn = getByText('Sign Out');
+    fireEvent.press(btn);
+    expect(navigationStubs.signoutUser).toHaveBeenCalled();
   });
 });
