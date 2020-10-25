@@ -31,12 +31,13 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({
           <OtoIcon
             name={isOpen ? 'caret-down' : 'caret-right'}
             size={28}
-            style={{ color: COLOURS.grey }}
+            style={{ color: conditions ? COLOURS.grey : COLOURS.dark }}
           />
           <OtoText size="large">{name}</OtoText>
         </View>
       </TouchableOpacity>
-      {isOpen &&
+      {conditions &&
+        isOpen &&
         conditions.map((condition) => {
           return (
             <ConditionItem
