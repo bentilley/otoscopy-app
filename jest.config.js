@@ -13,6 +13,7 @@ module.exports = {
       '|react-navigation-redux-helpers' +
       '|@react-navigation/.*' +
       '|@react-native-firebase/.*' +
+      '|@sentry/react-native' +
       ')',
   ],
 };
