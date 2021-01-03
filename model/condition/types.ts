@@ -91,10 +91,10 @@ export interface FavouriteDataDB extends SlideDataDB {
 export interface SlideDataDB {
   condition: string;
   diagnosis: string;
-  diagram: string;
-  img_url: string;
-  legend: {
+  diagram?: string;
+  img_url?: string;
+  legend?: {
     [index: string]: string;
   };
-  thumbnail_url: string;
+  thumbnail_url?: string;
 }

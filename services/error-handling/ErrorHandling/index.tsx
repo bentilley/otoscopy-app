@@ -1,8 +1,8 @@
 /** @format */
 
-import React from 'react';
-import { checkIfInvalidContext } from 'utils';
-import { Client } from '@sentry/types';
+import React from "react";
+import { checkIfInvalidContext } from "utils";
+import { Client } from "@sentry/types";
 
 interface ErrorHandlers {
   logError: (e: Error, extra: { [key: string]: any }) => void;
@@ -21,7 +21,7 @@ export const ErrorHandlingProvider: React.FC<Props> = ({
   const errorHandlers = React.useMemo(() => {
     return {
       logError: (e: Error, extra: { [key: string]: any }) => {
-        sentry.setContext('extra_information', extra);
+        sentry.setContext("extra_information", extra);
         sentry.captureException(e);
       },
     };

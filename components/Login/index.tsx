@@ -1,6 +1,6 @@
 /** @format */
 
-import React from 'react';
+import React from "react";
 import {
   KeyboardAvoidingView,
   View,
@@ -9,20 +9,20 @@ import {
   Platform,
   Keyboard,
   TouchableWithoutFeedback,
-} from 'react-native';
-import { COLOURS } from 'components/design';
-import { LoginForm } from './LoginForm';
-import { Header } from './Header';
+} from "react-native";
+import { COLOURS } from "components/design";
+import { LoginForm } from "./LoginForm";
+import { Header } from "./Header";
 
 type Props = {
-  loginUser: (email: string, password: string) => void;
+  signInUser: (email: string, password: string) => void;
   authErrorMsg: string | null;
   resetAuthError: () => void;
   goToSignUp: () => void;
 };
 
 export const Login: React.FC<Props> = ({
-  loginUser,
+  signInUser,
   authErrorMsg,
   resetAuthError,
   goToSignUp,
@@ -32,12 +32,12 @@ export const Login: React.FC<Props> = ({
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={[styles.screen]}>
         <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={[styles.container, { width: 0.7 * windowWidth }]}>
           <Header />
           <LoginForm
             createUser={goToSignUp}
-            loginUser={loginUser}
+            signInUser={signInUser}
             authErrorMsg={authErrorMsg}
             resetAuthError={resetAuthError}
           />
@@ -50,13 +50,13 @@ export const Login: React.FC<Props> = ({
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: COLOURS.black,
   },
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'stretch',
+    justifyContent: "center",
+    alignItems: "stretch",
   },
 });

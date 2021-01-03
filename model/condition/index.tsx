@@ -4,6 +4,6 @@ export {
   ConditionProvider,
   useConditions,
   useConditionsActions,
-} from './context';
+} from "./context";
 
-export { useFavourite } from './useFavourite';
+export { useFavourite } from "./useFavourite";

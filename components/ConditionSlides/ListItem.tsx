@@ -1,12 +1,12 @@
 /** @format */
 
-import React from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { COLOURS, OtoText, OtoIcon } from 'components/design';
-import { Slide } from 'model/condition/types';
-import { FavouriteStar } from 'components/Footer/icons';
-import { ListItemContainer } from 'components/UI';
-import { Thumbnail } from 'components/UI';
+import React from "react";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
+import { COLOURS, OtoText, OtoIcon } from "components/design";
+import { Slide } from "model/condition/types";
+import { FavouriteStar } from "components/Footer/icons";
+import { ListItemContainer } from "components/UI";
+import { Thumbnail } from "components/UI";
 
 type Props = {
   width: number;
@@ -36,7 +36,7 @@ export const ListItem: React.FC<Props> = ({ width, slide, onPress }) => {
               <TouchableOpacity
                 onPress={onPress}
                 style={slideListItemStyles.viewSlideButton}>
-                <OtoText size="small" weight={'semibold'}>
+                <OtoText size="small" weight={"semibold"}>
                   view slide
                 </OtoText>
                 <OtoIcon name="caret-right" size={30} color={COLOURS.grey} />
@@ -54,12 +54,12 @@ export const ListItem: React.FC<Props> = ({ width, slide, onPress }) => {
 
 const slideListItemStyles = StyleSheet.create({
   infoHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingTop: 12,
   },
-  title: { flexDirection: 'row' },
-  viewSlideButton: { flexDirection: 'row', alignItems: 'center' },
-  infoText: { flex: 1, paddingVertical: 8, justifyContent: 'space-between' },
+  title: { flexDirection: "row" },
+  viewSlideButton: { flexDirection: "row", alignItems: "center" },
+  infoText: { flex: 1, paddingVertical: 8, justifyContent: "space-between" },
 });

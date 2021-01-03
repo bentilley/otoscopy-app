@@ -1,9 +1,9 @@
 /** @format */
 
-import React from 'react';
-import { State } from './reducer';
-import { Category, ConditionHead, Condition, Slide } from './types';
-import { getRandomInt } from 'utils';
+import React from "react";
+import { State } from "./reducer";
+import { Category, ConditionHead, Condition, Slide } from "./types";
+import { getRandomInt } from "utils";
 
 export type Selectors = {
   getCategories: () => Category[];
@@ -27,7 +27,7 @@ const useSelectors = (state: State): Selectors => {
       getSlidesArray: () => Object.values(state.slides),
       getSlidesArrayForCondition: (condition: ConditionHead) =>
         Object.values(state.slides).filter(
-          (slide) => slide.conditionId == condition.id,
+          (slide) => slide.conditionId === condition.id,
         ),
       getCondition: (conditionId: string) => state.conditions[conditionId],
       getSlidesForCondition: (conditionId: string) =>

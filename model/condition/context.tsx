@@ -1,15 +1,15 @@
 /** @format */
 
-import React from 'react';
-import reducer, { initialState } from './reducer';
-import useActions from './actions';
-import useSelectors from './selectors';
-import useMiddleware from './middleware';
+import React from "react";
+import reducer, { initialState } from "./reducer";
+import useActions from "./actions";
+import useSelectors from "./selectors";
+import useMiddleware from "./middleware";
 
-import { Selectors } from './selectors';
-import { ActionHandlers } from './actions';
-import { checkIfInvalidContext } from 'utils';
-import { useUser } from 'model/user';
+import { Selectors } from "./selectors";
+import { ActionHandlers } from "./actions";
+import { checkIfInvalidContext } from "utils";
+import { useUser } from "model/user";
 
 const ConditionStateContext = React.createContext<Selectors | null>(null);
 const ConditionActionsContext = React.createContext<ActionHandlers | null>(

@@ -1,26 +1,26 @@
 /** @format */
 
-import React from 'react';
-import { View, Button, StyleSheet } from 'react-native';
-import { OtoText, COLOURS } from 'components/design';
-import { LoginInput } from './LoginInput';
-import { ErrorMessage } from './ErrorMessage';
+import React from "react";
+import { View, Button, StyleSheet } from "react-native";
+import { OtoText, COLOURS } from "components/design";
+import { LoginInput } from "./LoginInput";
+import { ErrorMessage } from "./ErrorMessage";
 
 type Props = {
   createUser: (email: string, passwrod: string) => void;
-  loginUser: (email: string, passwrod: string) => void;
+  signInUser: (email: string, passwrod: string) => void;
   authErrorMsg: string | null;
   resetAuthError: () => void;
 };
 
 export const LoginForm: React.FC<Props> = ({
   createUser,
-  loginUser,
+  signInUser,
   authErrorMsg,
   resetAuthError,
 }) => {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
   return (
     <View>
       <View style={styles.inputContainer}>
@@ -53,7 +53,7 @@ export const LoginForm: React.FC<Props> = ({
         <View>
           <Button
             title="Sign In"
-            onPress={() => loginUser(email, password)}
+            onPress={() => signInUser(email, password)}
             color={COLOURS.primary}
           />
         </View>
@@ -65,7 +65,7 @@ export const LoginForm: React.FC<Props> = ({
 const styles = StyleSheet.create({
   inputContainer: { paddingTop: 40 },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });

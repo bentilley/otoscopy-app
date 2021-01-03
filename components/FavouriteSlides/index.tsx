@@ -1,11 +1,11 @@
 /** @format */
 
-import React from 'react';
-import { useWindowDimensions } from 'react-native';
-import { Slide } from 'model/condition/types';
-import { ListItem } from './ListItem';
-import { FavouriteSlidesFooter } from './footer';
-import { SlideList } from 'components/UI/SlideList';
+import React from "react";
+import { useWindowDimensions } from "react-native";
+import { Slide } from "model/condition/types";
+import { ListItem } from "./ListItem";
+import { FavouriteSlidesFooter } from "./footer";
+import { SlideList } from "components/UI/SlideList";
 
 type Props = {
   slides: { [slideId: string]: Slide };

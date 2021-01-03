@@ -1,22 +1,19 @@
 /** @format */
 
-import React from 'react';
-import { ConditionSlideList } from '../index';
-import { render, fireEvent, cleanup } from '@testing-library/react-native';
-import { slideData } from 'components/ConditionSlideList/__mocks__/slide-data';
-import { Slide } from 'model/condition/types';
+import React from "react";
+import { ConditionSlides } from "../index";
+import { render, fireEvent, cleanup } from "@testing-library/react-native";
+import { slideData } from "components/ConditionSlides/__mocks__/slide-data";
+import { Slide } from "model/condition/types";
 
-// This is a fix for a TouchableOpacity bug - see
-// https://github.com/testing-library/native-testing-library/issues/113 to see
-// if there is a fix yet and this can be removed
-jest.mock(
-  'react-native/Libraries/Components/Touchable/TouchableOpacity',
-  () => 'TouchableOpacity',
-);
+jest.mock("model/condition");
+jest.mock("services/error-handling");
+jest.mock("services/firebase");
 
 let navigationStubs: {
   goToSlide: () => void;
   goToCondition: () => void;
+  goToStudySlides: () => void;
 };
 
 let props: {
@@ -29,6 +26,7 @@ beforeEach(() => {
   navigationStubs = {
     goToSlide: jest.fn(),
     goToCondition: jest.fn(),
+    goToStudySlides: jest.fn(),
   };
 
   props.slides = slideData;
@@ -36,23 +34,26 @@ beforeEach(() => {
 
 afterEach(cleanup);
 
-describe('<ConditionSlideList />', () => {
-  it('renders correctly', () => {
-    const { queryAllByText } = render(
-      <ConditionSlideList {...navigationStubs} {...props} />,
+describe("<ConditionSlideList />", () => {
+  it("renders correctly", async () => {
+    const { queryAllByText, findAllByTestId } = render(
+      <ConditionSlides {...navigationStubs} {...props} />,
     );
-    expect(queryAllByText('view slide').length).toEqual(3);
+    expect(queryAllByText("view slide").length).toEqual(3);
+    const imgs = await findAllByTestId(/slide-image-/);
+    expect(imgs.length).toEqual(3);
   });
 
-  it('navigates to the correct slide when the slide is pressed', () => {
-    const { getAllByText } = render(
-      <ConditionSlideList {...navigationStubs} {...props} />,
+  it("navigates to the correct slide when the slide is pressed", async () => {
+    const { getAllByText, findAllByTestId } = render(
+      <ConditionSlides {...navigationStubs} {...props} />,
     );
-    const btns = getAllByText('view slide');
+    await findAllByTestId(/slide-image-/); // wait for async img code to finish
+    const btns = getAllByText("view slide");
     expect(btns.length).toEqual(3);
     fireEvent.press(btns[0]);
     expect(navigationStubs.goToSlide).toHaveBeenCalledWith(
-      expect.objectContaining({ condition: 'Otitis Media' }),
+      expect.objectContaining({ condition: "Otitis Media" }),
     );
   });
 });

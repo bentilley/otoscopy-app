@@ -1,16 +1,16 @@
 /** @format */
 
-import React from 'react';
-import { View, Image, ActivityIndicator, StyleSheet } from 'react-native';
-import storage from '@react-native-firebase/storage';
-import { useErrorHandling } from 'services/error-handling';
-import { COLOURS } from 'components/design';
+import React from "react";
+import { View, Image, ActivityIndicator, StyleSheet } from "react-native";
+import { getDownloadURL } from "services/firebase";
+import { useErrorHandling } from "services/error-handling";
+import { COLOURS } from "components/design";
 
 type Props = {
   firebaseRef: string;
   width: number;
   height: number;
-  loaderSize?: 'small' | 'large';
+  loaderSize?: "small" | "large";
 };
 
 /**
@@ -32,22 +32,23 @@ export const SlideImage: React.FC<Props> = ({
 
   React.useEffect(() => {
     setUrl(null);
-    storage()
-      .ref(firebaseRef)
-      .getDownloadURL()
-      .then(
-        (downloadUrl) => setUrl(downloadUrl),
-        (err) => logError(err, { firebaseRef }),
-      );
+    getDownloadURL(firebaseRef).then(
+      (downloadUrl) => setUrl(downloadUrl),
+      (err) => logError(err, { firebaseRef }),
+    );
   }, [firebaseRef, setUrl, logError]);
 
   return url ? (
-    <Image source={{ uri: url }} style={{ width, height }} />
+    <Image
+      source={{ uri: url }}
+      style={{ width, height }}
+      testID={`slide-image-${firebaseRef}`}
+    />
   ) : (
     <LoadingImgPlaceholder
       width={width}
       height={height}
-      loaderSize={loaderSize || 'small'}
+      loaderSize={loaderSize || "small"}
     />
   );
 };
@@ -55,7 +56,7 @@ export const SlideImage: React.FC<Props> = ({
 type LoadingImgPlaceholderProps = {
   width: number;
   height: number;
-  loaderSize: 'small' | 'large';
+  loaderSize: "small" | "large";
 };
 
 /**
@@ -78,5 +79,5 @@ const LoadingImgPlaceholder: React.FC<LoadingImgPlaceholderProps> = ({
 };
 
 const styles = StyleSheet.create({
-  loading: { justifyContent: 'center', alignItems: 'center' },
+  loading: { justifyContent: "center", alignItems: "center" },
 });

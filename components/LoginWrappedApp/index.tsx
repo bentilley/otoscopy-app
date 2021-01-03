@@ -1,9 +1,9 @@
 /** @format */
 
-import React from 'react';
-import { AppScreens } from 'components/screens';
-import { LoginScreens } from 'components/screens';
-import { useUser } from 'model/user';
+import React from "react";
+import { AppScreens } from "components/screens";
+import { LoginScreens } from "components/screens";
+import { useUser } from "model/user";
 
 /**TODO Add loading spinner to login and sign up screen.
 

@@ -1,20 +1,20 @@
 /** @format */
 
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { ConditionProvider } from 'model/condition';
-import { ConditionHead, Slide } from 'model/condition/types';
-import { LoginScreen } from 'components/screens/LoginScreen';
-import { SignUpScreen } from 'components/screens/SignUpScreen';
-import { MenuScreen } from 'components/screens/MenuScreen';
-import { ReferenceScreen } from 'components/screens/ReferenceScreen';
-import { ConditionViewScreen } from 'components/screens/ConditionViewScreen';
-import { SlideViewScreen } from 'components/screens/SlideViewScreen';
-import { ConditionSlidesScreen } from 'components/screens/ConditionSlidesScreen';
-import { FavouriteSlidesScreen } from 'components/screens/FavouriteSlidesScreen';
-import { COLOURS } from 'components/design/';
-import { MenuButton } from './MenuButton';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { ConditionProvider } from "model/condition";
+import { ConditionHead, Slide } from "model/condition/types";
+import { LoginScreen } from "components/screens/LoginScreen";
+import { SignUpScreen } from "components/screens/SignUpScreen";
+import { MenuScreen } from "components/screens/MenuScreen";
+import { ReferenceScreen } from "components/screens/ReferenceScreen";
+import { ConditionViewScreen } from "components/screens/ConditionViewScreen";
+import { SlideViewScreen } from "components/screens/SlideViewScreen";
+import { ConditionSlidesScreen } from "components/screens/ConditionSlidesScreen";
+import { FavouriteSlidesScreen } from "components/screens/FavouriteSlidesScreen";
+import { COLOURS } from "components/design/";
+import { MenuButton } from "./MenuButton";
 
 export type RootStackParamList = {
   Menu: undefined;
@@ -43,14 +43,14 @@ export const AppScreens = () => {
             },
             headerTintColor: COLOURS.lightGrey,
             headerTitleStyle: {
-              fontWeight: 'bold',
+              fontWeight: "bold",
             },
             headerRight: () => <MenuButton navigation={navigation} />,
           })}>
           <Stack.Screen
             name="Menu"
             component={MenuScreen}
-            options={{ title: '' }}
+            options={{ title: "" }}
           />
           <Stack.Screen name="Reference" component={ReferenceScreen} />
           <Stack.Screen name="Condition" component={ConditionViewScreen} />
@@ -79,7 +79,7 @@ export const LoginScreens = () => {
       <LoginStack.Navigator
         initialRouteName="Login"
         screenOptions={() => ({
-          title: '',
+          title: "",
           headerStyle: {
             backgroundColor: COLOURS.veryDark,
             shadowColor: COLOURS.dark,

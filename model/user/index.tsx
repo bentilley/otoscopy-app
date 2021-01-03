@@ -2,10 +2,15 @@
  * @format
  */
 
-import React from 'react';
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
-import { checkIfInvalidContext } from 'utils';
+import React from "react";
+import { FirebaseAuthTypes } from "@react-native-firebase/auth";
+import { checkIfInvalidContext } from "utils";
+import {
+  setupAuthStateChangeHandler,
+  createUser,
+  signInUser,
+  signOutCurrentUser,
+} from "services/firebase";
 
 /**
  * User
@@ -21,8 +26,8 @@ interface ContextInterface {
   authErrorMsg: string | null;
   getUserSafe: () => User;
   createUser: (email: string, password: string, position: string) => void;
-  loginUser: (email: string, password: string) => void;
-  signoutUser: () => void;
+  signInUser: (email: string, password: string) => void;
+  signOutUser: () => void;
   resetAuthError: () => void;
 }
 
@@ -35,7 +40,7 @@ export const UserProvider: React.FC = ({ children }) => {
 
   const onAuthStateChanged = useAuthStateCallback(setUser, setInitialising);
   React.useEffect(() => {
-    auth().onAuthStateChanged(onAuthStateChanged);
+    setupAuthStateChangeHandler(onAuthStateChanged);
   }, [onAuthStateChanged]);
 
   const state = getStateAndSelectors(user, initialising, authErrorMsg);
@@ -104,20 +109,12 @@ const getUseCases = (setAuthErrorMsg: SetFunc<string | null>) => {
   const handleAuthError = getAuthErrorHandler(setAuthErrorMsg);
   return {
     createUser: (email: string, password: string, position: string) => {
-      auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then(({ user }) => {
-          firestore()
-            .collection('users')
-            .doc(user.uid)
-            .set({ email, position });
-        })
-        .catch(handleAuthError);
+      createUser(email, password, position).catch(handleAuthError);
     },
-    loginUser: (email: string, password: string) => {
-      auth().signInWithEmailAndPassword(email, password).catch(handleAuthError);
+    signInUser: (email: string, password: string) => {
+      signInUser(email, password).catch(handleAuthError);
     },
-    signoutUser: () => auth().signOut(),
+    signOutUser: () => signOutCurrentUser(),
     resetAuthError: () => setAuthErrorMsg(null),
   };
 };
@@ -135,20 +132,20 @@ interface AuthError {
 const getAuthErrorHandler = (setAuthErrorMsg: SetFunc<string | null>) => (
   error: AuthError,
 ) => {
-  if (error.code === 'auth/email-already-in-use') {
-    setAuthErrorMsg('That email address is already in use');
+  if (error.code === "auth/email-already-in-use") {
+    setAuthErrorMsg("That email address is already in use");
   }
-  if (error.code === 'auth/invalid-email') {
-    setAuthErrorMsg('That email address is invalid');
+  if (error.code === "auth/invalid-email") {
+    setAuthErrorMsg("That email address is invalid");
   }
-  if (error.code === 'auth/weak-password') {
-    setAuthErrorMsg('The given password is invalid or too weak');
+  if (error.code === "auth/weak-password") {
+    setAuthErrorMsg("The given password is invalid or too weak");
   }
-  if (error.code === 'auth/wrong-password') {
-    setAuthErrorMsg('The given password is incorrect');
+  if (error.code === "auth/wrong-password") {
+    setAuthErrorMsg("The given password is incorrect");
   }
-  if (error.code === 'auth/user-not-found') {
-    setAuthErrorMsg('There is no account for this email address');
+  if (error.code === "auth/user-not-found") {
+    setAuthErrorMsg("There is no account for this email address");
   }
   console.log(error);
 };

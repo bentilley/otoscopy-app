@@ -1,3 +1,3 @@
 /** @format */
 
-export { LoginWrappedApp } from './LoginWrappedApp';
+export { LoginWrappedApp } from "./LoginWrappedApp";

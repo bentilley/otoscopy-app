@@ -1,19 +1,32 @@
 /** @format */
 
-import React from 'react';
-import App from '../App';
+import React from "react";
+import App from "../App";
 
-import { render, cleanup } from '@testing-library/react-native';
+import { render, fireEvent } from "@testing-library/react-native";
 
-afterEach(cleanup);
+jest.mock("services/error-handling");
+jest.mock("services/firebase");
 
-describe('<App />', () => {
-  it('renders correctly on the menu screen', () => {
-    const { getByText, getAllByText } = render(<App />);
+describe("<App />", () => {
+  it("renders app after sign in", async () => {
+    const { getByPlaceholderText, getByText, findByText } = render(<App />);
 
-    expect(getAllByText('Otoscopy App')).toBeTruthy();
-    expect(getByText('Conditions')).toBeTruthy();
-    expect(getByText('Favourites')).toBeTruthy();
-    expect(getByText('Random Browse')).toBeTruthy();
+    expect(getByText("OtoApp")).toBeTruthy();
+    expect(getByText("Login")).toBeTruthy();
+
+    fireEvent.changeText(
+      getByPlaceholderText("email address"),
+      "doctor@hospital.uk",
+    );
+    fireEvent.changeText(getByPlaceholderText("password"), "password123");
+    fireEvent.press(getByText("Sign In"));
+
+    await findByText("Otoscopy App");
+
+    expect(getByText("Conditions")).toBeTruthy();
+    expect(getByText("Favourites")).toBeTruthy();
+    expect(getByText("Random Browse")).toBeTruthy();
+    expect(getByText("Sign Out")).toBeTruthy();
   });
 });
