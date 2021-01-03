@@ -1,14 +1,14 @@
 /** @format */
 
-import React from 'react';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
-import { OtoText, COLOURS } from 'components/design';
+import React from "react";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
+import { OtoText, COLOURS } from "components/design";
 
 type Props = {
   goToReference: () => void;
   goToFavourites: () => void;
   goToBrowse: () => void;
-  signoutUser: () => void;
+  signOutUser: () => void;
 };
 
 export const Menu: React.FC<Props> = (props) => {
@@ -18,7 +18,7 @@ export const Menu: React.FC<Props> = (props) => {
       <MenuItem onPress={props.goToReference}>Conditions</MenuItem>
       <MenuItem onPress={props.goToFavourites}>Favourites</MenuItem>
       <MenuItem onPress={props.goToBrowse}>Random Browse</MenuItem>
-      <MenuItem onPress={props.signoutUser}>Sign Out</MenuItem>
+      <MenuItem onPress={props.signOutUser}>Sign Out</MenuItem>
     </View>
   );
 };
@@ -36,7 +36,7 @@ type MenuItemProps = {
 };
 
 const MenuItem: React.FC<MenuItemProps> = ({ children, onPress }) => {
-  const text = children ? children.toString() : '';
+  const text = children ? children.toString() : "";
   return (
     <View style={styles.menuButtonContainer}>
       <TouchableOpacity onPress={onPress}>
@@ -50,9 +50,9 @@ const MenuItem: React.FC<MenuItemProps> = ({ children, onPress }) => {
 
 const styles = StyleSheet.create({
   menuScreen: { flex: 1, backgroundColor: COLOURS.black },
-  title: { alignItems: 'center', padding: 30 },
+  title: { alignItems: "center", padding: 30 },
   menuButton: {
-    alignItems: 'center',
+    alignItems: "center",
     paddingVertical: 15,
     borderWidth: 1,
     borderColor: COLOURS.lessDark,

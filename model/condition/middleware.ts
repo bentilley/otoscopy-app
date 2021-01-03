@@ -1,18 +1,11 @@
 /** @format */
 
-import React, { Dispatch } from 'react';
-import firestore from '@react-native-firebase/firestore';
+import React, { Dispatch } from "react";
+import { db } from "services/firebase";
 
 // TODO Import types as a namespace
-import {
-  Category,
-  ConditionHead,
-  ConditionDataDB,
-  SlideDataDB,
-  FavouriteDataDB,
-  Slide,
-} from './types';
-import { Action } from './actions';
+import { ConditionHead, Slide } from "./types";
+import { Action } from "./actions";
 
 const useMiddleware = (dispatch: Dispatch<Action>): Dispatch<Action> => {
   const enhancedDispatch = React.useMemo(() => getWrappedDispatch(dispatch), [
@@ -25,22 +18,22 @@ const getWrappedDispatch = (dispatch: Dispatch<Action>) => {
   const enhancedDispatch = async (action: Action) => {
     const value = dispatch(action);
     switch (action.type) {
-      case 'FETCH_CATEGORIES':
+      case "FETCH_CATEGORIES":
         fetchCategories(dispatch);
         break;
-      case 'FETCH_CONDITION':
+      case "FETCH_CONDITION":
         fetchCondition(dispatch, action.payload);
         break;
-      case 'FETCH_SLIDES_FOR_CONDITION':
+      case "FETCH_SLIDES_FOR_CONDITION":
         fetchSlidesForCondition(dispatch, action.payload);
         break;
-      case 'FETCH_USER_FAVOURITES':
+      case "FETCH_USER_FAVOURITES":
         fetchUserFavourites(dispatch, action.payload);
         break;
-      case 'ADD_TO_FAVOURITES':
+      case "ADD_TO_FAVOURITES":
         addToFavourites(action.payload);
         break;
-      case 'REMOVE_FROM_FAVOURITES':
+      case "REMOVE_FROM_FAVOURITES":
         removeFromFavourites(action.payload);
         break;
       default:
@@ -52,62 +45,31 @@ const getWrappedDispatch = (dispatch: Dispatch<Action>) => {
 };
 
 const fetchCategories = async (dispatch: Dispatch<Action>): Promise<void> => {
-  const query = await firestore().collection('categories').get();
-  const categories = query.docs.map((doc) => doc.data()) as Category[];
-  dispatch({ type: 'SET_CATEGORIES', payload: categories });
+  dispatch({ type: "SET_CATEGORIES", payload: await db.getCategories() });
 };
 
-// TODO Set up Sentry error logging for condition firebase call
 const fetchCondition = async (
   dispatch: Dispatch<Action>,
   condition: ConditionHead,
 ): Promise<void> => {
-  const conditionDoc = firestore().collection('conditions').doc(condition.id);
-  conditionDoc.get().then(
-    (doc) => {
-      const conditionData = doc.data() as ConditionDataDB;
-      const data = { ...conditionData, id: doc.id };
-      dispatch({ type: 'SET_CONDITION', payload: { id: doc.id, data } });
-    },
-    (err) => {
-      console.error(err);
-    },
-  );
+  const data = await db.getCondition(condition.id);
+  dispatch({ type: "SET_CONDITION", payload: { id: data.id, data } });
 };
 
-// TODO Set up Sentry error logging for slide firebase call
 const fetchSlidesForCondition = async (
   dispatch: Dispatch<Action>,
   condition: ConditionHead,
 ): Promise<void> => {
-  const conditionDoc = firestore().collection('conditions').doc(condition.id);
-  const slideCollection = conditionDoc.collection('slides');
-  slideCollection.get().then(
-    (snapshot) => {
-      const slides = snapshot.docs.map((doc) => {
-        const slideData = doc.data() as SlideDataDB;
-        return { ...slideData, id: doc.id, conditionId: condition.id };
-      });
-      dispatch({ type: 'SET_SLIDES', payload: { slides, condition } });
-    },
-    (err) => {
-      console.error(err);
-    },
-  );
+  const slides = await db.getSlidesForCondition(condition.id);
+  dispatch({ type: "SET_SLIDES", payload: { slides, condition } });
 };
 
 const fetchUserFavourites = async (
   dispatch: Dispatch<Action>,
   userUid: string,
 ): Promise<void> => {
-  const userCollection = firestore().collection('users');
-  const userFavourites = userCollection.doc(userUid).collection('favourites');
-  userFavourites.onSnapshot(({ docs }) => {
-    const favourites = docs.map((doc) => {
-      const slideData = doc.data() as FavouriteDataDB;
-      return { ...slideData, id: doc.id };
-    });
-    dispatch({ type: 'SET_FAVOURITES', payload: favourites });
+  db.watchUserFavourites(userUid, (favourites: Slide[]) => {
+    dispatch({ type: "SET_FAVOURITES", payload: favourites });
   });
 };
 
@@ -115,16 +77,14 @@ const addToFavourites = async (payload: {
   slide: Slide;
   userUid: string;
 }): Promise<void> => {
-  const userDoc = firestore().collection('users').doc(payload.userUid);
-  userDoc.collection('favourites').doc(payload.slide.id).set(payload.slide);
+  db.addFavourite(payload.userUid, payload.slide);
 };
 
 const removeFromFavourites = async (payload: {
   slideId: string;
   userUid: string;
 }): Promise<void> => {
-  const userDoc = firestore().collection('users').doc(payload.userUid);
-  userDoc.collection('favourites').doc(payload.slideId).delete();
+  db.deleteFavourite(payload.userUid, payload.slideId);
 };
 
 export default useMiddleware;
