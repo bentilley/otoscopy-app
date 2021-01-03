@@ -50,6 +50,11 @@ npx react-native run-android
 
 Depending on which platform you would like to run development mode in.
 
+### Commits
+
+This project uses [conventional
+commits](https://www.conventionalcommits.org/en/v1.0.0/).
+
 ## Notes
 
 This app was created following the React Native tutorial. See instructions
