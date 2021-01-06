@@ -2,11 +2,12 @@
 
 import React from "react";
 import { ConditionSlides } from "../index";
+import { ConditionProvider } from "model/condition";
 import { render, fireEvent, cleanup } from "@testing-library/react-native";
 import { slideData } from "components/ConditionSlides/__mocks__/slide-data";
 import { Slide } from "model/condition/types";
 
-jest.mock("model/condition");
+jest.mock("model/user");
 jest.mock("services/error-handling");
 jest.mock("services/firebase");
 
@@ -37,7 +38,9 @@ afterEach(cleanup);
 describe("<ConditionSlideList />", () => {
   it("renders correctly", async () => {
     const { queryAllByText, findAllByTestId } = render(
-      <ConditionSlides {...navigationStubs} {...props} />,
+      <ConditionProvider>
+        <ConditionSlides {...navigationStubs} {...props} />
+      </ConditionProvider>,
     );
     expect(queryAllByText("view slide").length).toEqual(3);
     const imgs = await findAllByTestId(/slide-image-/);
@@ -46,7 +49,9 @@ describe("<ConditionSlideList />", () => {
 
   it("navigates to the correct slide when the slide is pressed", async () => {
     const { getAllByText, findAllByTestId } = render(
-      <ConditionSlides {...navigationStubs} {...props} />,
+      <ConditionProvider>
+        <ConditionSlides {...navigationStubs} {...props} />
+      </ConditionProvider>,
     );
     await findAllByTestId(/slide-image-/); // wait for async img code to finish
     const btns = getAllByText("view slide");
