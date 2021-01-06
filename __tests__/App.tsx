@@ -12,8 +12,8 @@ describe("<App />", () => {
   it("renders app after sign in", async () => {
     const { getByPlaceholderText, getByText, findByText } = render(<App />);
 
-    expect(getByText("OtoApp")).toBeTruthy();
-    expect(getByText("Login")).toBeTruthy();
+    getByText("OtoApp");
+    getByText("Login");
 
     fireEvent.changeText(
       getByPlaceholderText("email address"),
@@ -24,9 +24,9 @@ describe("<App />", () => {
 
     await findByText("Otoscopy App");
 
-    expect(getByText("Conditions")).toBeTruthy();
-    expect(getByText("Favourites")).toBeTruthy();
-    expect(getByText("Random Browse")).toBeTruthy();
-    expect(getByText("Sign Out")).toBeTruthy();
+    getByText("Conditions");
+    getByText("Favourites");
+    getByText("Random Browse");
+    getByText("Sign Out");
   });
 });

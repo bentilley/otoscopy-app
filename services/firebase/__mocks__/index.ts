@@ -1,5 +1,11 @@
 /** @format */
 
+import { categories } from "model/condition/__mocks__/categories.data";
+import { condition } from "model/condition/__mocks__/condition.data";
+import { favourites } from "model/condition/__mocks__/favourites.data";
+
+// Auth
+
 let AUTH_CALLBACK: (user: any) => void;
 
 const USER_DATA = {
@@ -24,6 +30,23 @@ export const signInUser = () => {
   return Promise.resolve(AUTH_CALLBACK(USER_DATA));
 };
 
+// Storage
+
 export const getDownloadURL = jest.fn(() => {
   return Promise.resolve("www.example.com/img");
 });
+
+// Firestore
+
+export const db = {
+  getCategories: jest.fn(async () => categories),
+  getCondition: jest.fn(async () => condition),
+  getSlidesForCondition: jest.fn(() => []),
+  watchUserFavourites: jest.fn(
+    async (_: any, onChange: (data: any) => void) => {
+      onChange(favourites);
+    },
+  ),
+  addFavourite: jest.fn(),
+  deleteFavourite: jest.fn(),
+};

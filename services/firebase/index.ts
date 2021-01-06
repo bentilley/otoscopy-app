@@ -6,7 +6,6 @@ import storage from "@react-native-firebase/storage";
 
 import {
   Category,
-  // ConditionHead,
   ConditionDataDB,
   SlideDataDB,
   FavouriteDataDB,
