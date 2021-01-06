@@ -1,9 +1,9 @@
 /** @format */
 
-import React from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { Category, ConditionHead } from 'model/condition/types';
-import { OtoText, OtoIcon, COLOURS } from 'components/design';
+import React from "react";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { Category, ConditionHead } from "model/condition/types";
+import { OtoText, OtoIcon, COLOURS } from "components/design";
 
 type CategoryItemProps = Category & {
   name: string;
@@ -29,7 +29,7 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({
       <TouchableOpacity onPress={() => setIsOpen(!isOpen)}>
         <View style={styles.categoryItem}>
           <OtoIcon
-            name={isOpen ? 'caret-down' : 'caret-right'}
+            name={isOpen ? "caret-down" : "caret-right"}
             size={28}
             style={{ color: conditions ? COLOURS.grey : COLOURS.dark }}
           />
@@ -71,7 +71,7 @@ const ConditionItem: React.FC<ConditionItemProps> = ({ name, onPress }) => {
 
 const styles = StyleSheet.create({
   categoryItem: {
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingVertical: 10,
     paddingHorizontal: 5,
     borderColor: COLOURS.darkGrey,

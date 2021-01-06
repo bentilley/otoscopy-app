@@ -1,11 +1,11 @@
 /** @format */
 
-import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
-import { Category, ConditionHead } from 'model/condition/types';
-import { CategoryItem } from './CategoryItem';
-import { COLOURS } from 'components/design';
-import { ReferenceFooter } from './footer';
+import React from "react";
+import { ScrollView, StyleSheet } from "react-native";
+import { Category, ConditionHead } from "model/condition/types";
+import { CategoryItem } from "./CategoryItem";
+import { COLOURS } from "components/design";
+import { ReferenceFooter } from "./footer";
 
 type Props = {
   categories: Category[];
