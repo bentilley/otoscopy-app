@@ -1,7 +1,7 @@
 /** @format */
 
-import { Category, ConditionHead, Condition, Slide } from './types';
-import { Action } from './actions';
+import { Category, ConditionHead, Condition, Slide } from "./types";
+import { Action } from "./actions";
 
 export type State = {
   categories: Category[];
@@ -24,15 +24,15 @@ export const initialState: State = {
 const reducer = (state: State, action: Action): State => {
   let favourites: { [slideId: string]: Slide };
   switch (action.type) {
-    case 'SET_CATEGORIES':
+    case "SET_CATEGORIES":
       const conditionsToFetch = action.payload.reduce(
         (conditions, category) => conditions.concat(category.conditions),
         [] as ConditionHead[],
       );
       return { ...state, categories: action.payload, conditionsToFetch };
-    case 'SET_CONDITIONS_TO_FETCH':
+    case "SET_CONDITIONS_TO_FETCH":
       return { ...state, conditionsToFetch: action.payload };
-    case 'SET_CONDITION':
+    case "SET_CONDITION":
       return {
         ...state,
         conditions: {
@@ -40,7 +40,7 @@ const reducer = (state: State, action: Action): State => {
           [action.payload.id]: action.payload.data,
         },
       };
-    case 'SET_SLIDES':
+    case "SET_SLIDES":
       return {
         ...state,
         slides: {
@@ -58,7 +58,7 @@ const reducer = (state: State, action: Action): State => {
           action.payload.condition.id,
         ],
       };
-    case 'SET_FAVOURITES':
+    case "SET_FAVOURITES":
       return {
         ...state,
         favourites: action.payload.reduce(
@@ -69,11 +69,11 @@ const reducer = (state: State, action: Action): State => {
           {},
         ),
       };
-    case 'ADD_TO_FAVOURITES':
+    case "ADD_TO_FAVOURITES":
       favourites = { ...state.favourites };
       favourites[action.payload.slide.id] = action.payload.slide;
       return { ...state, favourites };
-    case 'REMOVE_FROM_FAVOURITES':
+    case "REMOVE_FROM_FAVOURITES":
       favourites = { ...state.favourites };
       delete favourites[action.payload.slideId];
       return { ...state, favourites };
