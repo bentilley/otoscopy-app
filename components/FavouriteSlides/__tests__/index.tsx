@@ -2,11 +2,12 @@
 
 import React from "react";
 import { FavouriteSlides } from "../index";
+import { ConditionProvider } from "model/condition";
 import { render, fireEvent, cleanup } from "@testing-library/react-native";
 import { slideData } from "components/ConditionSlides/__mocks__/slide-data";
 import { Slide } from "model/condition/types";
 
-jest.mock("model/condition");
+jest.mock("model/user");
 jest.mock("services/error-handling");
 jest.mock("services/firebase");
 
@@ -35,7 +36,9 @@ afterEach(cleanup);
 describe("<FavouritesSlideList />", () => {
   it("renders correctly", async () => {
     const { findAllByTestId } = render(
-      <FavouriteSlides {...navigationStubs} {...props} />,
+      <ConditionProvider>
+        <FavouriteSlides {...navigationStubs} {...props} />
+      </ConditionProvider>,
     );
     const imgs = await findAllByTestId(/slide-image-/);
     expect(imgs.length).toEqual(3);
@@ -43,7 +46,9 @@ describe("<FavouritesSlideList />", () => {
 
   it("navigates to the correct slide when the slide is pressed", async () => {
     const { findAllByTestId, getAllByText } = render(
-      <FavouriteSlides {...navigationStubs} {...props} />,
+      <ConditionProvider>
+        <FavouriteSlides {...navigationStubs} {...props} />
+      </ConditionProvider>,
     );
     await findAllByTestId(/slide-image-/);
     const btns = getAllByText("view slide");
