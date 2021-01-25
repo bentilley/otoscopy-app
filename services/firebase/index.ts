@@ -41,6 +41,10 @@ export async function signOutCurrentUser() {
   return auth().signOut();
 }
 
+export async function sendPasswordReset(email: string) {
+  return auth().sendPasswordResetEmail(email);
+}
+
 // Storage
 
 export async function getDownloadURL(firebaseRef: string): Promise<string> {

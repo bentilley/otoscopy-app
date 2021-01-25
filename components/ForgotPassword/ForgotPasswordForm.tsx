@@ -7,59 +7,44 @@ import { LoginInput } from "components/UI";
 import { ErrorMessage } from "components/Login/ErrorMessage";
 
 type Props = {
-  createUser: (email: string, password: string, position: string) => void;
+  sendPasswordReset: (email: string) => void;
   authErrorMsg: string | null;
   resetAuthError: () => void;
   goToLogin: () => void;
+  goToResetSentSuccess: () => void;
 };
 
-export const SignUpForm: React.FC<Props> = ({
-  createUser,
+export const ForgotPasswordForm: React.FC<Props> = ({
+  sendPasswordReset,
   authErrorMsg,
   resetAuthError,
   goToLogin,
+  goToResetSentSuccess,
 }) => {
   const [email, setEmail] = React.useState("");
-  const [position, setPosition] = React.useState("");
-  const [password, setPassword] = React.useState("");
   return (
     <View>
       <View style={styles.inputContainer}>
         <OtoText size="medium" weight="semibold">
-          Sign Up
+          Forgot Password
         </OtoText>
         <LoginInput
-          accessibilityLabel="your email address"
+          accessibilityLabel="the email address you signed up with"
           reactState={[email, setEmail]}
-          placeholder="email address"
+          placeholder="the email address you signed up with"
           textContentType="emailAddress"
           onChangeText={() => (authErrorMsg ? resetAuthError() : null)}
         />
-        <LoginInput
-          accessibilityLabel="your password"
-          reactState={[password, setPassword]}
-          placeholder="password"
-          textContentType="password"
-          secureTextEntry={true}
-          onChangeText={() => (authErrorMsg ? resetAuthError() : null)}
-        />
-        <LoginInput
-          accessibilityLabel="current position e.g. Junior Doctor (optional)"
-          reactState={[position, setPosition]}
-          placeholder="current position e.g. Junior Doctor"
-          textContentType="none"
-          onChangeText={() => (authErrorMsg ? resetAuthError() : null)}
-        />
-        <View style={styles.notRequired}>
-          <OtoText size="small">*not required</OtoText>
-        </View>
       </View>
       <ErrorMessage authErrorMsg={authErrorMsg} />
       <View style={styles.buttonContainer}>
         <View>
           <Button
-            title="Create User"
-            onPress={() => createUser(email, password, position)}
+            title="Send Password Reset"
+            onPress={() => {
+              sendPasswordReset(email);
+              goToResetSentSuccess();
+            }}
             color={COLOURS.primary}
           />
         </View>
@@ -77,5 +62,4 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  notRequired: { marginTop: 5 },
 });

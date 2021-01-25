@@ -10,6 +10,7 @@ import {
   createUser,
   signInUser,
   signOutCurrentUser,
+  sendPasswordReset,
 } from "services/firebase";
 
 /**
@@ -29,6 +30,7 @@ interface ContextInterface {
   signInUser: (email: string, password: string) => void;
   signOutUser: () => void;
   resetAuthError: () => void;
+  sendPasswordReset: (email: string) => void;
 }
 
 export const UserContext = React.createContext<ContextInterface | null>(null);
@@ -116,6 +118,7 @@ const getUseCases = (setAuthErrorMsg: SetFunc<string | null>) => {
     },
     signOutUser: () => signOutCurrentUser(),
     resetAuthError: () => setAuthErrorMsg(null),
+    sendPasswordReset: (email: string) => sendPasswordReset(email),
   };
 };
 

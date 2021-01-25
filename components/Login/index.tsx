@@ -19,6 +19,7 @@ type Props = {
   authErrorMsg: string | null;
   resetAuthError: () => void;
   goToSignUp: () => void;
+  goToForgotPassword: () => void;
 };
 
 export const Login: React.FC<Props> = ({
@@ -26,6 +27,7 @@ export const Login: React.FC<Props> = ({
   authErrorMsg,
   resetAuthError,
   goToSignUp,
+  goToForgotPassword,
 }) => {
   const windowWidth = useWindowDimensions().width;
   return (
@@ -40,6 +42,7 @@ export const Login: React.FC<Props> = ({
             signInUser={signInUser}
             authErrorMsg={authErrorMsg}
             resetAuthError={resetAuthError}
+            goToForgotPassword={goToForgotPassword}
           />
         </KeyboardAvoidingView>
       </View>

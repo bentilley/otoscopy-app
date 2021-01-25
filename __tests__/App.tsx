@@ -29,4 +29,24 @@ describe("<App />", () => {
     getByText("Random Browse");
     getByText("Sign Out");
   });
+
+  it("can send a password reset if needed", async () => {
+    const { getByPlaceholderText, getByText, findByText } = render(<App />);
+
+    getByText("Login");
+    fireEvent.press(getByText("forgot password?"));
+
+    getByText("Forgot Password");
+
+    fireEvent.changeText(
+      getByPlaceholderText("the email address you signed up with"),
+      "doctor@hospital.uk",
+    );
+    fireEvent.press(getByText("Send Password Reset"));
+
+    getByText("Please check your emails");
+    fireEvent.press(getByText("Back to login"));
+
+    await findByText("Login");
+  });
 });

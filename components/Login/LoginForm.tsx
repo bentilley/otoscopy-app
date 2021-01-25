@@ -1,9 +1,9 @@
 /** @format */
 
 import React from "react";
-import { View, Button, StyleSheet } from "react-native";
+import { View, Button, TouchableOpacity, StyleSheet } from "react-native";
 import { OtoText, COLOURS } from "components/design";
-import { LoginInput } from "./LoginInput";
+import { LoginInput } from "components/UI";
 import { ErrorMessage } from "./ErrorMessage";
 
 type Props = {
@@ -11,6 +11,7 @@ type Props = {
   signInUser: (email: string, passwrod: string) => void;
   authErrorMsg: string | null;
   resetAuthError: () => void;
+  goToForgotPassword: () => void;
 };
 
 export const LoginForm: React.FC<Props> = ({
@@ -18,6 +19,7 @@ export const LoginForm: React.FC<Props> = ({
   signInUser,
   authErrorMsg,
   resetAuthError,
+  goToForgotPassword,
 }) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -28,12 +30,14 @@ export const LoginForm: React.FC<Props> = ({
           Login
         </OtoText>
         <LoginInput
+          accessibilityLabel="your email address"
           reactState={[email, setEmail]}
           placeholder="email address"
           textContentType="emailAddress"
           onChangeText={() => (authErrorMsg ? resetAuthError() : null)}
         />
         <LoginInput
+          accessibilityLabel="choose a password"
           reactState={[password, setPassword]}
           placeholder="password"
           textContentType="password"
@@ -43,19 +47,27 @@ export const LoginForm: React.FC<Props> = ({
       </View>
       <ErrorMessage authErrorMsg={authErrorMsg} />
       <View style={styles.buttonContainer}>
-        <View>
+        <View style={styles.createUserContainer}>
           <Button
+            accessibilityLabel="create user"
             title="Create User"
             onPress={() => createUser(email, password)}
             color={COLOURS.grey}
           />
         </View>
-        <View>
+        <View style={styles.signInContainer}>
           <Button
+            accessibilityLabel="sign in"
             title="Sign In"
             onPress={() => signInUser(email, password)}
             color={COLOURS.primary}
           />
+          <TouchableOpacity
+            accessibilityLabel="have you forgotten your password?"
+            style={styles.forgotPasswordContainer}
+            onPress={goToForgotPassword}>
+            <OtoText size="small">forgot password?</OtoText>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -67,5 +79,16 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+  createUserContainer: {
+    flex: 1,
+    alignItems: "flex-start",
+  },
+  signInContainer: {
+    flex: 1,
+    alignItems: "flex-end",
+  },
+  forgotPasswordContainer: {
+    marginTop: 20,
   },
 });

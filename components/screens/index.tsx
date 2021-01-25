@@ -7,6 +7,8 @@ import { ConditionProvider } from "model/condition";
 import { ConditionHead, Slide } from "model/condition/types";
 import { LoginScreen } from "components/screens/LoginScreen";
 import { SignUpScreen } from "components/screens/SignUpScreen";
+import { ForgotPasswordScreen } from "components/screens/ForgotPasswordScreen";
+import { ResetSentSuccessScreen } from "components/screens/ResetSentSuccessScreen";
 import { MenuScreen } from "components/screens/MenuScreen";
 import { ReferenceScreen } from "components/screens/ReferenceScreen";
 import { ConditionViewScreen } from "components/screens/ConditionViewScreen";
@@ -69,6 +71,8 @@ export const AppScreens = () => {
 export type LoginStackParamList = {
   Login: undefined;
   SignUp: undefined;
+  ForgotPassword: undefined;
+  ResetSentSuccess: undefined;
 };
 
 const LoginStack = createStackNavigator<LoginStackParamList>();
@@ -88,6 +92,14 @@ export const LoginScreens = () => {
         })}>
         <LoginStack.Screen name="Login" component={LoginScreen} />
         <LoginStack.Screen name="SignUp" component={SignUpScreen} />
+        <LoginStack.Screen
+          name="ForgotPassword"
+          component={ForgotPasswordScreen}
+        />
+        <LoginStack.Screen
+          name="ResetSentSuccess"
+          component={ResetSentSuccessScreen}
+        />
       </LoginStack.Navigator>
     </NavigationContainer>
   );

@@ -11,20 +11,22 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { COLOURS } from "components/design";
-import { SignUpForm } from "./SignUpForm";
+import { ForgotPasswordForm } from "./ForgotPasswordForm";
 
 type Props = {
-  createUser: (email: string, password: string, position: string) => void;
+  sendPasswordReset: (email: string) => void;
   authErrorMsg: string | null;
   resetAuthError: () => void;
   goToLogin: () => void;
+  goToResetSentSuccess: () => void;
 };
 
-export const SignUp: React.FC<Props> = ({
-  createUser,
+export const ForgotPassword: React.FC<Props> = ({
+  sendPasswordReset,
   authErrorMsg,
   resetAuthError,
   goToLogin,
+  goToResetSentSuccess,
 }) => {
   const windowWidth = useWindowDimensions().width;
   return (
@@ -33,11 +35,12 @@ export const SignUp: React.FC<Props> = ({
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={[styles.container, { width: 0.7 * windowWidth }]}>
-          <SignUpForm
-            createUser={createUser}
+          <ForgotPasswordForm
+            sendPasswordReset={sendPasswordReset}
             authErrorMsg={authErrorMsg}
             resetAuthError={resetAuthError}
             goToLogin={goToLogin}
+            goToResetSentSuccess={goToResetSentSuccess}
           />
         </KeyboardAvoidingView>
       </View>
@@ -58,3 +61,6 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
   },
 });
+
+// Other index exports
+export { ResetSentSuccess } from "./ResetSentSuccess";

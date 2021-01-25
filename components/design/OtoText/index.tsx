@@ -1,8 +1,8 @@
 /** @format */
 
-import React from 'react';
-import { StyleSheet, Text } from 'react-native';
-import { COLOURS } from 'components/design/colours';
+import React from "react";
+import { StyleSheet, Text } from "react-native";
+import { COLOURS } from "components/design/colours";
 
 type OtoTextProps = {
   size: FontSizes;
@@ -22,8 +22,8 @@ const AppText: React.FC = ({ children }) => {
   return <Text style={style.font}>{children}</Text>;
 };
 
-type FontSizes = 'large' | 'medium' | 'smallMedium' | 'small';
-type FontWeights = 'fine' | 'normal' | 'semibold' | 'bold';
+type FontSizes = "large" | "medium" | "smallMedium" | "small";
+type FontWeights = "fine" | "normal" | "semibold" | "bold";
 
 function getStyleSheet(
   fontSize: FontSizes,
@@ -32,7 +32,7 @@ function getStyleSheet(
   return StyleSheet.create({
     style: {
       fontSize: size[fontSize],
-      fontWeight: weight[fontWeight || 'normal'],
+      fontWeight: weight[fontWeight || "normal"],
     },
   });
 }
@@ -44,11 +44,11 @@ const size: { [key in FontSizes]: number } = {
   small: 14,
 };
 
-const weight: { [key in FontWeights]: '100' | '300' | '500' | '700' } = {
-  fine: '100',
-  normal: '300',
-  semibold: '500',
-  bold: '700',
+const weight: { [key in FontWeights]: "100" | "300" | "500" | "700" } = {
+  fine: "100",
+  normal: "300",
+  semibold: "500",
+  bold: "700",
 };
 
 const style = StyleSheet.create({

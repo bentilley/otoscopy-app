@@ -16,6 +16,7 @@ export const LoginScreen: React.FC<LoginProps> = ({ navigation }) => {
   const { signInUser, authErrorMsg, resetAuthError } = useUser();
   const navigationFunctions = {
     goToSignUp: () => navigation.navigate("SignUp"),
+    goToForgotPassword: () => navigation.navigate("ForgotPassword"),
   };
   return (
     <Login
