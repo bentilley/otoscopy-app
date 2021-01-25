@@ -5,36 +5,6 @@ import ConditionView from "../index";
 import { Condition } from "model/condition/types";
 import { render, fireEvent, cleanup } from "@testing-library/react-native";
 
-jest.mock("model/condition", () => ({
-  useConditions: () => ({
-    getCondition: (conditionId: string | null) => {
-      if (conditionId !== "null") {
-        return {
-          name: "Otitis Media",
-          description: "Acute onset inflamation of the middle ear space",
-          population: ["Commonly paediatric 3-7 years"],
-          aetiology: {
-            bacterial: {
-              information: [
-                "Strep Pneumoniae",
-                "Haemophilus",
-                "Moraxella Catarrhalis",
-              ],
-              title: "Bacterial",
-            },
-            viral: {
-              information: ["Rhinovirus", "RSV", "Adenovirus"],
-              title: "Viral (75% cases)",
-            },
-          },
-        };
-      } else {
-        return null;
-      }
-    },
-  }),
-}));
-
 let navigationStubs: {
   goToSlides: () => void;
 };
@@ -89,9 +59,8 @@ describe("<ConditionView />", () => {
   });
 
   it("renders loading if there is no condition info", () => {
-    condition = null;
     const { queryByText } = render(
-      <ConditionView {...navigationStubs} condition={condition} />,
+      <ConditionView {...navigationStubs} condition={null} />,
     );
     expect(queryByText("Loading...")).toBeTruthy();
   });

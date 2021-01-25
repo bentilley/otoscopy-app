@@ -1,16 +1,16 @@
 /** @format */
 
-import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
-import { Condition } from 'model/condition/types';
-import { OtoText, COLOURS } from 'components/design';
-import { Section } from './Section';
-import { sections } from './sections';
-import { ConditionViewFooter } from './footer';
+import React from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { Condition } from "model/condition/types";
+import { OtoText, COLOURS } from "components/design";
+import { Section } from "./Section";
+import { sections } from "./sections";
+import { ConditionViewFooter } from "./footer";
 
 type Props = {
   goToSlides: () => void;
-  condition: Condition;
+  condition: Condition | null;
 };
 
 const ConditionView: React.FC<Props> = ({ goToSlides, condition }) => {
@@ -59,13 +59,13 @@ const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: COLOURS.black },
   description: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     paddingTop: 30,
     paddingBottom: 10,
   },
-  loading: { justifyContent: 'center', alignItems: 'center' },
+  loading: { justifyContent: "center", alignItems: "center" },
 });
 
 export default ConditionView;
