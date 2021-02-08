@@ -69,8 +69,8 @@ const useAuthStateCallback = (
 ) => {
   return React.useCallback(
     (userData: FirebaseAuthTypes.User | null) => {
-      setUser(userData);
       setInitialising(false);
+      setUser(userData);
     },
     [setUser, setInitialising],
   );

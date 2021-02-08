@@ -1,20 +1,20 @@
 /** @format */
 
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Slide } from 'model/condition/types';
-import { COLOURS } from 'components/design';
-import { Otoscope } from './Otoscope';
-import { Drawer } from './Drawer';
-import { MovableContainer } from './MovableContainer';
-import { DiagnosisInfo } from './DiagnosisInfo';
-import { MainImage } from './MainImage';
-import { Spacer } from './Spacer';
-import { useMaxImageY } from './dimensions';
-import { SlideViewFooter } from './footers';
-import { useSlideViewState } from './context';
-import { SwipeContainer } from './SwipeContainer';
-import { useImageSize } from './dimensions';
+import React from "react";
+import { View, StyleSheet } from "react-native";
+import { Slide } from "model/condition/types";
+import { COLOURS } from "components/design";
+import { Otoscope } from "./Otoscope";
+import { Drawer } from "./Drawer";
+import { MovableContainer } from "./MovableContainer";
+import { DiagnosisInfo } from "./DiagnosisInfo";
+import { MainImage } from "./MainImage";
+import { Spacer } from "./Spacer";
+import { useMaxImageY } from "./dimensions";
+import { SlideViewFooter } from "./footers";
+import { useSlideViewState } from "./context";
+import { SwipeContainer } from "./SwipeContainer";
+import { useImageSize } from "./dimensions";
 
 // TODO Add tap to close gesture to Drawer
 
@@ -38,12 +38,12 @@ export const SlideView: React.FC<Props> = ({ slidePool, goToCondition }) => {
           <MovableContainer>
             <MainImage
               size={imageSize}
-              firebaseRef={'/slide-img/' + currentSlide.id + '.jpg'}
+              firebaseRef={"/slide-img/" + currentSlide.id + ".jpg"}
             />
             {state.showOtoscope ? <Otoscope radius={imageSize / 2} /> : null}
           </MovableContainer>
           <Spacer
-            text={!state.isDiagnosed ? 'Tap to reveal diagnosis' : ''}
+            text={!state.isDiagnosed ? "Tap to reveal diagnosis" : ""}
             onPress={() => {
               update.setIsDiagnosed(true);
               drawer.openDrawer(() => movableContainer.moveYTo(maxImageHeight));
@@ -82,4 +82,4 @@ const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: COLOURS.black },
 });
 
-export { SlideViewProvider } from './context';
+export { SlideViewProvider } from "./context";

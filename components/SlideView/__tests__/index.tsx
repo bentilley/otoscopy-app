@@ -1,62 +1,44 @@
 /** @format */
 
 import React from "react";
-import { SlideView, SlideViewProvider } from "../index";
-import { ConditionProvider } from "model/condition";
-import { render, fireEvent, cleanup } from "@testing-library/react-native";
-import { slideData } from "components/ConditionSlides/__mocks__/slide-data";
-import { Slide } from "model/condition/types";
+import { AppScreens } from "components/screens";
+import { db } from "services/firebase";
+import { render, fireEvent, waitFor } from "@testing-library/react-native";
 
 jest.mock("model/user");
 jest.mock("components/UI");
-
-let navigationStubs: {
-  goToCondition: () => void;
-};
-
-let props: { slidePool: Slide[] } = { slidePool: Object.values(slideData) };
-
-beforeEach(() => {
-  navigationStubs = {
-    goToCondition: jest.fn(),
-  };
-
-  props.slidePool = Object.values(slideData);
-});
-
-afterEach(cleanup);
+jest.mock("services/firebase");
 
 describe("<SlideView />", () => {
-  it("renders correctly", () => {
-    const { getByText } = render(
-      <ConditionProvider>
-        <SlideViewProvider totalNumberOfSlides={0} startingIndex={0}>
-          <SlideView {...navigationStubs} {...props} />,
-        </SlideViewProvider>
-      </ConditionProvider>,
-    );
+  it("renders correctly", async () => {
+    const { getByText } = render(<AppScreens />);
+    await waitFor(() => {
+      expect(db.getCondition).toHaveBeenCalled();
+    });
+    fireEvent.press(getByText("Random Browse"));
     expect(getByText("Tap to reveal diagnosis")).toBeTruthy();
   });
 
-  it("reveals the diagnosis", () => {
-    const { getByText, queryByText } = render(
-      <ConditionProvider>
-        <SlideViewProvider totalNumberOfSlides={0} startingIndex={0}>
-          <SlideView {...navigationStubs} {...props} />,
-        </SlideViewProvider>
-      </ConditionProvider>,
-    );
-    const btn = getByText("Tap to reveal diagnosis");
-    fireEvent.press(btn);
+  it("reveals the diagnosis", async () => {
+    const { getByText, queryByText } = render(<AppScreens />);
+    await waitFor(() => {
+      expect(db.getCondition).toHaveBeenCalled();
+    });
+    fireEvent.press(getByText("Random Browse"));
+    fireEvent.press(getByText("Tap to reveal diagnosis"));
     expect(queryByText("Otitis Media")).toBeTruthy();
     expect(
       queryByText(
         "Right ear Acute Otitis Media. Bulging tympanic membrane with purulent effusion visible.",
       ),
     ).toBeTruthy();
+    fireEvent.press(getByText("next"));
+    await waitFor(() => {
+      getByText("Tap to reveal diagnosis");
+    });
   });
 
-  it("closes the diagnosis drawer on swipe", () => {
+  it.skip("closes the diagnosis drawer on swipe", () => {
     /* const { getByText, queryByText } = render( */
     /*   <SlideViewProvider totalNumberOfSlides={0} startingIndex={0}> */
     /*     <SlideView {...navigationStubs} {...props} />, */
