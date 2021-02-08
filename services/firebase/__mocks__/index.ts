@@ -3,6 +3,7 @@
 import { categories } from "model/condition/__mocks__/categories.data";
 import { condition } from "model/condition/__mocks__/condition.data";
 import { favourites } from "model/condition/__mocks__/favourites.data";
+import { slides } from "model/condition/__mocks__/slides.data";
 
 // Auth
 
@@ -30,6 +31,10 @@ export const signInUser = () => {
   return Promise.resolve(AUTH_CALLBACK(USER_DATA));
 };
 
+export const sendPasswordReset = () => {
+  return Promise.resolve();
+};
+
 // Storage
 
 export const getDownloadURL = jest.fn(() => {
@@ -41,7 +46,7 @@ export const getDownloadURL = jest.fn(() => {
 export const db = {
   getCategories: jest.fn(async () => categories),
   getCondition: jest.fn(async () => condition),
-  getSlidesForCondition: jest.fn(() => []),
+  getSlidesForCondition: jest.fn(() => slides),
   watchUserFavourites: jest.fn(
     async (_: any, onChange: (data: any) => void) => {
       onChange(favourites);
@@ -49,4 +54,5 @@ export const db = {
   ),
   addFavourite: jest.fn(),
   deleteFavourite: jest.fn(),
+  submitFeedback: jest.fn(),
 };

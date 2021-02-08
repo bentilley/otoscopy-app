@@ -1,16 +1,16 @@
 /** @format */
 
-import React from 'react';
-import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import React from "react";
+import { RouteProp } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 
-import { RootStackParamList } from 'components/screens';
-import ConditionView from 'components/ConditionView';
-import { useConditions, useConditionsActions } from 'model/condition';
+import { RootStackParamList } from "components/screens";
+import ConditionView from "components/ConditionView";
+import { useConditions, useConditionsActions } from "model/condition";
 
 type ConditionProps = {
-  navigation: StackNavigationProp<RootStackParamList, 'Condition'>;
-  route: RouteProp<RootStackParamList, 'Condition'>;
+  navigation: StackNavigationProp<RootStackParamList, "Condition">;
+  route: RouteProp<RootStackParamList, "Condition">;
 };
 
 export const ConditionViewScreen: React.FC<ConditionProps> = ({
@@ -24,7 +24,7 @@ export const ConditionViewScreen: React.FC<ConditionProps> = ({
   const navigationFunctions = {
     goToSlides: () => {
       fetchSlidesForCondition(condition);
-      navigation.navigate('ConditionSlides', {
+      navigation.navigate("ConditionSlides", {
         condition,
         slides: getSlidesForCondition(condition.id),
       });
