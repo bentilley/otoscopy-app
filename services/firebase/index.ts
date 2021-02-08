@@ -107,4 +107,11 @@ export const db = {
     });
     userSubscribers.push(subscriber);
   },
+
+  submitFeedback: async (userUid: string, userEmail: string, msg: string) => {
+    // TODO Set up Sentry error logging for user favourites firebase call
+    const feedback = firestore().collection("feedback");
+    // Catch submission errors and propagate to UI
+    return feedback.add({ userUid, userEmail, message: msg });
+  },
 };

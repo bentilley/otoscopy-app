@@ -8,6 +8,7 @@ type Props = {
   goToReference: () => void;
   goToFavourites: () => void;
   goToBrowse: () => void;
+  goToContactUs: () => void;
   signOutUser: () => void;
 };
 
@@ -18,6 +19,7 @@ export const Menu: React.FC<Props> = (props) => {
       <MenuItem onPress={props.goToReference}>Conditions</MenuItem>
       <MenuItem onPress={props.goToFavourites}>Favourites</MenuItem>
       <MenuItem onPress={props.goToBrowse}>Random Browse</MenuItem>
+      <MenuItem onPress={props.goToContactUs}>Contact Us</MenuItem>
       <MenuItem onPress={props.signOutUser}>Sign Out</MenuItem>
     </View>
   );

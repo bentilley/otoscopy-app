@@ -17,12 +17,12 @@ const ConditionActionsContext = React.createContext<ActionHandlers | null>(
 );
 
 export const ConditionProvider: React.FC = ({ children }) => {
-  const { uid } = useUser().getUserSafe();
+  const { uid, email } = useUser().getUserSafe();
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
   const selectors = useSelectors(state);
   const enhancedDispatch = useMiddleware(dispatch);
-  const actions = useActions(state, enhancedDispatch, uid);
+  const actions = useActions(state, enhancedDispatch, uid, email);
 
   const { fetchCategories, fetchUserFavourites } = actions;
   React.useEffect(() => {

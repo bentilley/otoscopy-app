@@ -23,6 +23,7 @@ export const MenuScreen: React.FC<MenuProps> = ({ navigation }) => {
     goToFavourites: () => navigation.navigate("Favourites"),
     goToBrowse: () =>
       navigation.navigate("Slide", { slidePool: getSlidesArray() }),
+    goToContactUs: () => navigation.navigate("ContactUs"),
     signOutUser,
   };
   return <Menu {...navigationFunctions} />;

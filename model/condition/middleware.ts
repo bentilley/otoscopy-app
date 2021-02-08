@@ -36,6 +36,9 @@ const getWrappedDispatch = (dispatch: Dispatch<Action>) => {
       case "REMOVE_FROM_FAVOURITES":
         removeFromFavourites(action.payload);
         break;
+      case "SUBMIT_FEEDBACK":
+        submitFeedback(action.payload);
+        break;
       default:
         return value;
     }
@@ -85,6 +88,14 @@ const removeFromFavourites = async (payload: {
   userUid: string;
 }): Promise<void> => {
   db.deleteFavourite(payload.userUid, payload.slideId);
+};
+
+const submitFeedback = async (payload: {
+  userUid: string;
+  userEmail: string;
+  msg: string;
+}): Promise<void> => {
+  db.submitFeedback(payload.userUid, payload.userEmail, payload.msg);
 };
 
 export default useMiddleware;

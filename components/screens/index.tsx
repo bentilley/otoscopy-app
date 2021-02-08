@@ -15,6 +15,7 @@ import { ConditionViewScreen } from "components/screens/ConditionViewScreen";
 import { SlideViewScreen } from "components/screens/SlideViewScreen";
 import { ConditionSlidesScreen } from "components/screens/ConditionSlidesScreen";
 import { FavouriteSlidesScreen } from "components/screens/FavouriteSlidesScreen";
+import { ContactUsScreen } from "components/screens/ContactUsScreen";
 import { COLOURS } from "components/design/";
 import { MenuButton } from "./MenuButton";
 
@@ -28,6 +29,7 @@ export type RootStackParamList = {
     slides: { [slideId: string]: Slide };
   };
   Favourites: undefined;
+  ContactUs: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -62,6 +64,7 @@ export const AppScreens = () => {
             component={ConditionSlidesScreen}
           />
           <Stack.Screen name="Favourites" component={FavouriteSlidesScreen} />
+          <Stack.Screen name="ContactUs" component={ContactUsScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </ConditionProvider>

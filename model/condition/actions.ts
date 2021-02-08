@@ -15,6 +15,10 @@ export type Action =
       type: "SET_SLIDES";
       payload: { slides: Slide[]; condition: ConditionHead };
     }
+  | {
+      type: "SUBMIT_FEEDBACK";
+      payload: { userUid: string; userEmail: string; msg: string };
+    }
   | { type: "FETCH_USER_FAVOURITES"; payload: string }
   | { type: "SET_FAVOURITES"; payload: Slide[] }
   | { type: "ADD_TO_FAVOURITES"; payload: { slide: Slide; userUid: string } }
@@ -27,6 +31,7 @@ export type ActionHandlers = {
   fetchCategories: () => void;
   fetchCondition: (condition: ConditionHead) => void;
   fetchSlidesForCondition: (condition: ConditionHead) => void;
+  submitFeedback: (msg: string) => void;
   fetchUserFavourites: (userEmail: string) => void;
   addToFavourites: (slideId: string) => void;
   removeFromFavourites: (slideId: string) => void;
@@ -37,6 +42,7 @@ const useActions = (
   state: State,
   dispatch: React.Dispatch<Action>,
   userUid: string,
+  userEmail: string,
 ): ActionHandlers => {
   const { conditions, conditionsWithSlides, slides } = state;
   return {
@@ -69,6 +75,15 @@ const useActions = (
         }
       },
       [conditionsWithSlides, dispatch],
+    ),
+    submitFeedback: React.useMemo(
+      () => (msg: string) => {
+        dispatch({
+          type: "SUBMIT_FEEDBACK",
+          payload: { userUid, userEmail, msg },
+        });
+      },
+      [userUid, userEmail, dispatch],
     ),
     fetchUserFavourites: React.useMemo(
       () => () => {

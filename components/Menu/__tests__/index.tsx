@@ -8,6 +8,7 @@ let navigationStubs: {
   goToReference: () => void;
   goToFavourites: () => void;
   goToBrowse: () => void;
+  goToContactUs: () => void;
   signOutUser: () => void;
 };
 
@@ -16,6 +17,7 @@ beforeEach(() => {
     goToReference: jest.fn(),
     goToFavourites: jest.fn(),
     goToBrowse: jest.fn(),
+    goToContactUs: jest.fn(),
     signOutUser: jest.fn(),
   };
 });
