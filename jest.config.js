@@ -2,7 +2,8 @@
 
 module.exports = {
   verbose: true,
-  preset: "react-native",
+  preset: "./.jest/jest-preset.js",
+  // preset: "react-native",
   modulePaths: ["<rootDir>"],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   setupFiles: ["./.jest/setup.js"],

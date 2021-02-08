@@ -1,0 +1,3 @@
+/** @format */
+
+global.originalPromise = Promise;
