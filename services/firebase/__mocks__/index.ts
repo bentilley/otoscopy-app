@@ -1,7 +1,7 @@
 /** @format */
 
 import { categories } from "model/condition/__mocks__/categories.data";
-import { condition } from "model/condition/__mocks__/condition.data";
+import { conditions } from "model/condition/__mocks__/condition.data";
 import { favourites } from "model/condition/__mocks__/favourites.data";
 import { slides } from "model/condition/__mocks__/slides.data";
 
@@ -43,9 +43,18 @@ export const getDownloadURL = jest.fn(() => {
 
 // Firestore
 
+type MapOptions = "condition1" | "condition2" | "doesntExist";
+const CONDITION_DATA_MAP: { [key: string]: MapOptions } = {
+  REtPLgJs8ACPVBV0e734: "condition1",
+  hRdbn6dgLMyKlDMSsvgb: "condition1",
+  OWLvLPY3hktUg5PDBuU5: "condition1",
+  blankCondition: "doesntExist",
+  externalLinkCondition: "condition2",
+};
+
 export const db = {
   getCategories: jest.fn(async () => categories),
-  getCondition: jest.fn(async () => condition),
+  getCondition: jest.fn(async (c) => conditions[CONDITION_DATA_MAP[c]]),
   getSlidesForCondition: jest.fn(() => slides),
   watchUserFavourites: jest.fn(
     async (_: any, onChange: (data: any) => void) => {
