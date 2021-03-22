@@ -1,11 +1,11 @@
 /** @format */
 
-import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { ConditionSection } from 'model/condition/types';
-import { OtoText, OtoIcon, COLOURS } from 'components/design';
-import { sectionMeta } from './sections';
-import { InfoSection } from './InfoSection';
+import React from "react";
+import { StyleSheet, View, Text } from "react-native";
+import { ConditionSection } from "model/condition/types";
+import { OtoText, OtoIcon, COLOURS } from "components/design";
+import { sectionMeta } from "./sections";
+import { InfoSection } from "./InfoSection";
 
 type Props = {
   information: ConditionSection;
@@ -42,11 +42,11 @@ export const Section: React.FC<Props> = ({ information, section }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingVertical: 5,
     paddingTop: 10,
   },
-  icon: { flex: 2, alignItems: 'center', paddingTop: 5 },
+  icon: { flex: 2, alignItems: "center", paddingTop: 5 },
   title: { paddingVertical: 8 },
   text: { flex: 8 },
 });
