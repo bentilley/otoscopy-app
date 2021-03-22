@@ -56,7 +56,9 @@ const fetchCondition = async (
   condition: ConditionHead,
 ): Promise<void> => {
   const data = await db.getCondition(condition.id);
-  dispatch({ type: "SET_CONDITION", payload: { id: data.id, data } });
+  if (data) {
+    dispatch({ type: "SET_CONDITION", payload: { id: data.id, data } });
+  }
 };
 
 const fetchSlidesForCondition = async (

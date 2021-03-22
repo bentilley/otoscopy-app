@@ -67,7 +67,11 @@ export const db = {
     // TODO Set up Sentry error logging for condition firebase call
     const doc = await firestore().collection("conditions").doc(id).get();
     const conditionData = doc.data() as ConditionDataDB;
-    return { ...conditionData, id: doc.id };
+    if (conditionData) {
+      return { ...conditionData, id: doc.id };
+    } else {
+      return null;
+    }
   },
 
   getSlidesForCondition: async (conditionId: string) => {
