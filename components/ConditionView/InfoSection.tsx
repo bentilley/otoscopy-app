@@ -5,11 +5,8 @@ import { View, StyleSheet } from 'react-native';
 
 import { ConditionSection } from 'model/condition/types';
 import { OtoIcon, OtoText, COLOURS } from 'components/design';
-import { shortHash } from 'utils';
 
-function isList(info: ConditionSection): info is string[] {
-  return (info as string[]).length !== undefined;
-}
+import { shortHash, isList, toStr, isInfoLink } from "utils";
 
 type Props = {
   information: ConditionSection;
