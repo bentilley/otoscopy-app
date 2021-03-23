@@ -41,6 +41,7 @@ export interface Condition extends ConditionHead, ConditionDataDB {}
 export interface ConditionDataDB {
   name: string;
   description: string;
+  additional_resources?: ConditionSection;
   aetiology: ConditionSection;
   audiology: ConditionSection;
   clinical_signs: ConditionSection;
@@ -57,7 +58,9 @@ export interface ConditionDataDB {
  * ConditionSection
  * A single fact section in the ConditionView.
  */
-export type ConditionSection = string[] | { [index: string]: SectionDetail };
+export type ConditionSection =
+  | (string | InfoLink)[]
+  | { [index: string]: SectionDetail };
 
 /**
  * SectionDetail
@@ -65,7 +68,16 @@ export type ConditionSection = string[] | { [index: string]: SectionDetail };
  */
 type SectionDetail = {
   title: string;
-  information: string[];
+  information: (string | InfoLink)[];
+};
+
+/**
+ * InfoLink
+ * A single fact that should be rendered as a link to a URL.
+ */
+export type InfoLink = {
+  text: string;
+  url: string;
 };
 
 /**

@@ -8,7 +8,7 @@ import { sectionMeta } from "./sections";
 import { InfoSection } from "./InfoSection";
 
 type Props = {
-  information: ConditionSection;
+  information: ConditionSection | undefined;
   section: string;
 };
 
