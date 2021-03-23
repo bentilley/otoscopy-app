@@ -22,8 +22,8 @@ const AppText: React.FC = ({ children }) => {
   return <Text style={style.font}>{children}</Text>;
 };
 
-type FontSizes = "large" | "medium" | "smallMedium" | "small";
-type FontWeights = "fine" | "normal" | "semibold" | "bold";
+export type FontSizes = "large" | "medium" | "smallMedium" | "small";
+export type FontWeights = "fine" | "normal" | "semibold" | "bold";
 
 function getStyleSheet(
   fontSize: FontSizes,
