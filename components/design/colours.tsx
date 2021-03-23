@@ -16,16 +16,16 @@ interface COLOURS {
 }
 
 export const COLOURS: COLOURS = Object.freeze({
-  black: '#010101',
-  veryDark: '#131313',
-  dark: '#2f2f2f',
-  lessDark: '#3e3e3e',
-  darkGrey: '#575757',
-  grey: '#bdbdbd',
-  lightGrey: '#dedede',
-  primary: '#15d6be',
-  pirmaryLight: '#68fff0',
-  primaryDark: '#00a48e',
-  favourite: '#cfb113',
-  error: '#c10002',
+  black: "#010101",
+  veryDark: "#131313",
+  dark: "#2f2f2f",
+  lessDark: "#3e3e3e",
+  darkGrey: "#575757",
+  grey: "#bdbdbd",
+  lightGrey: "#dedede",
+  primary: "#15d6be",
+  pirmaryLight: "#68fff0",
+  primaryDark: "#00a48e",
+  favourite: "#cfb113",
+  error: "#c10002",
 });
