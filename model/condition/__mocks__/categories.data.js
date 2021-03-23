@@ -3,14 +3,16 @@
 export const categories = [
   {
     name: "Normal Anatomy",
-    conditions: [{ name: "Otitis Media", id: "REtPLgJs8ACPVBV0e734" }],
+    conditions: [
+      { name: "Blank Condition Data", id: "blankCondition" },
+      { name: "Condition with Links", id: "externalLinkCondition" },
+    ],
   },
   {
     name: "Diseases of the middle ear",
     conditions: [
-      { name: "Otitis Media", id: "REtPLgJs8ACPVBV0e734" },
-      { name: "Cholesterol Granuloma", id: "hRdbn6dgLMyKlDMSsvgb" },
-      { name: "Otitis Media with Effusion", id: "OWLvLPY3hktUg5PDBuU5" },
+      { name: "Otitis Media", id: "condition1" },
+      { name: "Condition with Links", id: "externalLinkCondition" },
     ],
   },
 ];

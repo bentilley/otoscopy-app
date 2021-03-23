@@ -43,18 +43,14 @@ export const getDownloadURL = jest.fn(() => {
 
 // Firestore
 
-type MapOptions = "condition1" | "condition2" | "doesntExist";
-const CONDITION_DATA_MAP: { [key: string]: MapOptions } = {
-  REtPLgJs8ACPVBV0e734: "condition1",
-  hRdbn6dgLMyKlDMSsvgb: "condition1",
-  OWLvLPY3hktUg5PDBuU5: "condition1",
-  blankCondition: "doesntExist",
-  externalLinkCondition: "condition2",
-};
-
 export const db = {
   getCategories: jest.fn(async () => categories),
-  getCondition: jest.fn(async (c) => conditions[CONDITION_DATA_MAP[c]]),
+  getCondition: jest.fn(async (c) => {
+    if (c !== "blankCondition" && !conditions[c]) {
+      throw Error(`Test condition ${c} does not exist!`);
+    }
+    return conditions[c];
+  }),
   getSlidesForCondition: jest.fn(() => slides),
   watchUserFavourites: jest.fn(
     async (_: any, onChange: (data: any) => void) => {

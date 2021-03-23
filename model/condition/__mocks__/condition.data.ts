@@ -3,7 +3,7 @@ import { Condition } from "model/condition/types";
 
 export const conditions: { [key: string]: Condition | undefined } = {
   condition1: {
-    id: "REtPLgJs8ACPVBV0e734",
+    id: "condition1",
     aetiology: {
       bacterial: {
         information: [
@@ -95,8 +95,8 @@ export const conditions: { [key: string]: Condition | undefined } = {
     name: "Otitis Media",
     description: "Acute onset inflammation of middle ear space",
   },
-  condition2: {
-    id: "ajIfREwjI93GdjE12GE4",
+  externalLinkCondition: {
+    id: "externalLinkCondition",
     aetiology: {},
     audiology: [],
     management: {},
