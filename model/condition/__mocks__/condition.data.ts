@@ -107,29 +107,12 @@ export const conditions: { [key: string]: Condition | undefined } = {
     clinical_signs: [],
     risk_factors: [],
     otoscopy: [],
-    additional_resources: {
-      conservative: {
-        information: [
-          "60% resolve within 24 hours",
-          "Anagesia, antipyretics, observations",
-        ],
-        title: "Conservative",
+    additional_resources: [
+      {
+        text: "Link to something",
+        url: "www.example.com/link-to-something",
       },
-      surgical: {
-        information: [
-          "Myringotomy",
-          "Insertion of ventilation tube (grommet) for recurrent cases",
-        ],
-        title: "Surgical",
-      },
-      medical: {
-        information: [
-          "Oral antibiotics if failure to resolve in 24-48 hours, systematically unwell, < 2 years old, or at high risk of complications",
-          "Tropical antibiotics indicated if TM perforated",
-        ],
-        title: "Medical",
-      },
-    },
+    ],
     name: "Condition with Links",
     description: "Test condition with links to external resources.",
   },
