@@ -1,76 +1,96 @@
 /** @format */
 
 import React from "react";
-import ConditionView from "../index";
-import { Condition } from "model/condition/types";
-import { render, fireEvent, cleanup } from "@testing-library/react-native";
+import { AppScreens } from "components/screens";
+import { db } from "services/firebase";
+import { render, fireEvent, waitFor } from "@testing-library/react-native";
 
-let navigationStubs: {
-  goToSlides: () => void;
-};
-
-let condition: Condition;
-
-beforeEach(() => {
-  navigationStubs = {
-    goToSlides: jest.fn(),
-  };
-
-  condition = {
-    id: "otitis",
-    name: "Otitis Media",
-    description: "Acute onset inflamation of the middle ear space",
-    population: ["Commonly paediatric 3-7 years"],
-    aetiology: {
-      bacterial: {
-        information: [
-          "Strep Pneumoniae",
-          "Haemophilus",
-          "Moraxella Catarrhalis",
-        ],
-        title: "Bacterial",
-      },
-      viral: {
-        information: ["Rhinovirus", "RSV", "Adenovirus"],
-        title: "Viral (75% cases)",
-      },
-    },
-    audiology: {},
-    clinical_signs: {},
-    complications: {},
-    investigations: {},
-    management: {},
-    otoscopy: {},
-    risk_factors: {},
-    symptoms: {},
-  };
-});
-
-afterEach(cleanup);
+jest.mock("components/UI");
+jest.mock("model/user");
+jest.mock("services/firebase");
 
 describe("<ConditionView />", () => {
-  it("renders correctly", () => {
-    const { queryByText } = render(
-      <ConditionView {...navigationStubs} condition={condition} />,
-    );
+  it("renders correctly", async () => {
+    const { queryByText, getByText } = render(<AppScreens />);
+    await waitFor(() => {
+      expect(db.getCondition).toHaveBeenCalled();
+    });
+
+    fireEvent.press(getByText("Conditions"));
+    fireEvent.press(getByText("Diseases of the middle ear"));
+    fireEvent.press(getByText("Otitis Media"));
+
+    expect(queryByText("Strep Pneumoniae")).toBeTruthy();
+    expect(queryByText("Conductive hearing loss")).toBeTruthy();
     expect(
-      queryByText("Acute onset inflamation of the middle ear space"),
+      queryByText("CT/MRI if intracranial complications suspected"),
     ).toBeTruthy();
+
+    // Not really part of the test...
+    // This just waits for react to stop so it doesn't thow warnings.
+    await waitFor(() => {
+      expect(db.getCondition).toHaveBeenCalled();
+    });
   });
 
-  it("renders loading if there is no condition info", () => {
-    const { queryByText } = render(
-      <ConditionView {...navigationStubs} condition={null} />,
-    );
+  it("renders loading if there is no condition info", async () => {
+    const { queryByText, getByText } = render(<AppScreens />);
+    await waitFor(() => {
+      expect(db.getCondition).toHaveBeenCalled();
+    });
+
+    fireEvent.press(getByText("Conditions"));
+    fireEvent.press(getByText("Normal Anatomy"));
+    fireEvent.press(getByText("Blank Condition Data"));
+
     expect(queryByText("Loading...")).toBeTruthy();
+
+    // Not really part of the test...
+    // This just waits for react to stop so it doesn't thow warnings.
+    await waitFor(() => {
+      expect(db.getCondition).toHaveBeenCalled();
+    });
   });
 
-  it("navigates to the slide view when the slide button is pressed", () => {
-    const { getByText } = render(
-      <ConditionView {...navigationStubs} condition={condition} />,
-    );
-    const btn = getByText("view slides");
-    fireEvent.press(btn);
-    expect(navigationStubs.goToSlides).toHaveBeenCalled();
+  it("navigates to slide view when slide button is pressed", async () => {
+    const { queryByText, getByText } = render(<AppScreens />);
+    await waitFor(() => {
+      expect(db.getCondition).toHaveBeenCalled();
+    });
+
+    fireEvent.press(getByText("Conditions"));
+    fireEvent.press(getByText("Diseases of the middle ear"));
+    fireEvent.press(getByText("Otitis Media"));
+    fireEvent.press(getByText("view slides"));
+
+    expect(queryByText("ConditionSlides")).toBeTruthy();
+
+    // Not really part of the test...
+    // This just waits for react to stop so it doesn't thow warnings.
+    await waitFor(() => {
+      expect(db.getCondition).toHaveBeenCalled();
+    });
+  });
+
+  it("can have external links in sections (i.e. further reading", async () => {
+    const { Linking } = require("react-native");
+    Linking.canOpenURL.mockReturnValue(true);
+
+    const { queryByText, getByText } = render(<AppScreens />);
+    await waitFor(() => {
+      expect(db.getCondition).toHaveBeenCalled();
+    });
+
+    fireEvent.press(getByText("Conditions"));
+    fireEvent.press(getByText("Diseases of the middle ear"));
+    fireEvent.press(getByText("Condition with Links"));
+
+    expect(queryByText("Additional Resources")).toBeTruthy();
+    fireEvent.press(getByText("Link to something"));
+    await waitFor(() => {
+      expect(Linking.openURL).toHaveBeenCalledWith(
+        "https://www.example.com/link-to-something",
+      );
+    });
   });
 });
