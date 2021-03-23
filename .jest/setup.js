@@ -16,3 +16,14 @@ jest.mock("react-native-reanimated", () => {
 // Silence the warning: Animated: `useNativeDriver` is not supported because the
 // native animated module is missing
 jest.mock("react-native/Libraries/Animated/src/NativeAnimatedHelper");
+
+// Mock the Linking module for tests
+jest.mock("react-native/Libraries/Linking/Linking.js", () => {
+  return {
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    openURL: jest.fn(),
+    canOpenURL: jest.fn(),
+    getInitialURL: jest.fn(),
+  };
+});
