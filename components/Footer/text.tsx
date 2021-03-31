@@ -1,12 +1,12 @@
 /** @format */
 
-import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
-import { OtoText, OtoIcon, COLOURS } from 'components/design';
+import React from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import { OtoText, OtoIcon, COLOURS } from "components/design";
 
 interface Props {
   text: string;
-  caret?: 'L' | 'R';
+  caret?: "L" | "R";
   onPress: () => void;
 }
 
@@ -20,13 +20,13 @@ interface Props {
 export const FooterText: React.FC<Props> = ({ text, caret, onPress }) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
-      {caret === 'L' ? (
+      {caret === "L" ? (
         <OtoIcon name="caret-left" size={30} color={COLOURS.grey} />
       ) : null}
       <OtoText size="medium" weight="semibold">
         {text}
       </OtoText>
-      {caret === 'R' ? (
+      {caret === "R" ? (
         <OtoIcon name="caret-right" size={30} color={COLOURS.grey} />
       ) : null}
     </TouchableOpacity>
@@ -34,5 +34,5 @@ export const FooterText: React.FC<Props> = ({ text, caret, onPress }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flexDirection: 'row', alignItems: 'center' },
+  container: { flexDirection: "row", alignItems: "center" },
 });
