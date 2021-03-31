@@ -16,20 +16,16 @@ describe("<ConditionView />", () => {
       expect(db.getCondition).toHaveBeenCalled();
     });
 
-    fireEvent.press(getByText("Conditions"));
-    fireEvent.press(getByText("Diseases of the middle ear"));
-    fireEvent.press(getByText("Otitis Media"));
+    await fireEvent.press(getByText("Conditions"));
+    await fireEvent.press(getByText("Diseases of the middle ear"));
+    await fireEvent.press(getByText("Otitis Media"));
 
-    expect(queryByText("Strep Pneumoniae")).toBeTruthy();
-    expect(queryByText("Conductive hearing loss")).toBeTruthy();
-    expect(
-      queryByText("CT/MRI if intracranial complications suspected"),
-    ).toBeTruthy();
-
-    // Not really part of the test...
-    // This just waits for react to stop so it doesn't thow warnings.
     await waitFor(() => {
-      expect(db.getCondition).toHaveBeenCalled();
+      expect(queryByText("Strep Pneumoniae")).toBeTruthy();
+      expect(queryByText("Conductive hearing loss")).toBeTruthy();
+      expect(
+        queryByText("CT/MRI if intracranial complications suspected"),
+      ).toBeTruthy();
     });
   });
 
@@ -39,36 +35,29 @@ describe("<ConditionView />", () => {
       expect(db.getCondition).toHaveBeenCalled();
     });
 
-    fireEvent.press(getByText("Conditions"));
-    fireEvent.press(getByText("Normal Anatomy"));
-    fireEvent.press(getByText("Blank Condition Data"));
+    await fireEvent.press(getByText("Conditions"));
+    await fireEvent.press(getByText("Normal Anatomy"));
+    await fireEvent.press(getByText("Blank Condition Data"));
 
-    expect(queryByText("Loading...")).toBeTruthy();
-
-    // Not really part of the test...
-    // This just waits for react to stop so it doesn't thow warnings.
     await waitFor(() => {
-      expect(db.getCondition).toHaveBeenCalled();
+      expect(queryByText("Loading...")).toBeTruthy();
     });
   });
 
   it("navigates to slide view when slide button is pressed", async () => {
-    const { queryByText, getByText } = render(<AppScreens />);
+    const { queryByText, queryAllByText, getByText } = render(<AppScreens />);
     await waitFor(() => {
       expect(db.getCondition).toHaveBeenCalled();
     });
 
-    fireEvent.press(getByText("Conditions"));
-    fireEvent.press(getByText("Diseases of the middle ear"));
-    fireEvent.press(getByText("Otitis Media"));
-    fireEvent.press(getByText("view slides"));
+    await fireEvent.press(getByText("Conditions"));
+    await fireEvent.press(getByText("Diseases of the middle ear"));
+    await fireEvent.press(getByText("Otitis Media"));
+    await fireEvent.press(getByText("view slides"));
 
-    expect(queryByText("ConditionSlides")).toBeTruthy();
-
-    // Not really part of the test...
-    // This just waits for react to stop so it doesn't thow warnings.
     await waitFor(() => {
-      expect(db.getCondition).toHaveBeenCalled();
+      expect(queryByText("ConditionSlides")).toBeTruthy();
+      expect(queryAllByText("view slide")).toBeTruthy();
     });
   });
 
