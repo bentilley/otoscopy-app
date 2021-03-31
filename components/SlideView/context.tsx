@@ -1,8 +1,8 @@
 /** @format */
 
-import React from 'react';
-import { Animated } from 'react-native';
-import { useMaxDrawerHeight } from './dimensions';
+import React from "react";
+import { Animated } from "react-native";
+import { useMaxDrawerHeight } from "./dimensions";
 
 /**
  * SlideViewState
@@ -31,6 +31,7 @@ interface Context {
   movableContainer: {
     translation: Animated.ValueXY;
     moveYTo: (Y: number) => void;
+    setY: (Y: number) => void;
   };
   drawer: {
     drawerHeight: Animated.Value;
@@ -38,6 +39,7 @@ interface Context {
     setMoveStartY: (Y: number) => void;
     openDrawer: (onStart?: () => void, onComplete?: () => void) => void;
     closeDrawer: (onStart?: () => void, onComplete?: () => void) => void;
+    setHeight: (height: number) => void;
   };
 }
 
@@ -102,6 +104,7 @@ export const SlideViewProvider: React.FC<Props> = ({
         useNativeDriver: false,
       }).start();
     },
+    setY: (Y: number) => translation.y.setValue(Y),
   };
 
   const drawerHeight = React.useRef(new Animated.Value(0)).current;
@@ -130,6 +133,7 @@ export const SlideViewProvider: React.FC<Props> = ({
         finished && onComplete ? onComplete() : null,
       );
     },
+    setHeight: (height: number) => drawerHeight.setValue(height),
   };
 
   return (
@@ -147,7 +151,7 @@ export const SlideViewProvider: React.FC<Props> = ({
 export const useSlideViewState = () => {
   const context = React.useContext(SlideViewContext);
   if (!context) {
-    throw new Error('Context hook used outside of provider!');
+    throw new Error("Context hook used outside of provider!");
   } else {
     return context;
   }

@@ -32,8 +32,18 @@ export const SlideView: React.FC<Props> = ({ slidePool, goToCondition }) => {
     <React.Fragment>
       <View style={styles.screen}>
         <SwipeContainer
-          onSwipeRightComplete={() => update.incrementSlideIndex()}
-          onSwipeLeftComplete={() => update.decrementSlideIndex()}>
+          onSwipeRightComplete={() => {
+            drawer.setHeight(0);
+            movableContainer.setY(0);
+            update.incrementSlideIndex();
+            update.setIsDiagnosed(false);
+          }}
+          onSwipeLeftComplete={() => {
+            drawer.setHeight(0);
+            movableContainer.setY(0);
+            update.decrementSlideIndex();
+            update.setIsDiagnosed(false);
+          }}>
           <Spacer />
           <MovableContainer>
             <MainImage
