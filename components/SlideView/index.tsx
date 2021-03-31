@@ -57,13 +57,13 @@ export const SlideView: React.FC<Props> = ({ slidePool, goToCondition }) => {
               slideId={currentSlide.id}
               condition={currentSlide.condition}
               diagnosis={currentSlide.diagnosis}
+              goToCondition={() => goToCondition(currentSlide)}
             />
           </Drawer>
         </SwipeContainer>
       </View>
       <SlideViewFooter
         slideId={currentSlide.id}
-        goToCondition={() => goToCondition(currentSlide)}
         goToNextSlide={() => {
           drawer.closeDrawer(
             () => movableContainer.moveYTo(0),

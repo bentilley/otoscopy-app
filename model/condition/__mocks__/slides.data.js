@@ -15,12 +15,12 @@ export const slides = [
     thumbnail_url: "/thumb/otitis-media/100001.jpg",
     img_url: "/slide-img/otitis-media/100001.jpg",
     id: "aJxdT03yhiLr1hFV7PdL",
-    conditionId: "REtPLgJs8ACPVBV0e734",
+    conditionId: "condition1",
   },
   {
     condition: "Otitis Media",
     diagnosis: "A short description of wtf is wrong with this poor, poor ear.",
     id: "64dlvwQNDTT7qRQ9Qetg",
-    conditionId: "REtPLgJs8ACPVBV0e734",
+    conditionId: "condition1",
   },
 ];

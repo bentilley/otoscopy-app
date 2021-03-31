@@ -1,9 +1,9 @@
 /** @format */
 
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { OtoText } from 'components/design';
-import { FavouriteStar } from 'components/Footer/icons';
+import React from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { OtoText, COLOURS } from "components/design";
+import { FavouriteStar } from "components/Footer/icons";
 
 /**
  * DiagnosisInfo
@@ -16,6 +16,7 @@ export const DiagnosisInfo: React.FC<DiagnosisInfoProps> = ({
   slideId,
   condition,
   diagnosis,
+  goToCondition,
 }) => {
   return (
     <View>
@@ -27,6 +28,11 @@ export const DiagnosisInfo: React.FC<DiagnosisInfoProps> = ({
       </View>
       <View style={styles.body}>
         <OtoText size="medium">{diagnosis}</OtoText>
+        <TouchableOpacity onPress={goToCondition} style={styles.moreInfo}>
+          <OtoText size="medium" weight="semibold">
+            <Text style={{ color: COLOURS.primary }}>More info...</Text>
+          </OtoText>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -36,10 +42,12 @@ type DiagnosisInfoProps = {
   slideId: string;
   condition: string;
   diagnosis: string;
+  goToCondition: () => void;
 };
 
 const styles = StyleSheet.create({
-  title: { flexDirection: 'row', alignItems: 'center', paddingTop: 10 },
+  title: { flexDirection: "row", alignItems: "center", paddingTop: 10 },
   body: { paddingTop: 20 },
   star: { paddingLeft: 10 },
+  moreInfo: { paddingTop: 20 },
 });

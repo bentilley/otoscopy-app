@@ -1,11 +1,11 @@
 /** @format */
 
-import React from 'react';
-import { StyleSheet } from 'react-native';
-import { COLOURS } from 'components/design';
-import { useSlideViewState } from './context';
-import { Footer, FooterIcon, FooterText } from 'components/Footer';
-import { FavouriteStar } from 'components/Footer/icons';
+import React from "react";
+import { StyleSheet } from "react-native";
+import { COLOURS } from "components/design";
+import { useSlideViewState } from "./context";
+import { Footer, FooterIcon, FooterText } from "components/Footer";
+import { FavouriteStar } from "components/Footer/icons";
 
 interface SlideViewFooterProps
   extends DiagnosedFooterProps,
@@ -19,16 +19,12 @@ interface SlideViewFooterProps
  * @param goToNextSlide - Navigate the app to the next slide.
  */
 export const SlideViewFooter: React.FC<SlideViewFooterProps> = ({
-  goToCondition,
   goToNextSlide,
   slideId,
 }) => {
   const { state } = useSlideViewState();
   return state.isDiagnosed ? (
-    <DiagnosedFooter
-      goToCondition={goToCondition}
-      goToNextSlide={goToNextSlide}
-    />
+    <DiagnosedFooter goToNextSlide={goToNextSlide} />
   ) : (
     <UndiagnosedFooter slideId={slideId} />
   );
@@ -58,14 +54,13 @@ export const UndiagnosedFooter: React.FC<UndiagnosedFooterProps> = ({
       <FooterIcon
         iconName="eardrum"
         colour={COLOURS.grey}
-        onPress={() => console.log('show diagram')}
+        onPress={() => console.log("show diagram")}
       />
     </Footer>
   );
 };
 
 interface DiagnosedFooterProps {
-  goToCondition: () => void;
   goToNextSlide: () => void;
 }
 
@@ -76,12 +71,10 @@ interface DiagnosedFooterProps {
  * @param goToNextSlide - Navigate the app to the next slide.
  */
 export const DiagnosedFooter: React.FC<DiagnosedFooterProps> = ({
-  goToCondition,
   goToNextSlide,
 }) => {
   return (
-    <Footer style={styles.footer}>
-      <FooterText text="see condition" onPress={goToCondition} />
+    <Footer style={styles.footerRight}>
       <FooterText text="next" caret="R" onPress={goToNextSlide} />
     </Footer>
   );
@@ -89,7 +82,10 @@ export const DiagnosedFooter: React.FC<DiagnosedFooterProps> = ({
 
 const styles = StyleSheet.create({
   footer: {
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
     paddingHorizontal: 30,
+  },
+  footerRight: {
+    justifyContent: "flex-end",
   },
 });

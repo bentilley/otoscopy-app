@@ -1,10 +1,10 @@
 /** @format */
 
-import React from 'react';
-import { View, StyleSheet, Animated } from 'react-native';
-import { OtoIcon, COLOURS } from 'components/design';
-import { useSlideViewState } from './context';
-import { MIN_MOVEMENT_FOR_CLOSE, useMaxDrawerHeight } from './dimensions';
+import React from "react";
+import { View, StyleSheet, Animated, TouchableOpacity } from "react-native";
+import { OtoIcon, COLOURS } from "components/design";
+import { useSlideViewState } from "./context";
+import { MIN_MOVEMENT_FOR_CLOSE, useMaxDrawerHeight } from "./dimensions";
 
 interface Props {
   onOpenStart?: () => void;
@@ -62,7 +62,11 @@ export const Drawer: React.FC<Props> = ({
             closeDrawer(onCloseStart, onCloseComplete);
           }
         }}>
-        <OtoIcon name="caret-down" size={45} color={COLOURS.lightGrey} />
+        <TouchableOpacity
+          onPress={() => closeDrawer(onCloseStart, onCloseComplete)}
+          testID="slide-view__close_drawer">
+          <OtoIcon name="caret-down" size={45} color={COLOURS.lightGrey} />
+        </TouchableOpacity>
       </View>
       {children}
     </Animated.View>
@@ -71,11 +75,11 @@ export const Drawer: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
-    overflow: 'hidden',
+    overflow: "hidden",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     paddingHorizontal: 20,
@@ -83,8 +87,8 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
   pullTab: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
