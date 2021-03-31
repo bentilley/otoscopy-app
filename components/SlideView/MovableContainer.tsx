@@ -1,8 +1,8 @@
 /** @format */
 
-import React from 'react';
-import { StyleSheet, Animated } from 'react-native';
-import { useSlideViewState } from './context';
+import React from "react";
+import { StyleSheet, Animated } from "react-native";
+import { useSlideViewState } from "./context";
 
 /**
  * MovableContainer
@@ -23,5 +23,5 @@ export const MovableContainer: React.FC = ({ children }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { justifyContent: 'center', alignItems: 'center' },
+  container: { justifyContent: "center", alignItems: "center" },
 });
