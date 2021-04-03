@@ -1,61 +1,71 @@
 /** @format */
 
 import React from "react";
-import { FavouriteSlides } from "../index";
-import { ConditionProvider } from "model/condition";
-import { render, fireEvent, cleanup } from "@testing-library/react-native";
-import { slideData } from "components/ConditionSlides/__mocks__/slide-data";
-import { Slide } from "model/condition/types";
+import { AppScreens } from "components/screens";
+import { db } from "services/firebase";
+import { render, fireEvent, waitFor } from "@testing-library/react-native";
 
 jest.mock("model/user");
-jest.mock("services/error-handling");
+jest.mock("components/UI");
 jest.mock("services/firebase");
-
-let navigationStubs: {
-  goToSlide: () => void;
-  studyFavourites: () => void;
-};
-
-let props: {
-  slides: { [slideId: string]: Slide };
-} = {
-  slides: slideData,
-};
-
-beforeEach(() => {
-  navigationStubs = {
-    goToSlide: jest.fn(),
-    studyFavourites: jest.fn(),
-  };
-
-  props.slides = slideData;
-});
-
-afterEach(cleanup);
 
 describe("<FavouritesSlideList />", () => {
   it("renders correctly", async () => {
-    const { findAllByTestId } = render(
-      <ConditionProvider>
-        <FavouriteSlides {...navigationStubs} {...props} />
-      </ConditionProvider>,
-    );
-    const imgs = await findAllByTestId(/slide-image-/);
-    expect(imgs.length).toEqual(3);
+    const { getByText, queryAllByText } = render(<AppScreens />);
+    await waitFor(() => {
+      expect(db.watchUserFavourites).toHaveBeenCalled();
+    });
+    await fireEvent.press(getByText("Favourites"));
+    await waitFor(async () => {
+      // Use "view slide" buttons to count the number of slides.
+      const viewBtns = queryAllByText("view slide");
+      expect(viewBtns.length).toEqual(2);
+    });
   });
 
   it("navigates to the correct slide when the slide is pressed", async () => {
-    const { findAllByTestId, getAllByText } = render(
-      <ConditionProvider>
-        <FavouriteSlides {...navigationStubs} {...props} />
-      </ConditionProvider>,
-    );
-    await findAllByTestId(/slide-image-/);
+    const { getByText, getAllByText, queryByText } = render(<AppScreens />);
+    await waitFor(() => {
+      expect(db.watchUserFavourites).toHaveBeenCalled();
+    });
+    await fireEvent.press(getByText("Favourites"));
     const btns = getAllByText("view slide");
-    expect(btns.length).toEqual(3);
-    fireEvent.press(btns[0]);
-    expect(navigationStubs.goToSlide).toHaveBeenCalledWith(
-      expect.objectContaining({ condition: "Otitis Media" }),
-    );
+    expect(btns.length).toEqual(2);
+    await fireEvent.press(btns[0]);
+    await waitFor(() => {
+      expect(queryByText("Tap to reveal diagnosis")).toBeTruthy();
+    });
+  });
+
+  it("requires confirmation to remove a favourite", async () => {
+    const { getByText, getAllByText, queryAllByText } = render(<AppScreens />);
+    await waitFor(() => {
+      expect(db.watchUserFavourites).toHaveBeenCalled();
+    });
+    await fireEvent.press(getByText("Favourites"));
+    const removeBtns = queryAllByText("remove");
+    expect(removeBtns.length).toEqual(2);
+    const btns = getAllByText("remove");
+    await fireEvent.press(btns[0]);
+    await fireEvent.press(getByText("sure?"));
+    await waitFor(async () => {
+      expect(queryAllByText("remove").length).toEqual(1);
+    });
+  });
+
+  it("can undo remove press", async () => {
+    const { getByText, getAllByText, queryAllByText } = render(<AppScreens />);
+    await waitFor(() => {
+      expect(db.watchUserFavourites).toHaveBeenCalled();
+    });
+    await fireEvent.press(getByText("Favourites"));
+    const viewBtns = queryAllByText("remove");
+    expect(viewBtns.length).toEqual(2);
+    const btns = getAllByText("remove");
+    await fireEvent.press(btns[0]);
+    await fireEvent.press(getByText("undo"));
+    await waitFor(async () => {
+      expect(queryAllByText("remove").length).toEqual(2);
+    });
   });
 });

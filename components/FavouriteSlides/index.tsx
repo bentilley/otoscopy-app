@@ -13,9 +13,10 @@ type Props = {
   studyFavourites: () => void;
 };
 
-/**
- * FavouriteSlides
+/** FavouriteSlides
+ *
  * A component to display a list of favourited slides.
+ *
  * @param slides - an array of slides to display;
  * @param goToSlide - navigate the app to a specific slide;
  * @param studyFavourites - navigate the app to SlideView with favourite slides.

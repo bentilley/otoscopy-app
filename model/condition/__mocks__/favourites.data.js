@@ -4,8 +4,8 @@ export const favourites = [
   {
     diagnosis:
       "Otitis Media but with some extra stuff that Olly will enlighten me about one day.",
-    id: "5Hwf7lV7I3eNLiUadDCf",
-    conditionId: "OWLvLPY3hktUg5PDBuU5",
+    id: "64dlvwQNDTT7qRQ9Qetg",
+    conditionId: "condition1",
     condition: "Otitis Media with Effusion",
   },
   {
@@ -19,7 +19,7 @@ export const favourites = [
     thumbnail_url: "/thumb/otitis-media/100001.jpg",
     id: "aJxdT03yhiLr1hFV7PdL",
     condition: "Otitis Media",
-    conditionId: "REtPLgJs8ACPVBV0e734",
+    conditionId: "condition1",
     diagnosis:
       "Right ear Acute Otitis Media. Bulging tympanic membrane with purulent effusion visible.",
     img_url: "/slide-img/otitis-media/100001.jpg",
