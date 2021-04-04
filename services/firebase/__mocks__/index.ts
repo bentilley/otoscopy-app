@@ -31,9 +31,9 @@ export const signInUser = () => {
   return Promise.resolve(AUTH_CALLBACK(USER_DATA));
 };
 
-export const sendPasswordReset = () => {
+export const sendPasswordReset = jest.fn(() => {
   return Promise.resolve();
-};
+});
 
 // Storage
 

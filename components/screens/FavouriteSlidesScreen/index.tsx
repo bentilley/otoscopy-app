@@ -18,11 +18,11 @@ export const FavouriteSlidesScreen: React.FC<Props> = ({ navigation }) => {
     goToSlide: (slide: Slide) => {
       const slidePool = getSlidesArray();
       const startingIndex = slidePool.map((s) => s.id).indexOf(slide.id);
-      navigation.navigate("Slide", { slidePool, startingIndex });
+      navigation.push("Slide", { slidePool, startingIndex });
     },
     studyFavourites: () => {
       const slidePool = getFavouritesArray();
-      navigation.navigate("Slide", { slidePool });
+      navigation.push("Slide", { slidePool });
     },
   };
   return <FavouriteSlides slides={getFavourites()} {...navigationFunctions} />;

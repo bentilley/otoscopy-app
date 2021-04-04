@@ -12,11 +12,14 @@ import { FeedbackForm } from "./FeedbackForm";
 import { FeedbackSuccess } from "./FeedbackSuccess";
 
 type Props = {
-  goToMenu: () => void;
+  goToLandingPage: () => void;
   submitFeedback: (msg: string) => void;
 };
 
-export const ContactUs: React.FC<Props> = ({ goToMenu, submitFeedback }) => {
+export const ContactUs: React.FC<Props> = ({
+  goToLandingPage,
+  submitFeedback,
+}) => {
   const [feedbackSubmitted, setFeedbackSubmitted] = React.useState(false);
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -30,7 +33,7 @@ export const ContactUs: React.FC<Props> = ({ goToMenu, submitFeedback }) => {
           />
         ) : (
           <FeedbackSuccess
-            goToMenu={goToMenu}
+            goToLandingPage={goToLandingPage}
             resetForm={() => setFeedbackSubmitted(false)}
           />
         )}

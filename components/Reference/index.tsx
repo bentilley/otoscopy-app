@@ -1,7 +1,7 @@
 /** @format */
 
 import React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
 import { Category, ConditionHead } from "model/condition/types";
 import { CategoryItem } from "./CategoryItem";
 import { COLOURS } from "components/design";
@@ -19,8 +19,8 @@ const Reference: React.FC<Props> = ({
   goToFavourites,
 }) => {
   return (
-    <React.Fragment>
-      <ScrollView style={styles.screen}>
+    <View style={styles.screen} testID="reference-screen">
+      <ScrollView>
         {categories.map((category) => (
           <CategoryItem
             {...category}
@@ -30,7 +30,7 @@ const Reference: React.FC<Props> = ({
         ))}
       </ScrollView>
       <ReferenceFooter goToFavourites={goToFavourites} />
-    </React.Fragment>
+    </View>
   );
 };
 

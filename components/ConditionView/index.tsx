@@ -17,8 +17,8 @@ const ConditionView: React.FC<Props> = ({ goToSlides, condition }) => {
   return (
     <React.Fragment>
       {condition ? (
-        <React.Fragment>
-          <ScrollView style={styles.screen}>
+        <View style={styles.screen} testID="condition-view-screen">
+          <ScrollView>
             <Description>{condition.description}</Description>
             {sections.map((section) => (
               <Section
@@ -29,7 +29,7 @@ const ConditionView: React.FC<Props> = ({ goToSlides, condition }) => {
             ))}
           </ScrollView>
           <ConditionViewFooter goToSlides={goToSlides} />
-        </React.Fragment>
+        </View>
       ) : (
         <LoadingView />
       )}

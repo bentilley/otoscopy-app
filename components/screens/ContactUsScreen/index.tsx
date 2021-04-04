@@ -17,7 +17,7 @@ export const ContactUsScreen: React.FC<ContactUsProps> = ({ navigation }) => {
   const { submitFeedback } = useConditionsActions();
   return (
     <ContactUs
-      goToMenu={() => navigation.navigate("Menu")}
+      goToLandingPage={() => navigation.popToTop()}
       submitFeedback={submitFeedback}
     />
   );

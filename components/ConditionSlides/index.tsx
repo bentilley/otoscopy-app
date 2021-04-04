@@ -31,6 +31,7 @@ export const ConditionSlides: React.FC<Props> = ({
         />
       )}
       footer={<ConditionSlidesFooter goToStudySlides={goToStudySlides} />}
+      testID="condition-slide-view-screen"
     />
   );
 };

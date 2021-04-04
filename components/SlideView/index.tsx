@@ -44,7 +44,7 @@ export const SlideView: React.FC<Props> = ({ slidePool, goToCondition }) => {
             update.decrementSlideIndex();
             update.setIsDiagnosed(false);
           }}>
-          <Spacer />
+          <Spacer text="Otoscopy App" />
           <MovableContainer>
             <MainImage
               size={imageSize}

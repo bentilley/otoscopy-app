@@ -11,19 +11,21 @@ jest.mock("services/firebase");
 
 describe("<SlideView />", () => {
   it("renders correctly", async () => {
-    const { getByText } = render(<AppScreens />);
+    const { getByText, getByTestId } = render(<AppScreens />);
     await waitFor(() => {
       expect(db.getCondition).toHaveBeenCalled();
     });
+    fireEvent.press(getByTestId("menu-button"));
     fireEvent.press(getByText("Random Browse"));
     expect(getByText("Tap to reveal diagnosis")).toBeTruthy();
   });
 
   it("reveals the diagnosis", async () => {
-    const { getByText, queryByText } = render(<AppScreens />);
+    const { getByText, queryByText, getByTestId } = render(<AppScreens />);
     await waitFor(() => {
       expect(db.getCondition).toHaveBeenCalled();
     });
+    fireEvent.press(getByTestId("menu-button"));
     fireEvent.press(getByText("Random Browse"));
     fireEvent.press(getByText("Tap to reveal diagnosis"));
     expect(queryByText("Otitis Media")).toBeTruthy();
@@ -40,10 +42,11 @@ describe("<SlideView />", () => {
   });
 
   it("can navigate to the condition view", async () => {
-    const { getByText, queryByText } = render(<AppScreens />);
+    const { getByText, queryByText, getByTestId } = render(<AppScreens />);
     await waitFor(() => {
       expect(db.getCondition).toHaveBeenCalled();
     });
+    fireEvent.press(getByTestId("menu-button"));
     fireEvent.press(getByText("Random Browse"));
     fireEvent.press(getByText("Tap to reveal diagnosis"));
     fireEvent.press(getByText("More info..."));
@@ -60,6 +63,7 @@ describe("<SlideView />", () => {
     await waitFor(() => {
       expect(db.getCondition).toHaveBeenCalled();
     });
+    fireEvent.press(getByTestId("menu-button"));
     fireEvent.press(getByText("Random Browse"));
     fireEvent.press(getByText("Tap to reveal diagnosis"));
     expect(queryByText("Otitis Media")).toBeTruthy();

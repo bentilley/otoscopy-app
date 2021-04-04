@@ -12,15 +12,16 @@ jest.mock("model/user");
 
 describe("<ContactUs />", () => {
   it("it can record user feedback", async () => {
-    const { getByPlaceholderText, getByText, queryByText } = render(
-      <AppScreens />,
-    );
+    const {
+      getByPlaceholderText,
+      getByText,
+      queryByText,
+      getByTestId,
+    } = render(<AppScreens />);
     await waitFor(() => {
       expect(db.getCondition).toHaveBeenCalled();
     });
-
-    getByText("Otoscopy App");
-
+    fireEvent.press(getByTestId("menu-button"));
     fireEvent.press(getByText("Contact Us"));
 
     fireEvent.changeText(
@@ -33,7 +34,7 @@ describe("<ContactUs />", () => {
       expect(db.submitFeedback).toHaveBeenCalled();
     });
     getByText("Thank you for your feedback!");
-    fireEvent.press(getByText("Back to Menu"));
+    fireEvent.press(getByText("Done"));
     await waitFor(() => {
       expect(
         queryByText(

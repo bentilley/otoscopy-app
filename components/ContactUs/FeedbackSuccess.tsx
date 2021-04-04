@@ -5,11 +5,14 @@ import { View, Button, StyleSheet } from "react-native";
 import { Title, Paragraph } from "components/design";
 
 type Props = {
-  goToMenu: () => void;
+  goToLandingPage: () => void;
   resetForm: () => void;
 };
 
-export const FeedbackSuccess: React.FC<Props> = ({ goToMenu, resetForm }) => {
+export const FeedbackSuccess: React.FC<Props> = ({
+  goToLandingPage,
+  resetForm,
+}) => {
   return (
     <View style={styles.container}>
       <Title>Success!</Title>
@@ -20,7 +23,7 @@ export const FeedbackSuccess: React.FC<Props> = ({ goToMenu, resetForm }) => {
       </Paragraph>
       <View>
         <Button title="Contact Again!" onPress={resetForm} />
-        <Button title="Back to Menu" onPress={goToMenu} />
+        <Button title="Done" onPress={goToLandingPage} />
       </View>
     </View>
   );

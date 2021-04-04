@@ -19,11 +19,11 @@ export const MenuScreen: React.FC<MenuProps> = ({ navigation }) => {
   const { getSlidesArray } = useConditions();
 
   const navigationFunctions = {
-    goToReference: () => navigation.navigate("Reference"),
-    goToFavourites: () => navigation.navigate("Favourites"),
+    goToReference: () => navigation.replace("Reference"),
+    goToFavourites: () => navigation.replace("Favourites"),
     goToBrowse: () =>
       navigation.navigate("Slide", { slidePool: getSlidesArray() }),
-    goToContactUs: () => navigation.navigate("ContactUs"),
+    goToContactUs: () => navigation.replace("ContactUs"),
     signOutUser,
   };
   return <Menu {...navigationFunctions} />;

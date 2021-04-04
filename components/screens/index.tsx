@@ -23,7 +23,7 @@ export type RootStackParamList = {
   Menu: undefined;
   Reference: undefined;
   Condition: { condition: ConditionHead };
-  Slide: { slidePool: Slide[]; startingIndex?: number };
+  Slide: { slidePool: Slide[] | null; startingIndex?: number };
   ConditionSlides: {
     condition: ConditionHead;
     slides: { [slideId: string]: Slide };
@@ -39,7 +39,7 @@ export const AppScreens = () => {
     <ConditionProvider>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="Menu"
+          initialRouteName="Slide"
           screenOptions={({ navigation }) => ({
             headerStyle: {
               backgroundColor: COLOURS.veryDark,
@@ -56,15 +56,24 @@ export const AppScreens = () => {
             component={MenuScreen}
             options={{ title: "" }}
           />
+          <Stack.Screen
+            name="Slide"
+            component={SlideViewScreen}
+            initialParams={{ startingIndex: 0, slidePool: null }}
+            options={{ title: "" }}
+          />
           <Stack.Screen name="Reference" component={ReferenceScreen} />
           <Stack.Screen name="Condition" component={ConditionViewScreen} />
-          <Stack.Screen name="Slide" component={SlideViewScreen} />
           <Stack.Screen
             name="ConditionSlides"
             component={ConditionSlidesScreen}
           />
           <Stack.Screen name="Favourites" component={FavouriteSlidesScreen} />
-          <Stack.Screen name="ContactUs" component={ContactUsScreen} />
+          <Stack.Screen
+            name="ContactUs"
+            component={ContactUsScreen}
+            options={{ title: "" }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </ConditionProvider>

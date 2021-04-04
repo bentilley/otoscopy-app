@@ -1,7 +1,7 @@
 /** @format */
 
-import React from 'react';
-import { SlideImage } from 'components/UI';
+import React from "react";
+import { SlideImage } from "components/UI";
 
 type Props = {
   size: number;
