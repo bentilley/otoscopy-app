@@ -1,8 +1,8 @@
 /** @format */
 
-import React from 'react';
-import { View, StyleSheet, Animated, PanResponder } from 'react-native';
-import { COLOURS } from 'components/design';
+import React from "react";
+import { View, StyleSheet, Animated, PanResponder } from "react-native";
+import { COLOURS } from "components/design";
 
 interface Props {
   radius: number;
@@ -94,15 +94,15 @@ const boundaryStylesFromRadius = (radius: number) => {
 };
 
 const styles = StyleSheet.create({
-  container: { position: 'absolute', overflow: 'hidden' },
+  container: { position: "absolute", overflow: "hidden" },
   animation: {
-    position: 'absolute',
+    position: "absolute",
   },
   overlay: {
     borderColor: COLOURS.black,
   },
   overlayHighlight: {
-    position: 'absolute',
+    position: "absolute",
     borderWidth: 1,
   },
   boundary: {
