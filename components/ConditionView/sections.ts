@@ -42,6 +42,6 @@ export const sectionMeta: {
   complications: { title: "Complications", icon: "complications" },
   additional_resources: {
     title: "Additional Resources",
-    icon: "complications",
+    icon: "external-links",
   },
 };
