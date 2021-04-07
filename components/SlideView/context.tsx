@@ -13,6 +13,7 @@ import { useMaxDrawerHeight } from "./dimensions";
  */
 type State = {
   showOtoscope: boolean;
+  showOverlay: boolean;
   isDiagnosed: boolean;
   slideIndex: number;
   numSlides: number;
@@ -22,6 +23,7 @@ interface Context {
   state: State;
   update: {
     setShowOtoscope: (b: boolean) => void;
+    setShowOverlay: (b: boolean) => void;
     setIsDiagnosed: (b: boolean) => void;
     setSlideIndex: (b: number) => void;
     setNumSlides: (b: number) => void;
@@ -63,6 +65,7 @@ export const SlideViewProvider: React.FC<Props> = ({
   children,
 }) => {
   const [showOtoscope, setShowOtoscope] = React.useState(false);
+  const [showOverlay, setShowOverlay] = React.useState(false);
   const [isDiagnosed, setIsDiagnosed] = React.useState(false);
   const [slideIndex, setSlideIndex] = React.useState(startingIndex);
   const [numSlides, setNumSlides] = React.useState(totalNumberOfSlides);
@@ -85,9 +88,16 @@ export const SlideViewProvider: React.FC<Props> = ({
     }
   }, [slideIndex, numSlides]);
 
-  const state = { showOtoscope, isDiagnosed, slideIndex, numSlides };
+  const state = {
+    showOtoscope,
+    showOverlay,
+    isDiagnosed,
+    slideIndex,
+    numSlides,
+  };
   const update = {
     setShowOtoscope,
+    setShowOverlay,
     setIsDiagnosed,
     setSlideIndex,
     setNumSlides,

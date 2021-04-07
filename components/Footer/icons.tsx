@@ -15,6 +15,7 @@ import { useFavourite } from "model/condition";
  * @param size - Size of the icon (default 40).
  * @param onPress - A callback for when the icon is pressed.
  * @param style - React Native style prop.
+ * @param testID - React Native testID prop.
  */
 export const FooterIcon: React.FC<Props> = ({
   iconName,
@@ -22,9 +23,10 @@ export const FooterIcon: React.FC<Props> = ({
   size,
   onPress,
   style,
+  testID,
 }) => {
   return (
-    <TouchableOpacity onPress={onPress} style={style}>
+    <TouchableOpacity onPress={onPress} style={style} testID={testID}>
       <OtoIcon name={iconName} size={size || 40} color={colour} />
     </TouchableOpacity>
   );
@@ -36,6 +38,7 @@ type Props = {
   size?: number;
   onPress: () => void;
   style?: StyleProp<ViewStyle>;
+  testID?: string;
 };
 
 /**

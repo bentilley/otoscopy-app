@@ -9,6 +9,8 @@ import { Drawer } from "./Drawer";
 import { MovableContainer } from "./MovableContainer";
 import { DiagnosisInfo } from "./DiagnosisInfo";
 import { MainImage } from "./MainImage";
+import { Overlay } from "./Overlay";
+import { Legend } from "./Legend";
 import { Spacer } from "./Spacer";
 import { useMaxImageY } from "./dimensions";
 import { SlideViewFooter } from "./footers";
@@ -29,7 +31,7 @@ export const SlideView: React.FC<Props> = ({ slidePool, goToCondition }) => {
   const imageSize = useImageSize();
   const currentSlide = slidePool[state.slideIndex];
   return (
-    <React.Fragment>
+    <View style={styles.screen} testID="slide-view-screen">
       <View style={styles.screen}>
         <SwipeContainer
           onSwipeRightComplete={() => {
@@ -50,30 +52,47 @@ export const SlideView: React.FC<Props> = ({ slidePool, goToCondition }) => {
               size={imageSize}
               firebaseRef={"/slide-img/" + currentSlide.id + ".jpg"}
             />
+            {state.showOverlay ? (
+              <Overlay
+                size={imageSize}
+                firebaseRef={"/overlay/" + currentSlide.id + ".png"}
+              />
+            ) : null}
             {state.showOtoscope ? <Otoscope radius={imageSize / 2} /> : null}
           </MovableContainer>
           <Spacer
-            text={!state.isDiagnosed ? "Tap to reveal diagnosis" : ""}
+            text={
+              !state.isDiagnosed && !state.showOverlay
+                ? "Tap to reveal diagnosis"
+                : ""
+            }
             onPress={() => {
               update.setIsDiagnosed(true);
               drawer.openDrawer(() => movableContainer.moveYTo(maxImageHeight));
             }}
           />
           <Drawer
-            onCloseComplete={() => update.setIsDiagnosed(false)}
+            onCloseComplete={() => {
+              update.setIsDiagnosed(false);
+              update.setShowOverlay(false);
+            }}
             onCloseStart={() => movableContainer.moveYTo(0)}
             onOpenStart={() => movableContainer.moveYTo(maxImageHeight)}>
-            <DiagnosisInfo
-              slideId={currentSlide.id}
-              condition={currentSlide.condition}
-              diagnosis={currentSlide.diagnosis}
-              goToCondition={() => goToCondition(currentSlide)}
-            />
+            {state.showOverlay && <Legend legend={currentSlide.legend || {}} />}
+            {state.isDiagnosed && (
+              <DiagnosisInfo
+                slideId={currentSlide.id}
+                condition={currentSlide.condition}
+                diagnosis={currentSlide.diagnosis}
+                goToCondition={() => goToCondition(currentSlide)}
+              />
+            )}
           </Drawer>
         </SwipeContainer>
       </View>
       <SlideViewFooter
         slideId={currentSlide.id}
+        hasOverlay={currentSlide.hasOverlay}
         goToNextSlide={() => {
           drawer.closeDrawer(
             () => movableContainer.moveYTo(0),
@@ -83,8 +102,21 @@ export const SlideView: React.FC<Props> = ({ slidePool, goToCondition }) => {
             },
           );
         }}
+        toggleOverlay={() => {
+          if (state.showOverlay) {
+            drawer.closeDrawer(
+              () => movableContainer.moveYTo(0),
+              () => update.setShowOverlay(false),
+            );
+          } else {
+            drawer.openDrawer(() => {
+              movableContainer.moveYTo(maxImageHeight);
+              update.setShowOverlay(true);
+            });
+          }
+        }}
       />
-    </React.Fragment>
+    </View>
   );
 };
 

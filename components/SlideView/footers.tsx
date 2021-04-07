@@ -21,17 +21,25 @@ interface SlideViewFooterProps
 export const SlideViewFooter: React.FC<SlideViewFooterProps> = ({
   goToNextSlide,
   slideId,
+  hasOverlay,
+  toggleOverlay,
 }) => {
   const { state } = useSlideViewState();
   return state.isDiagnosed ? (
     <DiagnosedFooter goToNextSlide={goToNextSlide} />
   ) : (
-    <UndiagnosedFooter slideId={slideId} />
+    <UndiagnosedFooter
+      slideId={slideId}
+      hasOverlay={hasOverlay}
+      toggleOverlay={toggleOverlay}
+    />
   );
 };
 
 interface UndiagnosedFooterProps {
   slideId: string;
+  hasOverlay?: boolean;
+  toggleOverlay: () => void;
 }
 
 // TODO Set up diagram view
@@ -41,6 +49,8 @@ interface UndiagnosedFooterProps {
  */
 export const UndiagnosedFooter: React.FC<UndiagnosedFooterProps> = ({
   slideId,
+  hasOverlay,
+  toggleOverlay,
 }) => {
   const { state, update } = useSlideViewState();
   return (
@@ -51,11 +61,20 @@ export const UndiagnosedFooter: React.FC<UndiagnosedFooterProps> = ({
         onPress={() => update.setShowOtoscope(!state.showOtoscope)}
       />
       <FavouriteStar slideId={slideId} />
-      <FooterIcon
-        iconName="eardrum"
-        colour={COLOURS.grey}
-        onPress={() => console.log("show diagram")}
-      />
+      {hasOverlay ? (
+        <FooterIcon
+          iconName="eardrum"
+          colour={state.showOverlay ? COLOURS.primary : COLOURS.grey}
+          onPress={toggleOverlay}
+          testID="slide-view__overlay-btn"
+        />
+      ) : (
+        <FooterIcon
+          iconName="eardrum"
+          colour={COLOURS.dark}
+          onPress={() => console.log("Slide has no overlay!")}
+        />
+      )}
     </Footer>
   );
 };
@@ -82,8 +101,7 @@ export const DiagnosedFooter: React.FC<DiagnosedFooterProps> = ({
 
 const styles = StyleSheet.create({
   footer: {
-    justifyContent: "space-between",
-    paddingHorizontal: 30,
+    justifyContent: "space-around",
   },
   footerRight: {
     justifyContent: "flex-end",

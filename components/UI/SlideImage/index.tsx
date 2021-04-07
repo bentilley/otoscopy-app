@@ -1,7 +1,13 @@
 /** @format */
 
 import React from "react";
-import { View, Image, ActivityIndicator, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  ActivityIndicator,
+  StyleSheet,
+  ImageStyle,
+} from "react-native";
 import { getDownloadURL } from "services/firebase";
 import { useErrorHandling } from "services/error-handling";
 import { COLOURS } from "components/design";
@@ -11,6 +17,7 @@ type Props = {
   width: number;
   height: number;
   loaderSize?: "small" | "large";
+  style?: ImageStyle;
 };
 
 /**
@@ -26,6 +33,7 @@ export const SlideImage: React.FC<Props> = ({
   width,
   height,
   loaderSize,
+  style,
 }) => {
   const [url, setUrl] = React.useState<string | null>(null);
   const { logError } = useErrorHandling();
@@ -41,7 +49,7 @@ export const SlideImage: React.FC<Props> = ({
   return url ? (
     <Image
       source={{ uri: url }}
-      style={{ width, height }}
+      style={[{ width, height }, style]}
       testID={`slide-image-${firebaseRef}`}
     />
   ) : (

@@ -103,6 +103,7 @@ export interface FavouriteDataDB extends SlideDataDB {
 export interface SlideDataDB {
   condition: string;
   diagnosis: string;
+  hasOverlay?: boolean;
   diagram?: string;
   img_url?: string;
   legend?: {
