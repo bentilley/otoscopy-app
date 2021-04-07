@@ -1,14 +1,15 @@
 /** @format */
 
-import React from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
-import { TouchableOpacity } from 'react-native';
-import { OtoIcon, COLOURS } from 'components/design';
-import { useFavourite } from 'model/condition';
+import React from "react";
+import { StyleProp, ViewStyle } from "react-native";
+import { TouchableOpacity } from "react-native";
+import { OtoIcon, COLOURS } from "components/design";
+import { useFavourite } from "model/condition";
 
-/**
- * FooterIcon
+/** FooterIcon
+ *
  * Icon used in the app Footer.
+ *
  * @param iconName - The name of the icon to display.
  * @param colour - The colour of the icon.
  * @param size - Size of the icon (default 40).
@@ -51,7 +52,7 @@ export const FavouriteStar: React.FC<FavouriteStarProps> = ({
   const [isFavourite, toggleFavourite] = useFavourite(slideId);
   return (
     <FooterIcon
-      iconName={isFavourite ? 'star' : 'star-o'}
+      iconName={isFavourite ? "star" : "star-o"}
       colour={isFavourite ? COLOURS.favourite : COLOURS.grey}
       size={size}
       onPress={toggleFavourite}
