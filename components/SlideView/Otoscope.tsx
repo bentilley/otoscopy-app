@@ -129,9 +129,6 @@ function getNewPosWithBoundaryLimits(
   return { x: Px, y: Py };
 }
 
-type TransformStyle = {
-  transform: { translateX?: Animated.Value; translateY?: Animated.Value }[];
-};
-function transformFromPosition(pos: Animated.ValueXY): TransformStyle {
+function transformFromPosition(pos: Animated.ValueXY) {
   return { transform: [{ translateX: pos.x }, { translateY: pos.y }] };
 }
