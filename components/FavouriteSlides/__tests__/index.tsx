@@ -60,7 +60,7 @@ describe("<FavouritesSlideList />", () => {
     });
   });
 
-  it("can undo remove press", async () => {
+  it("can cancel remove press", async () => {
     const { getByText, getAllByText, queryAllByText, getByTestId } = render(
       <AppScreens />,
     );
@@ -73,7 +73,7 @@ describe("<FavouritesSlideList />", () => {
     expect(viewBtns.length).toEqual(2);
     const btns = getAllByText("remove");
     await fireEvent.press(btns[0]);
-    await fireEvent.press(getByText("undo"));
+    await fireEvent.press(getByText("cancel"));
     await waitFor(async () => {
       expect(queryAllByText("remove").length).toEqual(2);
     });

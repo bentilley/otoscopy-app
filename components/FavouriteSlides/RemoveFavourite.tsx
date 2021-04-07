@@ -39,7 +39,7 @@ export const RemoveFavourite: React.FC<Props> = ({ slideId }) => {
       {userHasPressed && (
         <TouchableOpacity onPress={() => setUserHasPressed(false)}>
           <OtoText size="small">
-            <Text style={{ color: COLOURS.primary }}>undo</Text>
+            <Text style={{ color: COLOURS.primary }}>cancel</Text>
           </OtoText>
         </TouchableOpacity>
       )}
