@@ -98,6 +98,12 @@ describe("<Reference />", () => {
   });
 
   it("can search for a condition", () => {
-    // This is for using the search feature at the bottom of the screen
+    const { queryByText, getByTestId, getByPlaceholderText } = render(
+      <Reference categories={categories} {...navigationStubs} />,
+    );
+    fireEvent.press(getByTestId("reference__search"));
+    fireEvent.changeText(getByPlaceholderText("search"), "otitis");
+    expect(queryByText("Banging Ben Bones")).toBeNull();
+    expect(queryByText("Octagon ear Ollifilus")).toBeNull();
   });
 });

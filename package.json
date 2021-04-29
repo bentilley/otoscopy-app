@@ -19,6 +19,7 @@
     "@react-navigation/native": "^5.7.6",
     "@react-navigation/stack": "^5.9.3",
     "@sentry/react-native": "^1.9.0",
+    "js-levenshtein": "^1.1.6",
     "react": "^16.14.0",
     "react-native": "^0.63.3",
     "react-native-gesture-handler": "^1.8.0",
