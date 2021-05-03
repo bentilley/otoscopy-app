@@ -21,7 +21,7 @@ const Reference: React.FC<Props> = ({
 }) => {
   const [showSearch, setShowSearch] = React.useState(false);
   const [searchTerm, setSearchTerm] = React.useState("");
-  if (showSearch && searchTerm != "") {
+  if (showSearch && searchTerm !== "") {
     categories = filterSearch(categories, searchTerm);
   }
   return (

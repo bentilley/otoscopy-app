@@ -57,7 +57,7 @@ describe("<ConditionView />", () => {
   });
 
   it("navigates to slide view when slide button is pressed", async () => {
-    const { getByText, getByTestId, queryByText } = render(<AppScreens />);
+    const { getByText, getByTestId } = render(<AppScreens />);
     await waitFor(() => {
       expect(db.getCondition).toHaveBeenCalled();
     });
@@ -74,7 +74,6 @@ describe("<ConditionView />", () => {
 
     screen = within(getByTestId("condition-slide-view-screen"));
     await waitFor(() => {
-      expect(queryByText("ConditionSlides")).toBeTruthy();
       expect(screen.queryAllByText("view slide")).toBeTruthy();
     });
   });

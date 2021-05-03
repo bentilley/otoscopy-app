@@ -70,11 +70,24 @@ export const AppScreens = () => {
             }}
             options={{ title: "" }}
           />
-          <Stack.Screen name="Reference" component={ReferenceScreen} />
-          <Stack.Screen name="Condition" component={ConditionViewScreen} />
+          <Stack.Screen
+            name="Reference"
+            component={ReferenceScreen}
+            options={{ title: "Conditions" }}
+          />
+          <Stack.Screen
+            name="Condition"
+            component={ConditionViewScreen}
+            options={({ route }) => ({
+              title: route.params.condition.name,
+            })}
+          />
           <Stack.Screen
             name="ConditionSlides"
             component={ConditionSlidesScreen}
+            options={({ route }) => ({
+              title: route.params.condition.name,
+            })}
           />
           <Stack.Screen name="Favourites" component={FavouriteSlidesScreen} />
           <Stack.Screen
