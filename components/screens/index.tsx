@@ -23,7 +23,11 @@ export type RootStackParamList = {
   Menu: undefined;
   Reference: undefined;
   Condition: { condition: ConditionHead };
-  Slide: { slidePool: Slide[] | null; startingIndex?: number };
+  Slide: {
+    slidePool: Slide[] | null;
+    startingIndex?: number;
+    showTitle?: boolean;
+  };
   ConditionSlides: {
     condition: ConditionHead;
     slides: { [slideId: string]: Slide };
@@ -59,7 +63,11 @@ export const AppScreens = () => {
           <Stack.Screen
             name="Slide"
             component={SlideViewScreen}
-            initialParams={{ startingIndex: 0, slidePool: null }}
+            initialParams={{
+              startingIndex: 0,
+              slidePool: null,
+              showTitle: true,
+            }}
             options={{ title: "" }}
           />
           <Stack.Screen name="Reference" component={ReferenceScreen} />

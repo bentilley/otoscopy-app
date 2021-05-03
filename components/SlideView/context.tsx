@@ -41,6 +41,11 @@ interface Context {
     closeDrawer: (onStart?: () => void, onComplete?: () => void) => void;
     setHeight: (height: number) => void;
   };
+  title: {
+    opacity: Animated.Value;
+    hide: (params: { timeout: number }) => void;
+    show: () => void;
+  };
 }
 
 const SlideViewContext = React.createContext<Context | null>(null);
@@ -141,9 +146,39 @@ export const SlideViewProvider: React.FC<Props> = ({
     setHeight: (height: number) => drawerHeight.setValue(height),
   };
 
+  const opacity = React.useRef(new Animated.Value(1)).current;
+  const cancelTimeout = React.useRef<number | null>(null);
+  const title = {
+    opacity,
+    hide: ({ timeout }: { timeout: number }) => {
+      Animated.timing(opacity, {
+        toValue: 0,
+        duration: 1000,
+        useNativeDriver: true,
+      }).start(({ finished }) => {
+        if (finished) {
+          if (cancelTimeout.current) {
+            clearTimeout(cancelTimeout.current);
+          }
+          cancelTimeout.current = (setTimeout(
+            title.show,
+            timeout * 1000,
+          ) as unknown) as number;
+        }
+      });
+    },
+    show: () => {
+      Animated.timing(opacity, {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: true,
+      }).start();
+    },
+  };
+
   return (
     <SlideViewContext.Provider
-      value={{ state, update, movableContainer, drawer }}>
+      value={{ state, update, movableContainer, drawer, title }}>
       {children}
     </SlideViewContext.Provider>
   );

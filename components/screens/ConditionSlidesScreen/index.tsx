@@ -23,11 +23,11 @@ export const ConditionSlidesScreen: React.FC<SlideListProps> = ({
     goToSlide: (slide: Slide) => {
       const slidePool = getSlidesArray();
       const startingIndex = slidePool.map((s) => s.id).indexOf(slide.id);
-      navigation.push("Slide", { slidePool, startingIndex });
+      navigation.push("Slide", { slidePool, startingIndex, showTitle: false });
     },
     goToStudySlides: () => {
       const slidePool = getSlidesArrayForCondition(route.params.condition);
-      navigation.push("Slide", { slidePool });
+      navigation.push("Slide", { slidePool, showTitle: false });
     },
   };
   return (

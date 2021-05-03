@@ -1,9 +1,9 @@
 /** @format */
 
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Animated } from "react-native";
 import { Slide } from "model/condition/types";
-import { COLOURS } from "components/design";
+import { COLOURS, OtoText, TitleLogo } from "components/design";
 import { Otoscope } from "./Otoscope";
 import { Drawer } from "./Drawer";
 import { MovableContainer } from "./MovableContainer";
@@ -19,12 +19,23 @@ import { SwipeContainer } from "./SwipeContainer";
 import { useImageSize } from "./dimensions";
 
 type Props = {
+  showTitle: boolean | undefined;
   slidePool: Slide[];
   goToCondition: (slide: Slide) => void;
 };
 
-export const SlideView: React.FC<Props> = ({ slidePool, goToCondition }) => {
-  const { state, update, movableContainer, drawer } = useSlideViewState();
+export const SlideView: React.FC<Props> = ({
+  showTitle,
+  slidePool,
+  goToCondition,
+}) => {
+  const {
+    state,
+    update,
+    movableContainer,
+    drawer,
+    title,
+  } = useSlideViewState();
   const maxImageHeight = useMaxImageY();
   const imageSize = useImageSize();
   const currentSlide = slidePool[state.slideIndex];
@@ -37,14 +48,16 @@ export const SlideView: React.FC<Props> = ({ slidePool, goToCondition }) => {
             movableContainer.setY(0);
             update.incrementSlideIndex();
             update.setIsDiagnosed(false);
+            title.hide({ timeout: 60 });
           }}
           onSwipeLeftComplete={() => {
             drawer.setHeight(0);
             movableContainer.setY(0);
             update.decrementSlideIndex();
             update.setIsDiagnosed(false);
+            title.hide({ timeout: 60 });
           }}>
-          <Spacer text="Otoscopy App" />
+          <Spacer>{showTitle ? <TemporaryTitleLogo /> : null}</Spacer>
           <MovableContainer>
             <MainImage
               size={imageSize}
@@ -59,16 +72,16 @@ export const SlideView: React.FC<Props> = ({ slidePool, goToCondition }) => {
             {state.showOtoscope ? <Otoscope radius={imageSize / 2} /> : null}
           </MovableContainer>
           <Spacer
-            text={
-              !state.isDiagnosed && !state.showOverlay
-                ? "Tap to reveal diagnosis"
-                : ""
-            }
             onPress={() => {
               update.setIsDiagnosed(true);
               drawer.openDrawer(() => movableContainer.moveYTo(maxImageHeight));
-            }}
-          />
+            }}>
+            <OtoText size="large" weight="semibold" align="center">
+              {!state.isDiagnosed && !state.showOverlay
+                ? "Tap to reveal diagnosis"
+                : ""}
+            </OtoText>
+          </Spacer>
           <Drawer
             onCloseComplete={() => {
               update.setIsDiagnosed(false);
@@ -115,6 +128,15 @@ export const SlideView: React.FC<Props> = ({ slidePool, goToCondition }) => {
         }}
       />
     </View>
+  );
+};
+
+const TemporaryTitleLogo: React.FC = () => {
+  const { title } = useSlideViewState();
+  return (
+    <Animated.View style={{ opacity: title.opacity }}>
+      <TitleLogo />
+    </Animated.View>
   );
 };
 

@@ -1,9 +1,9 @@
 /** @format */
 
-import React from 'react';
-import { GestureResponderEvent, useWindowDimensions } from 'react-native';
-import { StyleSheet, Animated } from 'react-native';
-import { COLOURS } from 'components/design';
+import React from "react";
+import { GestureResponderEvent, useWindowDimensions } from "react-native";
+import { StyleSheet, Animated } from "react-native";
+import { COLOURS } from "components/design";
 
 const MOVEMENT_THRESHOLD = 0.15;
 const MAXIMUM_MOVEMENT = 0.8;
@@ -88,8 +88,8 @@ function getStyleFromPos(x: Animated.Value, width: number): AnimatedStyle {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'stretch',
-    justifyContent: 'center',
+    alignItems: "stretch",
+    justifyContent: "center",
     backgroundColor: COLOURS.black,
   },
 });

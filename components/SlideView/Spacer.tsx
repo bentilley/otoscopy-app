@@ -1,31 +1,26 @@
 /** @format */
 
-import React from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
-import { OtoText } from 'components/design';
+import React from "react";
+import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 
-type Props = { text?: string; onPress?: () => void };
+type Props = { onPress?: () => void };
 
-/**
- * Spacer
- * Component for filling space around other components.
- * @param text - Text to display in the spacer (center aligned).
+/** Component for filling space around other components.
+ *
  * @param onPress - Callback for when the spacer is pressed.
  */
-export const Spacer: React.FC<Props> = ({ text, onPress }) => {
+export const Spacer: React.FC<Props> = ({ children, onPress }) => {
   return (
     <TouchableWithoutFeedback onPress={() => onPress && onPress()}>
-      <View style={styles.spacer}>
-        {text ? (
-          <OtoText size="large" weight="bold">
-            {text}
-          </OtoText>
-        ) : null}
-      </View>
+      <View style={styles.spacer}>{children}</View>
     </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
-  spacer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  spacer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "stretch",
+  },
 });

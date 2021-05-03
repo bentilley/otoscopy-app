@@ -1,8 +1,8 @@
 /** @format */
 
 import React from "react";
-import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
-import { OtoText, OtoIcon, COLOURS } from "components/design";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
+import { OtoText, OtoIcon, TitleLogo, COLOURS } from "components/design";
 
 type Props = {
   goToReference: () => void;
@@ -18,7 +18,7 @@ export const Menu: React.FC<Props> = (props) => {
   // </MenuItem>
   return (
     <View style={styles.menuScreen}>
-      <MenuTitle />
+      <TitleLogo />
       <MenuItem onPress={props.goToReference} icon="stethoscope">
         Conditions
       </MenuItem>
@@ -31,18 +31,6 @@ export const Menu: React.FC<Props> = (props) => {
       <MenuItem onPress={props.signOutUser} icon="sign-out">
         Sign Out
       </MenuItem>
-    </View>
-  );
-};
-
-const MenuTitle: React.FC = () => {
-  return (
-    <View style={styles.title}>
-      <Image
-        source={require("../../img/title-logo.png")}
-        resizeMode="contain"
-        style={styles.titleImg}
-      />
     </View>
   );
 };
@@ -76,8 +64,6 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
     backgroundColor: COLOURS.black,
   },
-  title: { flexDirection: "row", alignItems: "center", padding: 40 },
-  titleImg: { flex: 1 },
   menuButtonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
