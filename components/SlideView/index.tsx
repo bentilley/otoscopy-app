@@ -110,6 +110,7 @@ export const SlideView: React.FC<Props> = ({
             () => {
               update.incrementSlideIndex();
               update.setIsDiagnosed(false);
+              title.hide({ timeout: 60 });
             },
           );
         }}
