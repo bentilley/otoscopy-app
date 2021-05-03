@@ -48,7 +48,7 @@ const LoadingView = () => {
 const Description: React.FC = ({ children }) => {
   return (
     <View style={styles.description}>
-      <OtoText size="smallMedium" weight="semibold">
+      <OtoText size="smallMedium" weight="semibold" align="center">
         {children}
       </OtoText>
     </View>
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingTop: 30,
     paddingBottom: 10,
+    paddingHorizontal: 20,
   },
   loading: { justifyContent: "center", alignItems: "center" },
 });
