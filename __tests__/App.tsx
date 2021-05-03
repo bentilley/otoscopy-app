@@ -31,7 +31,6 @@ describe("<App />", () => {
     await waitFor(() => {
       getByText("Conditions");
       getByText("Favourites");
-      getByText("Random Browse");
       getByText("Sign Out");
     });
   });

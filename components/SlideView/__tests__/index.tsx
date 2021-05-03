@@ -16,12 +16,10 @@ jest.mock("services/firebase");
 
 describe("<SlideView />", () => {
   it("renders correctly", async () => {
-    const { getByText, getByTestId } = render(<AppScreens />);
+    const { getByTestId } = render(<AppScreens />);
     await waitFor(() => {
       expect(db.watchUserFavourites).toHaveBeenCalled();
     });
-    await fireEvent.press(getByTestId("menu-button"));
-    await fireEvent.press(getByText("Random Browse"));
 
     let screen = within(getByTestId("slide-view-screen"));
     expect(screen.getByText("Tap to reveal diagnosis")).toBeTruthy();
@@ -32,8 +30,6 @@ describe("<SlideView />", () => {
     await waitFor(() => {
       expect(db.watchUserFavourites).toHaveBeenCalled();
     });
-    await fireEvent.press(getByTestId("menu-button"));
-    await fireEvent.press(getByText("Random Browse"));
 
     let screen = within(getByTestId("slide-view-screen"));
     await fireEvent.press(screen.getByText("Tap to reveal diagnosis"));
@@ -50,12 +46,10 @@ describe("<SlideView />", () => {
   });
 
   it("can navigate to the condition view", async () => {
-    const { getByText, getByTestId } = render(<AppScreens />);
+    const { getByTestId } = render(<AppScreens />);
     await waitFor(() => {
       expect(db.watchUserFavourites).toHaveBeenCalled();
     });
-    await fireEvent.press(getByTestId("menu-button"));
-    await fireEvent.press(getByText("Random Browse"));
 
     let screen = within(getByTestId("slide-view-screen"));
     await fireEvent.press(screen.getByText("Tap to reveal diagnosis"));
@@ -70,12 +64,10 @@ describe("<SlideView />", () => {
   });
 
   it("closes the diagnosis drawer on press", async () => {
-    const { getByText, getByTestId } = render(<AppScreens />);
+    const { getByTestId } = render(<AppScreens />);
     await waitFor(() => {
       expect(db.watchUserFavourites).toHaveBeenCalled();
     });
-    await fireEvent.press(getByTestId("menu-button"));
-    await fireEvent.press(getByText("Random Browse"));
 
     let screen = within(getByTestId("slide-view-screen"));
     await fireEvent.press(screen.getByText("Tap to reveal diagnosis"));
@@ -92,12 +84,10 @@ describe("<SlideView />", () => {
   });
 
   it("can show the legend if the slide has one", async () => {
-    const { getByText, getByTestId } = render(<AppScreens />);
+    const { getByTestId } = render(<AppScreens />);
     await waitFor(() => {
       expect(db.watchUserFavourites).toHaveBeenCalled();
     });
-    await fireEvent.press(getByTestId("menu-button"));
-    await fireEvent.press(getByText("Random Browse"));
 
     let screen = within(getByTestId("slide-view-screen"));
     await fireEvent.press(screen.getByTestId("slide-view__overlay-btn"));
