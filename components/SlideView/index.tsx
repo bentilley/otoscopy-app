@@ -18,8 +18,6 @@ import { useSlideViewState } from "./context";
 import { SwipeContainer } from "./SwipeContainer";
 import { useImageSize } from "./dimensions";
 
-// TODO Add tap to close gesture to Drawer
-
 type Props = {
   slidePool: Slide[];
   goToCondition: (slide: Slide) => void;

@@ -16,7 +16,6 @@ type State = {
   showOverlay: boolean;
   isDiagnosed: boolean;
   slideIndex: number;
-  numSlides: number;
 };
 
 interface Context {
@@ -26,7 +25,6 @@ interface Context {
     setShowOverlay: (b: boolean) => void;
     setIsDiagnosed: (b: boolean) => void;
     setSlideIndex: (b: number) => void;
-    setNumSlides: (b: number) => void;
     incrementSlideIndex: () => void;
     decrementSlideIndex: () => void;
   };
@@ -68,39 +66,36 @@ export const SlideViewProvider: React.FC<Props> = ({
   const [showOverlay, setShowOverlay] = React.useState(false);
   const [isDiagnosed, setIsDiagnosed] = React.useState(false);
   const [slideIndex, setSlideIndex] = React.useState(startingIndex);
-  const [numSlides, setNumSlides] = React.useState(totalNumberOfSlides);
   const maxDrawerHeight = useMaxDrawerHeight();
 
   const incrementSlideIndex = React.useCallback(() => {
     const nextIndex = slideIndex + 1;
-    if (nextIndex < numSlides) {
+    if (nextIndex < totalNumberOfSlides) {
       setSlideIndex(nextIndex);
     } else {
       setSlideIndex(0);
     }
-  }, [slideIndex, numSlides]);
+  }, [slideIndex, totalNumberOfSlides]);
   const decrementSlideIndex = React.useCallback(() => {
     const nextIndex = slideIndex - 1;
     if (nextIndex >= 0) {
       setSlideIndex(nextIndex);
     } else {
-      setSlideIndex(numSlides - 1);
+      setSlideIndex(totalNumberOfSlides - 1);
     }
-  }, [slideIndex, numSlides]);
+  }, [slideIndex, totalNumberOfSlides]);
 
   const state = {
     showOtoscope,
     showOverlay,
     isDiagnosed,
     slideIndex,
-    numSlides,
   };
   const update = {
     setShowOtoscope,
     setShowOverlay,
     setIsDiagnosed,
     setSlideIndex,
-    setNumSlides,
     incrementSlideIndex,
     decrementSlideIndex,
   };
