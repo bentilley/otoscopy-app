@@ -7,10 +7,16 @@ import { COLOURS } from "components/design/colours";
 type OtoTextProps = {
   size: FontSizes;
   weight?: FontWeights;
+  align?: TextAlign;
 };
 
-export const OtoText: React.FC<OtoTextProps> = ({ children, size, weight }) => {
-  const stylesheet = getStyleSheet(size, weight);
+export const OtoText: React.FC<OtoTextProps> = ({
+  children,
+  size,
+  weight,
+  align,
+}) => {
+  const stylesheet = getStyleSheet(size, weight, align);
   return (
     <AppText>
       <Text style={stylesheet.style}>{children}</Text>
@@ -24,15 +30,18 @@ const AppText: React.FC = ({ children }) => {
 
 export type FontSizes = "large" | "medium" | "smallMedium" | "small";
 export type FontWeights = "fine" | "normal" | "semibold" | "bold";
+export type TextAlign = "left" | "right" | "center";
 
 function getStyleSheet(
   fontSize: FontSizes,
   fontWeight: FontWeights | undefined,
+  textAlign: TextAlign | undefined,
 ) {
   return StyleSheet.create({
     style: {
       fontSize: size[fontSize],
       fontWeight: weight[fontWeight || "normal"],
+      textAlign,
     },
   });
 }
