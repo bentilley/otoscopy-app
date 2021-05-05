@@ -5,14 +5,13 @@ import {
   KeyboardAvoidingView,
   View,
   StyleSheet,
-  useWindowDimensions,
   Platform,
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
 import { COLOURS } from "components/design";
 import { LoginForm } from "./LoginForm";
-import { Header } from "./Header";
+import { TitleLogo } from "components/design";
 
 type Props = {
   signInUser: (email: string, password: string) => void;
@@ -29,21 +28,22 @@ export const Login: React.FC<Props> = ({
   goToSignUp,
   goToForgotPassword,
 }) => {
-  const windowWidth = useWindowDimensions().width;
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={[styles.screen]}>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
-          style={[styles.container, { width: 0.7 * windowWidth }]}>
-          <Header />
-          <LoginForm
-            createUser={goToSignUp}
-            signInUser={signInUser}
-            authErrorMsg={authErrorMsg}
-            resetAuthError={resetAuthError}
-            goToForgotPassword={goToForgotPassword}
-          />
+          style={[styles.container]}>
+          <TitleLogo />
+          <View style={styles.formContainer}>
+            <LoginForm
+              createUser={goToSignUp}
+              signInUser={signInUser}
+              authErrorMsg={authErrorMsg}
+              resetAuthError={resetAuthError}
+              goToForgotPassword={goToForgotPassword}
+            />
+          </View>
         </KeyboardAvoidingView>
       </View>
     </TouchableWithoutFeedback>
@@ -54,12 +54,13 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "stretch",
     backgroundColor: COLOURS.black,
   },
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "stretch",
+    alignItems: "center",
   },
+  formContainer: { width: "70%" },
 });

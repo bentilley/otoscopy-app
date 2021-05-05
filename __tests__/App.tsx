@@ -11,11 +11,8 @@ jest.mock("services/firebase");
 
 describe("<App />", () => {
   it("renders app after sign in", async () => {
-    const { getByPlaceholderText, getByText, getByTestId } = render(
-      <App />,
-    );
+    const { getByPlaceholderText, getByText, getByTestId } = render(<App />);
 
-    getByText("OtoApp");
     getByText("Login");
 
     await fireEvent.changeText(
