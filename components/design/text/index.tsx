@@ -33,7 +33,11 @@ export const Paragraph: React.FC = ({ children }) => {
 };
 
 const styles = StyleSheet.create({
-  titleLogo: { flexDirection: "row", alignItems: "center", padding: 40 },
+  titleLogo: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 40,
+  },
   titleLogoImg: { flex: 1 },
   title: {
     paddingVertical: 20,

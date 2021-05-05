@@ -19,18 +19,27 @@ export const Menu: React.FC<Props> = (props) => {
   return (
     <View style={styles.menuScreen}>
       <TitleLogo />
-      <MenuItem onPress={props.goToReference} icon="stethoscope">
-        Conditions
-      </MenuItem>
-      <MenuItem onPress={props.goToFavourites} icon="star-o">
-        Favourites
-      </MenuItem>
-      <MenuItem onPress={props.goToContactUs} icon="ear">
-        Contact Us
-      </MenuItem>
-      <MenuItem onPress={props.signOutUser} icon="sign-out">
-        Sign Out
-      </MenuItem>
+      <View style={styles.menuItemContainer}>
+        <MenuItem onPress={props.goToReference} icon="stethoscope">
+          Conditions
+        </MenuItem>
+        <MenuItem
+          onPress={() => {
+            throw new Error("Sentry Testing");
+          }}
+          icon="risks">
+          Error
+        </MenuItem>
+        <MenuItem onPress={props.goToFavourites} icon="star-o">
+          Favourites
+        </MenuItem>
+        <MenuItem onPress={props.goToContactUs} icon="ear">
+          Contact Us
+        </MenuItem>
+        <MenuItem onPress={props.signOutUser} icon="sign-out">
+          Sign Out
+        </MenuItem>
+      </View>
     </View>
   );
 };
@@ -64,15 +73,17 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
     backgroundColor: COLOURS.black,
   },
+  menuItemContainer: {
+    flex: 1,
+    justifyContent: "space-evenly",
+  },
   menuButtonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    paddingVertical: 25,
   },
   menuBtn: {
     flexBasis: "50%",
     flexDirection: "row",
-    backgroundColor: COLOURS.veryDark,
   },
   menuBtnIcon: {
     flex: 1,
