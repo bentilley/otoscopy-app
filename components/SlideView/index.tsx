@@ -76,11 +76,13 @@ export const SlideView: React.FC<Props> = ({
               update.setIsDiagnosed(true);
               drawer.openDrawer(() => movableContainer.moveYTo(maxImageHeight));
             }}>
-            <OtoText size="large" weight="semibold" align="center">
-              {!state.isDiagnosed && !state.showOverlay
-                ? "Tap to reveal diagnosis"
-                : ""}
-            </OtoText>
+            <View style={styles.tapAligner}>
+              <OtoText size="large" weight="semibold" align="center">
+                {!state.isDiagnosed && !state.showOverlay
+                  ? "Tap to reveal diagnosis"
+                  : ""}
+              </OtoText>
+            </View>
           </Spacer>
           <Drawer
             onCloseComplete={() => {
@@ -143,6 +145,7 @@ const TemporaryTitleLogo: React.FC = () => {
 
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: COLOURS.black },
+  tapAligner: { alignItems: "center" },
 });
 
 export { SlideViewProvider } from "./context";
